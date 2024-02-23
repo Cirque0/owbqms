@@ -9,9 +9,11 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Faculty\FacultyAuthenticationController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    // TODO: Remove boilerplate register and login routes later
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 
@@ -21,6 +23,10 @@ Route::middleware('guest')->group(function () {
                 ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::controller(FacultyAuthenticationController::class)->group(function () {
+        Route::get('faculty/login', 'show')->name('faculty.login');
+    });
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
