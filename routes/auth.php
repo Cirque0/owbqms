@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Faculty\FacultyAuthenticationController;
+use App\Http\Controllers\Faculty\FacultyRegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -24,9 +25,18 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::controller(FacultyAuthenticationController::class)->group(function () {
-        Route::get('faculty/login', 'show')->name('faculty.login');
+    Route::prefix('faculty')->group(function () {
+
+        Route::controller(FacultyAuthenticationController::class)->group(function () {
+            Route::get('login', 'show')->name('faculty.login');
+        });
+    
+        Route::controller(FacultyRegistrationController::class)->group(function () {
+            Route::get('register', 'show')->name('faculty.register');
+            Route::post('register', 'store')->name('faculty.register.store');
+        });
     });
+
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');

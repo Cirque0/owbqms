@@ -40,7 +40,7 @@ export default function Login() {
 
                         <button className="btn btn-sm btn-primary">Login</button>
                         <Link className="text-sm">Forgot password?</Link>
-                        <Link className="text-sm">Don't have an account?</Link>
+                        <Link href={route('faculty.register')} className="text-sm">Don't have an account?</Link>
                     </form>
                 </div>
             </div>
