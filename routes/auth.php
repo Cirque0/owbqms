@@ -29,6 +29,7 @@ Route::middleware('guest')->group(function () {
 
         Route::controller(FacultyAuthenticationController::class)->group(function () {
             Route::get('login', 'show')->name('faculty.login');
+            Route::post('login', 'store')->name('faculty.login.store');
         });
     
         Route::controller(FacultyRegistrationController::class)->group(function () {
