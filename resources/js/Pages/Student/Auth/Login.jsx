@@ -95,7 +95,7 @@ export default function Login() {
                         <div className="flex flex-col items-center gap-1">
                             <Link className="text-sm">Forgot password?</Link>
                             <Link
-                                // href={route("faculty.register")}
+                                href={route("student.register")}
                                 className="text-sm"
                             >
                                 Don't have an account?
