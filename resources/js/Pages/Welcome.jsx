@@ -11,6 +11,7 @@ export default function Welcome() {
                     <p className='mt-16 text-center text-2xl font-bold'>Welcome!</p>
 
                     <div className="mx-4 mt-12 flex flex-col gap-4">
+                        <p className='text-center text-xl'>Login as...</p>
                         <Link href={route('student.login')} className='btn btn-primary btn-lg'>Student</Link>
                         <div className="divider before:bg-white after:bg-white">OR</div>
                         <Link href={route('faculty.login')} className='btn btn-primary btn-lg'>Faculty</Link>
