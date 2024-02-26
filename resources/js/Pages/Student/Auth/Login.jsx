@@ -10,7 +10,7 @@ export default function Login() {
 
     const login = (e) => {
         e.preventDefault();
-        // post(route('faculty.login.store'));
+        post(route('student.login.store'));
     }
 
     return (

@@ -43,6 +43,7 @@ Route::middleware('guest')->group(function () {
     Route::prefix('student')->group(function () {
         Route::controller(StudentAuthenticationController::class)->group(function () {
             Route::get('login', 'show')->name('student.login');
+            Route::post('login', 'store')->name('student.login.store');
         });
 
         Route::controller(StudentRegistrationController::class)->group(function () {
