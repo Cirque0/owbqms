@@ -16,7 +16,7 @@ use Inertia\Inertia;
 class StudentRegistrationController extends Controller
 {
     public function show() {
-        return Inertia::render('Student/Auth/Register');
+        return Inertia::render('Auth/Student/Register');
     }
 
     public function store(Request $request) {

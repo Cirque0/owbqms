@@ -13,7 +13,7 @@ use Inertia\Inertia;
 class StudentAuthenticationController extends Controller
 {
     public function show() {
-        return Inertia::render('Student/Auth/Login');
+        return Inertia::render('Auth/Student/Login');
     }
 
     public function store(Request $request): RedirectResponse
