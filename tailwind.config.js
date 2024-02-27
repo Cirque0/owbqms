@@ -15,8 +15,15 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                maroon: '#880000',
+            }
         },
     },
 
-    plugins: [forms],
+    plugins: [require('daisyui')],
+
+    daisyui: {
+        themes: ['bumblebee']
+    }
 };
