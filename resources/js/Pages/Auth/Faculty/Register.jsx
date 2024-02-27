@@ -20,7 +20,7 @@ export default function Register() {
     };
 
     return (
-        <main className="min-h-screen flex flex-col justify-center items-center">
+        <div className="min-h-screen flex flex-col justify-center items-center">
             <Head title="Register / Faculty" />
             <div className="card md:min-h-fit min-h-screen w-full max-w-xl md:bg-base-200 md:shadow">
                 <div className="card-body">
@@ -297,6 +297,6 @@ export default function Register() {
                     </form>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
