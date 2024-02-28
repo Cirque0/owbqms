@@ -1,9 +1,14 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head, Link } from "@inertiajs/react";
+import { useRef } from "react";
+import AddClassModal from "./Partials/AddClassModal";
 
 function Class({ classObj }) {
     return (
-        <Link href="#" className="h-40 px-6 py-2 flex flex-col bg-gray-100 rounded-xl drop-shadow-lg">
+        <Link
+            href="#"
+            className="md:h-40 min-h-20 px-6 py-2 flex flex-col bg-gray-100 rounded-xl drop-shadow-lg"
+        >
             <div className="grow flex flex-col text-lg font-bold">
                 <p className="text-maroon">{classObj.subject.name}</p>
                 <p>{classObj.section.name}</p>
@@ -14,34 +19,35 @@ function Class({ classObj }) {
                     24
                 </span>
                 <span className="inline-flex items-baseline gap-2">
-                    <i className="bi bi-person-plus text-lg"></i>
-                    8
+                    <i className="bi bi-person-plus text-lg"></i>8
                 </span>
             </div>
         </Link>
-    )
+    );
 }
 
 const testClasses = [
     {
         subject: {
-            name: 'Web Development',
+            name: "Web Development",
         },
         section: {
-            name: 'BSIT 4-1N'
-        }
+            name: "BSIT 4-1N",
+        },
     },
     {
         subject: {
-            name: 'Information Assurance and Security 1',
+            name: "Information Assurance and Security 1",
         },
         section: {
-            name: 'BSIT 4-1N'
-        }
+            name: "BSIT 4-1N",
+        },
     },
-]
+];
 
 export default function Classes({ auth }) {
+    const addModalRef = useRef(null);
+
     return (
         <>
             <Head title="Classes \ Faculty" />
@@ -50,26 +56,30 @@ export default function Classes({ auth }) {
                     <div className="grow">
                         <h2 className="font-bold text-2xl">Your Classes</h2>
 
-                        <div className="mt-4 grid grid-cols-2 gap-4">
-                            <button className="h-40 bg-gray-100 rounded-xl shadow-lg">
+                        <div className="mt-4 grid md:grid-cols-2 gap-4">
+                            <button
+                                onClick={() => addModalRef.current.showModal()}
+                                className="md:h-40 h-20 bg-gray-100 rounded-xl shadow-lg"
+                            >
                                 <span className="flex justify-center items-center gap-2 text-lg text-maroon font-bold">
                                     <i className="bi bi-plus-square text-2xl"></i>
-                                    Add a new class
+                                    Create a new class
                                 </span>
                             </button>
 
-                            {testClasses.map((classObj) => (
-                                <Class classObj={classObj} />
+                            {testClasses.map((classObj, index) => (
+                                <Class key={index} classObj={classObj} />
                             ))}
                         </div>
                     </div>
 
-                    <div className="w-60 flex flex-col">
+                    <div className="w-60 hidden md:flex flex-col">
                         <h2 className="font-bold text-2xl">Ongoing Exams</h2>
-
                     </div>
                 </div>
+
+                <AddClassModal ref={addModalRef} />
             </FacultyLayout>
         </>
-    )
+    );
 }
