@@ -36,8 +36,8 @@ export default function FacultyLayout({ user, header, children }) {
                     <div className="px-4 font-bold">FACULTY / Classes</div>
                 </div>
                 {/* Page content here */}
-                <main className="min-h-screen py-12 flex">
-                    <div className="sticky top-32 h-fit w-80 px-16 hidden md:flex flex-col">
+                <main className="min-h-screen px-16 py-12 gap-8 flex">
+                    <div className="sticky top-32 h-fit w-60 hidden md:flex flex-col">
                         <ul className="menu w-full text-lg">
                             <li>
                                 <details>
