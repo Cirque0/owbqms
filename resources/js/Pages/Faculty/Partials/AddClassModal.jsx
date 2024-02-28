@@ -1,51 +1,80 @@
+import Combobox from "@/Components/Combobox";
 import { useForm } from "@inertiajs/react";
 import { forwardRef } from "react";
 
 const AddClassModal = forwardRef(({}, ref) => {
+    const { data, setData } = useForm({
+        course: "",
+        section: "",
+        subject: "",
+    });
+
     return (
         <dialog ref={ref} className="modal modal-bottom md:modal-middle">
-            <div className="modal-box">
+            <div className="modal-box md:overflow-visible">
                 <h3 className="font-bold text-lg">Create a new class</h3>
 
                 <form className="mt-4">
                     <div className="md:grid grid-cols-2 gap-2">
                         <label className="form-control w-full">
                             <div className="label">
-                                <span className="label-text">
-                                    Course
-                                </span>
+                                <span className="label-text">Course</span>
                             </div>
-                            <input
-                                type="text"
+                            <Combobox
+                                className={
+                                    "w-full input input-sm input-bordered"
+                                }
+                                value={data.course}
+                                onChange={(value) => setData("course", value)}
                                 placeholder="Select a course"
-                                className="input input-sm input-bordered w-full"
+                                options={[
+                                    "Durward Reynolds",
+                                    "Kenton Towne",
+                                    "Therese Wunsch",
+                                    "Benedict Kessler",
+                                    "Katelyn Rohan",
+                                ]}
                             />
                         </label>
 
                         <label className="form-control w-full">
                             <div className="label">
-                                <span className="label-text">
-                                    Section
-                                </span>
+                                <span className="label-text">Section</span>
                             </div>
-                            <input
-                                type="text"
+                            <Combobox
+                                className={
+                                    "w-full input input-sm input-bordered"
+                                }
+                                value={data.section}
+                                onChange={(value) => setData("section", value)}
                                 placeholder="Select a section"
-                                className="input input-sm input-bordered w-full"
+                                options={[
+                                    "Durward Reynolds",
+                                    "Kenton Towne",
+                                    "Therese Wunsch",
+                                    "Benedict Kessler",
+                                    "Katelyn Rohan",
+                                ]}
                             />
                         </label>
                     </div>
 
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text">
-                                Subject
-                            </span>
+                            <span className="label-text">Subject</span>
                         </div>
-                        <input
-                            type="text"
+                        <Combobox
+                            className={"w-full input input-sm input-bordered"}
+                            value={data.subject}
+                            onChange={(value) => setData("subject", value)}
                             placeholder="Select a subject"
-                            className="input input-sm input-bordered w-full"
+                            options={[
+                                "Durward Reynolds",
+                                "Kenton Towne",
+                                "Therese Wunsch",
+                                "Benedict Kessler",
+                                "Katelyn Rohan",
+                            ]}
                         />
                     </label>
                 </form>
