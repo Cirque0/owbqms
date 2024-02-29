@@ -59,7 +59,11 @@ export default function FacultyLayout({ user, header, children }) {
                                             </a>
                                         </li>
                                         <li className="text-error">
-                                            <Link href={route('logout')} as="button" method="post">
+                                            <Link
+                                                href={route("logout")}
+                                                as="button"
+                                                method="post"
+                                            >
                                                 <i className="bi bi-box-arrow-right"></i>
                                                 Logout
                                             </Link>
@@ -71,22 +75,58 @@ export default function FacultyLayout({ user, header, children }) {
                                 <div className="menu-title divider py-0 my-0"></div>
                             </li>
                             <li>
-                                <Link href={route('faculty.home')}>
+                                <Link href={route("faculty.home")}>
                                     <i className="bi bi-house-door"></i>
                                     Home
                                 </Link>
                             </li>
+
                             <li>
-                                <button onClick={() => createModal.current.showModal()}>
-                                    <i className="bi bi-plus-square"></i>
-                                    Create a new class
-                                </button>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i className="bi bi-mortarboard"></i>
-                                    Classes
-                                </a>
+                                <details open>
+                                    <summary>Classes</summary>
+
+                                    <ul>
+                                        <li>
+                                            <button
+                                                onClick={() =>
+                                                    createModal.current.showModal()
+                                                }
+                                            >
+                                                <i className="bi bi-plus-square"></i>
+                                                New class
+                                            </button>
+                                        </li>
+                                        {user.instructed_classes.map(
+                                            (classModel) => (
+                                                <li>
+                                                    <Link
+                                                        href={route(
+                                                            "faculty.classes.show",
+                                                            { class: classModel.id }
+                                                        )}
+                                                        title={
+                                                            classModel.subject.name
+                                                        }
+                                                        className="flex flex-col items-start gap-0"
+                                                    >
+                                                        <span className="font-medium text-xs">
+                                                            {
+                                                                classModel.section
+                                                                    .name
+                                                            }
+                                                        </span>
+                                                        <span className="line-clamp-1">
+                                                            {
+                                                                classModel.subject
+                                                                    .name
+                                                            }
+                                                        </span>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </details>
                             </li>
                             <li>
                                 <a href="#">
@@ -121,7 +161,11 @@ export default function FacultyLayout({ user, header, children }) {
                                     </a>
                                 </li>
                                 <li className="text-error">
-                                    <Link href={route('logout')} as="button" method="post">
+                                    <Link
+                                        href={route("logout")}
+                                        as="button"
+                                        method="post"
+                                    >
                                         <i className="bi bi-box-arrow-right"></i>
                                         Logout
                                     </Link>
@@ -133,22 +177,45 @@ export default function FacultyLayout({ user, header, children }) {
                         <div className="menu-title divider py-0 my-0"></div>
                     </li>
                     <li>
-                        <Link href={route('faculty.home')}>
+                        <Link href={route("faculty.home")}>
                             <i className="bi bi-house-door"></i>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <button onClick={() => createModal.current.showModal()}>
-                            <i className="bi bi-plus-square"></i>
-                            Create a new class
-                        </button>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="bi bi-mortarboard"></i>
-                            Classes
-                        </a>
+                        <details open>
+                            <summary>Classes</summary>
+                            <ul>
+                                <li>
+                                    <button
+                                        onClick={() =>
+                                            createModal.current.showModal()
+                                        }
+                                    >
+                                        <i className="bi bi-plus-square"></i>
+                                        New class
+                                    </button>
+                                </li>
+                                {user.instructed_classes.map((classModel) => (
+                                    <li>
+                                        <Link
+                                            href={route("faculty.classes.show", {
+                                                class: classModel.id,
+                                            })}
+                                            title={classModel.subject.name}
+                                            className="flex flex-col items-start gap-0"
+                                        >
+                                            <span className="font-medium text-xs">
+                                                {classModel.section.name}
+                                            </span>
+                                            <span className="line-clamp-1">
+                                                {classModel.subject.name}
+                                            </span>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </details>
                     </li>
                     <li>
                         <a href="#">
