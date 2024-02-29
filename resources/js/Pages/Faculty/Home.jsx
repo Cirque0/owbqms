@@ -4,7 +4,7 @@ import { Head, Link } from "@inertiajs/react";
 function Class({ classObj }) {
     return (
         <Link
-            href="#"
+            href={route('faculty.classes.show', {class: classObj.id})}
             className="md:h-40 min-h-20 px-6 py-2 flex flex-col bg-gray-100 rounded-xl drop-shadow-lg"
         >
             <div className="grow flex flex-col text-lg font-bold">
@@ -24,26 +24,7 @@ function Class({ classObj }) {
     );
 }
 
-const testClasses = [
-    {
-        subject: {
-            name: "Web Development",
-        },
-        section: {
-            name: "BSIT 4-1N",
-        },
-    },
-    {
-        subject: {
-            name: "Information Assurance and Security 1",
-        },
-        section: {
-            name: "BSIT 4-1N",
-        },
-    },
-];
-
-export default function Home({ auth }) {
+export default function Home({ auth, classes }) {
     return (
         <>
             <Head title="Classes \ Faculty" />
@@ -53,9 +34,13 @@ export default function Home({ auth }) {
                         <h2 className="font-bold text-2xl">Your Classes</h2>
 
                         <div className="mt-4 grid md:grid-cols-2 gap-4">
-                            {testClasses.map((classObj, index) => (
-                                <Class key={index} classObj={classObj} />
-                            ))}
+                            {classes.length > 0 ? classes.map((classObj) => (
+                                <Class key={classObj.id} classObj={classObj} />
+                            )) : (
+                                <div className="md:h-40 min-h-20 px-6 py-2 col-span-2 flex flex-col justify-center items-center bg-gray-100 rounded-xl">
+                                    <span className="text-xl font-semibold text-neutral">You don't have any classes, yet.</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 
