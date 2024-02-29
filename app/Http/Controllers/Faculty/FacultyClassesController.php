@@ -13,6 +13,18 @@ use Inertia\Inertia;
 
 class FacultyClassesController extends Controller
 {
+    public function show(ClassModel $class) {
+        $class->load([
+            'section:id,name',
+            'subject:id,name',
+            'instructor:id,username' => ['profile:id,user_id,first_name,middle_name,last_name'],
+        ]);
+
+        return Inertia::render('Faculty/Class/Class', [
+            'classModel' => $class,
+        ]);
+    }
+
     public function store(ClassRequest $request) {
         $course = Course::firstOrCreate([
             'name' => $request->course,
