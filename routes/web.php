@@ -34,8 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
-        Route::get('/', [FacultyHomeController::class, 'index'])->name('faculty.home');
-        Route::resource('classes', FacultyClassesController::class)->only(['store']);
+        Route::get('/', [FacultyHomeController::class, 'index'])->name('home');
+        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store']);
     });
 
     Route::group(['prefix' => 'student', 'middleware' => ['student']], function () {

@@ -1,4 +1,5 @@
 import AddClassModal from "@/Pages/Faculty/Partials/AddClassModal";
+import { Link } from "@inertiajs/react";
 import { useRef } from "react";
 
 export default function FacultyLayout({ user, header, children }) {
@@ -70,10 +71,10 @@ export default function FacultyLayout({ user, header, children }) {
                                 <div className="menu-title divider py-0 my-0"></div>
                             </li>
                             <li>
-                                <a href="#">
+                                <Link href={route('faculty.home')}>
                                     <i className="bi bi-house-door"></i>
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <button onClick={() => createModal.current.showModal()}>
@@ -130,6 +131,12 @@ export default function FacultyLayout({ user, header, children }) {
                     </li>
                     <li>
                         <div className="menu-title divider py-0 my-0"></div>
+                    </li>
+                    <li>
+                        <Link href={route('faculty.home')}>
+                            <i className="bi bi-house-door"></i>
+                            Home
+                        </Link>
                     </li>
                     <li>
                         <button onClick={() => createModal.current.showModal()}>
