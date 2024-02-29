@@ -4,6 +4,7 @@ use App\Http\Controllers\Faculty\FacultyClassesController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentClassesController;
+use App\Http\Controllers\Student\StudentHomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,8 +39,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('classes', FacultyClassesController::class)->only(['show', 'store']);
     });
 
-    Route::group(['prefix' => 'student', 'middleware' => ['student']], function () {
-        Route::get('/classes', [StudentClassesController::class, 'index'])->name('student.classes');
+    Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
+        Route::get('/', [StudentHomeController::class, 'index'])->name('home');
+        Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
     });
 });
 

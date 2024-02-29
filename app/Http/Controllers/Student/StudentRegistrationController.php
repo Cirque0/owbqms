@@ -54,6 +54,6 @@ class StudentRegistrationController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('student.classes'));
+        return redirect(route('student.home'));
     }
 }
