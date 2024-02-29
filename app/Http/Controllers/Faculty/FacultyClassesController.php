@@ -13,10 +13,6 @@ use Inertia\Inertia;
 
 class FacultyClassesController extends Controller
 {
-    public function index() {
-        return Inertia::render('Faculty/Classes');
-    }
-
     public function store(ClassRequest $request) {
         $course = Course::firstOrCreate([
             'name' => $request->course,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Faculty\FacultyClassesController;
+use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentClassesController;
 use Illuminate\Foundation\Application;
@@ -33,7 +34,8 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
-        Route::resource('classes', FacultyClassesController::class)->only(['index', 'store']);
+        Route::get('/', [FacultyHomeController::class, 'index'])->name('faculty.home');
+        Route::resource('classes', FacultyClassesController::class)->only(['store']);
     });
 
     Route::group(['prefix' => 'student', 'middleware' => ['student']], function () {

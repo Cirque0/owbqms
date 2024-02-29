@@ -43,7 +43,7 @@ const testClasses = [
     },
 ];
 
-export default function Classes({ auth }) {
+export default function Home({ auth }) {
     return (
         <>
             <Head title="Classes \ Faculty" />

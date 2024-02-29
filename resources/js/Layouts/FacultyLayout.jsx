@@ -70,6 +70,12 @@ export default function FacultyLayout({ user, header, children }) {
                                 <div className="menu-title divider py-0 my-0"></div>
                             </li>
                             <li>
+                                <a href="#">
+                                    <i className="bi bi-house-door"></i>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
                                 <button onClick={() => createModal.current.showModal()}>
                                     <i className="bi bi-plus-square"></i>
                                     Create a new class
