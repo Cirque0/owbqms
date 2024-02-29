@@ -54,6 +54,6 @@ class FacultyRegistrationController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('faculty.classes'));
+        return redirect(route('faculty.home'));
     }
 }

@@ -36,7 +36,7 @@ class FacultyAuthenticationController extends Controller
         )) {
             $request->session()->regenerate();
  
-            return redirect()->intended(route('faculty.classes'));
+            return redirect()->intended(route('faculty.home'));
         }
  
         return back()->withErrors([

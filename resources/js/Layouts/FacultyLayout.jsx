@@ -59,10 +59,10 @@ export default function FacultyLayout({ user, header, children }) {
                                             </a>
                                         </li>
                                         <li className="text-error">
-                                            <a href="#">
+                                            <Link href={route('logout')} as="button" method="post">
                                                 <i className="bi bi-box-arrow-right"></i>
                                                 Logout
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </details>
@@ -121,10 +121,10 @@ export default function FacultyLayout({ user, header, children }) {
                                     </a>
                                 </li>
                                 <li className="text-error">
-                                    <a href="#">
+                                    <Link href={route('logout')} as="button" method="post">
                                         <i className="bi bi-box-arrow-right"></i>
                                         Logout
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </details>
