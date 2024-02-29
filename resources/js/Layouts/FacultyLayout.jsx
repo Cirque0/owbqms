@@ -92,7 +92,7 @@ export default function FacultyLayout({ user, header, children }) {
                                                     createModal.current.showModal()
                                                 }
                                             >
-                                                <i className="bi bi-plus-square"></i>
+                                                <i className="bi bi-plus-lg"></i>
                                                 New class
                                             </button>
                                         </li>
@@ -192,7 +192,7 @@ export default function FacultyLayout({ user, header, children }) {
                                             createModal.current.showModal()
                                         }
                                     >
-                                        <i className="bi bi-plus-square"></i>
+                                        <i className="bi bi-plus-lg"></i>
                                         New class
                                     </button>
                                 </li>
