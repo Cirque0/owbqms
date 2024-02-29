@@ -9,7 +9,7 @@ export default function FacultyLayout({ user, header, children }) {
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
-                <div className="sticky top-0 z-50 w-full navbar bg-primary text-white">
+                <div className="sticky top-0 z-40 w-full navbar bg-primary text-white">
                     <div className="flex-none lg:hidden">
                         <label
                             htmlFor="my-drawer-3"
@@ -67,6 +67,9 @@ export default function FacultyLayout({ user, header, children }) {
                                 </details>
                             </li>
                             <li>
+                                <div className="menu-title divider py-0 my-0"></div>
+                            </li>
+                            <li>
                                 <button onClick={() => createModal.current.showModal()}>
                                     <i className="bi bi-plus-square"></i>
                                     Create a new class
@@ -89,7 +92,7 @@ export default function FacultyLayout({ user, header, children }) {
                     {children}
                 </main>
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side z-50">
                 <label
                     htmlFor="my-drawer-3"
                     aria-label="close sidebar"
@@ -118,6 +121,15 @@ export default function FacultyLayout({ user, header, children }) {
                                 </li>
                             </ul>
                         </details>
+                    </li>
+                    <li>
+                        <div className="menu-title divider py-0 my-0"></div>
+                    </li>
+                    <li>
+                        <button onClick={() => createModal.current.showModal()}>
+                            <i className="bi bi-plus-square"></i>
+                            Create a new class
+                        </button>
                     </li>
                     <li>
                         <a href="#">
