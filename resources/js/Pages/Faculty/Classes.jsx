@@ -1,7 +1,5 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head, Link } from "@inertiajs/react";
-import { useRef } from "react";
-import AddClassModal from "./Partials/AddClassModal";
 
 function Class({ classObj }) {
     return (
@@ -46,8 +44,6 @@ const testClasses = [
 ];
 
 export default function Classes({ auth }) {
-    const addModalRef = useRef(null);
-
     return (
         <>
             <Head title="Classes \ Faculty" />
@@ -57,16 +53,6 @@ export default function Classes({ auth }) {
                         <h2 className="font-bold text-2xl">Your Classes</h2>
 
                         <div className="mt-4 grid md:grid-cols-2 gap-4">
-                            <button
-                                onClick={() => addModalRef.current.showModal()}
-                                className="md:h-40 h-20 bg-gray-100 rounded-xl shadow-lg"
-                            >
-                                <span className="flex justify-center items-center gap-2 text-lg text-maroon font-bold">
-                                    <i className="bi bi-plus-square text-2xl"></i>
-                                    Create a new class
-                                </span>
-                            </button>
-
                             {testClasses.map((classObj, index) => (
                                 <Class key={index} classObj={classObj} />
                             ))}
@@ -77,8 +63,6 @@ export default function Classes({ auth }) {
                         <h2 className="font-bold text-2xl">Ongoing Exams</h2>
                     </div>
                 </div>
-
-                <AddClassModal ref={addModalRef} />
             </FacultyLayout>
         </>
     );

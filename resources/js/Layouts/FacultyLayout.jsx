@@ -1,4 +1,9 @@
+import AddClassModal from "@/Pages/Faculty/Partials/AddClassModal";
+import { useRef } from "react";
+
 export default function FacultyLayout({ user, header, children }) {
+    const createModal = useRef(null);
+
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -38,7 +43,7 @@ export default function FacultyLayout({ user, header, children }) {
                 {/* Page content here */}
                 <main className="min-h-screen md:px-16 px-4 py-12 gap-8 flex">
                     <div className="sticky top-32 h-fit w-60 hidden md:flex flex-col">
-                        <ul className="menu w-full text-lg">
+                        <ul className="menu w-full text-base">
                             <li>
                                 <details>
                                     <summary>
@@ -60,6 +65,12 @@ export default function FacultyLayout({ user, header, children }) {
                                         </li>
                                     </ul>
                                 </details>
+                            </li>
+                            <li>
+                                <button onClick={() => createModal.current.showModal()}>
+                                    <i className="bi bi-plus-square"></i>
+                                    Create a new class
+                                </button>
                             </li>
                             <li>
                                 <a href="#">
@@ -122,6 +133,8 @@ export default function FacultyLayout({ user, header, children }) {
                     </li>
                 </ul>
             </div>
+
+            <AddClassModal ref={createModal} />
         </div>
     );
 }
