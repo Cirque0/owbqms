@@ -3,18 +3,26 @@ import { useForm } from "@inertiajs/react";
 import { forwardRef } from "react";
 
 const AddClassModal = forwardRef(({}, ref) => {
-    const { data, setData } = useForm({
-        course: "",
-        section: "",
-        subject: "",
-    });
+    const { data, setData, post, errors, processing, recentlySuccessful } =
+        useForm({
+            course: "",
+            section: "",
+            subject: "",
+        });
+
+    const create = (e) => {
+        e.preventDefault();
+        post(route("faculty.classes.store"), {
+            onSuccess: () => ref.current.close(),
+        });
+    };
 
     return (
         <dialog ref={ref} className="modal modal-bottom md:modal-middle">
             <div className="modal-box md:overflow-visible">
                 <h3 className="font-bold text-lg">Create a new class</h3>
 
-                <form className="mt-4">
+                <form id="create_form" className="mt-4" onSubmit={create}>
                     <div className="md:grid grid-cols-2 gap-2">
                         <label className="form-control w-full">
                             <div className="label">
@@ -35,6 +43,9 @@ const AddClassModal = forwardRef(({}, ref) => {
                                     "Katelyn Rohan",
                                 ]}
                             />
+                            <div className="label">
+                                <span className="label-text-alt text-error">{errors.course}</span>
+                            </div>
                         </label>
 
                         <label className="form-control w-full">
@@ -56,6 +67,9 @@ const AddClassModal = forwardRef(({}, ref) => {
                                     "Katelyn Rohan",
                                 ]}
                             />
+                            <div className="label">
+                                <span className="label-text-alt text-error">{errors.section}</span>
+                            </div>
                         </label>
                     </div>
 
@@ -76,13 +90,24 @@ const AddClassModal = forwardRef(({}, ref) => {
                                 "Katelyn Rohan",
                             ]}
                         />
+                        <div className="label">
+                            <span className="label-text-alt text-error">{errors.subject}</span>
+                        </div>
                     </label>
                 </form>
 
                 <div className="modal-action">
                     <button
+                        className="btn btn-sm btn-info"
+                        form="create_form"
+                        disabled={processing}
+                    >
+                        Create new class
+                    </button>
+                    <button
                         className="btn btn-sm"
                         onClick={() => ref.current.close()}
+                        disabled={processing}
                     >
                         Close
                     </button>

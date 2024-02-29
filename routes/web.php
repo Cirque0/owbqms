@@ -31,8 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::group(['prefix' => 'faculty', 'middleware' => ['faculty']], function() {
-        Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
+    Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
+        // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
+        Route::resource('classes', FacultyClassesController::class)->only(['index', 'store']);
     });
 
     Route::group(['prefix' => 'student', 'middleware' => ['student']], function () {
