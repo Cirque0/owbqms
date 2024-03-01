@@ -1,4 +1,5 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
+import { Link } from "@inertiajs/react";
 
 export default function ClassLayout({ user, classModel, children }) {
     return (
@@ -14,9 +15,9 @@ export default function ClassLayout({ user, classModel, children }) {
                     </div>
 
                     <div role="tablist" className="mt-4 tabs tabs-bordered">
-                        <a role="tab" className={`tab ${route().current('faculty.classes.show') ? 'tab-active' : ''}`}>
+                        <Link href={route('faculty.classes.show', {class: classModel.id})} role="tab" className={`tab ${route().current('faculty.classes.show') ? 'tab-active' : ''}`}>
                             Students
-                        </a>
+                        </Link>
                         <a role="tab" className="tab">
                             Examinations
                         </a>
@@ -28,8 +29,11 @@ export default function ClassLayout({ user, classModel, children }) {
                     {children}
                 </div>
 
-                <div className="w-60 hidden md:flex flex-col">
-                    <h2 className="font-bold text-2xl">Ongoing Exams</h2>
+                <div className="md:card hidden w-full max-w-xs bg-gray-100">
+                    <div className="card-body">
+                        <h2 className="card-title">Ongoing Exams</h2>
+
+                    </div>
                 </div>
             </div>
         </FacultyLayout>
