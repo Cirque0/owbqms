@@ -2,7 +2,7 @@ import Combobox from "@/Components/Combobox";
 import { useForm } from "@inertiajs/react";
 import { forwardRef } from "react";
 
-const AddClassModal = forwardRef(({}, ref) => {
+const CreateClassModal = forwardRef(({}, ref) => {
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             course: "",
@@ -117,4 +117,4 @@ const AddClassModal = forwardRef(({}, ref) => {
     );
 });
 
-export default AddClassModal;
+export default CreateClassModal;

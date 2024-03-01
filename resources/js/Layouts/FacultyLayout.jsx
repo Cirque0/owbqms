@@ -1,6 +1,4 @@
-import AddClassModal from "@/Pages/Faculty/Partials/AddClassModal";
 import { Link } from "@inertiajs/react";
-import { useRef } from "react";
 
 export default function FacultyLayout({ user, header, children }) {
     return (

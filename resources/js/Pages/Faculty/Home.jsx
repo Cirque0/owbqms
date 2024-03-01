@@ -1,7 +1,7 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head, Link } from "@inertiajs/react";
 import { useRef } from "react";
-import AddClassModal from "./Partials/AddClassModal";
+import CreateClassModal from "./Partials/CreateClassModal";
 
 function Class({ classObj }) {
     return (
@@ -66,7 +66,7 @@ export default function Home({ auth, classes }) {
                     </div>
                 </div>
 
-                <AddClassModal ref={addClassRef} />
+                <CreateClassModal ref={addClassRef} />
             </FacultyLayout>
         </>
     );
