@@ -10,7 +10,7 @@ const JoinClassModal = forwardRef(({}, ref) => {
 
     const join = (e) => {
         e.preventDefault();
-        
+        post(route("student.classes.join"));
     };
 
     return (
@@ -27,20 +27,31 @@ const JoinClassModal = forwardRef(({}, ref) => {
                             type="text"
                             className="w-full input input-sm input-bordered"
                             value={data.class_code}
-                            onChange={(e) => setData('class_code', e.target.value)}
+                            onChange={(e) =>
+                                setData("class_code", e.target.value)
+                            }
                             placeholder="Enter the class code"
                         />
-                        
-                        <div className="label">
-                            <span className="label-text-alt text-error">{errors.class_code}</span>
+
+                        <div className="label flex-col items-start">
+                            <span className="label-text-alt text-error">
+                                {errors.class_code}
+                            </span>
                         </div>
                     </label>
                 </form>
 
+                {recentlySuccessful && (
+                    <p className="flex gap-1 text-sm">
+                        <i className="bi bi-check-circle-fill text-success"></i>
+                        A request to join the class has been sent!
+                    </p>
+                )}
+
                 <div className="modal-action">
                     <button
                         className="btn btn-sm btn-info"
-                        form="create_form"
+                        form="join_form"
                         disabled={processing}
                     >
                         {processing && (

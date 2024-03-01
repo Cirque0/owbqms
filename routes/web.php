@@ -41,7 +41,8 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
         Route::get('/', [StudentHomeController::class, 'index'])->name('home');
-        Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
+        // Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
+        Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
     });
 });
 

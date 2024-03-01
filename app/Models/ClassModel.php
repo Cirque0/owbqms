@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ClassModel extends Model
 {
@@ -33,5 +34,15 @@ class ClassModel extends Model
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')->wherePivot('status', 'enrolled');
+    }
+
+    public function requests(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')->wherePivot('status', 'pending');
     }
 }
