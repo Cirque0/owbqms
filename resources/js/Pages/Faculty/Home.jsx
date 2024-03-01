@@ -44,8 +44,11 @@ export default function Home({ auth, classes }) {
                         </div>
                     </div>
 
-                    <div className="w-60 hidden md:flex flex-col">
-                        <h2 className="font-bold text-2xl">Ongoing Exams</h2>
+                    <div className="md:card hidden w-full max-w-xs bg-gray-100">
+                        <div className="card-body">
+                            <h2 className="card-title">Ongoing Exams</h2>
+
+                        </div>
                     </div>
                 </div>
             </FacultyLayout>

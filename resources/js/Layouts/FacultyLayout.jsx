@@ -3,8 +3,6 @@ import { Link } from "@inertiajs/react";
 import { useRef } from "react";
 
 export default function FacultyLayout({ user, header, children }) {
-    const createModal = useRef(null);
-
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -39,19 +37,30 @@ export default function FacultyLayout({ user, header, children }) {
                             className="md:block hidden h-16"
                         />
                     </div>
-                    <div className="px-4 font-bold">FACULTY / Classes</div>
-                </div>
-                {/* Page content here */}
-                <main className="min-h-screen md:px-16 px-4 py-12 gap-8 flex">
-                    <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
-                        <ul className="menu w-full text-base">
+                    <div className="px-4 font-bold">
+                        <ul className="menu md:menu-horizontal hidden w-full text-base">
+                            <li>
+                                <div className="menu-title divider py-0 my-0"></div>
+                            </li>
+                            <li>
+                                <Link href={route("faculty.home")}>
+                                    <i className="bi bi-mortarboard"></i>
+                                    Classes
+                                </Link>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i className="bi bi-journal-text"></i>
+                                    Exams
+                                </a>
+                            </li>
                             <li>
                                 <details>
                                     <summary>
                                         <i className="bi bi-person-circle"></i>
                                         {user.username}
                                     </summary>
-                                    <ul className="text-base">
+                                    <ul className="text-neutral text-base">
                                         <li>
                                             <a href="#">
                                                 <i className="bi bi-gear"></i>
@@ -71,71 +80,11 @@ export default function FacultyLayout({ user, header, children }) {
                                     </ul>
                                 </details>
                             </li>
-                            <li>
-                                <div className="menu-title divider py-0 my-0"></div>
-                            </li>
-                            <li>
-                                <Link href={route("faculty.home")}>
-                                    <i className="bi bi-house-door"></i>
-                                    Home
-                                </Link>
-                            </li>
-
-                            <li>
-                                <details open>
-                                    <summary>Classes</summary>
-
-                                    <ul>
-                                        <li>
-                                            <button
-                                                onClick={() =>
-                                                    createModal.current.showModal()
-                                                }
-                                            >
-                                                <i className="bi bi-plus-lg"></i>
-                                                New class
-                                            </button>
-                                        </li>
-                                        {user.instructed_classes.map(
-                                            (classModel) => (
-                                                <li>
-                                                    <Link
-                                                        href={route(
-                                                            "faculty.classes.show",
-                                                            { class: classModel.id }
-                                                        )}
-                                                        title={
-                                                            classModel.subject.name
-                                                        }
-                                                        className="flex flex-col items-start gap-0"
-                                                    >
-                                                        <span className="font-medium text-xs">
-                                                            {
-                                                                classModel.section
-                                                                    .name
-                                                            }
-                                                        </span>
-                                                        <span className="line-clamp-1">
-                                                            {
-                                                                classModel.subject
-                                                                    .name
-                                                            }
-                                                        </span>
-                                                    </Link>
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
-                                </details>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i className="bi bi-journal-text"></i>
-                                    Exams
-                                </a>
-                            </li>
                         </ul>
                     </div>
+                </div>
+                {/* Page content here */}
+                <main className="min-h-screen md:px-40 px-4 md:py-12 py-6 gap-8">
                     {children}
                 </main>
             </div>
@@ -178,44 +127,9 @@ export default function FacultyLayout({ user, header, children }) {
                     </li>
                     <li>
                         <Link href={route("faculty.home")}>
-                            <i className="bi bi-house-door"></i>
-                            Home
+                            <i className="bi bi-mortarboard"></i>
+                            Classes
                         </Link>
-                    </li>
-                    <li>
-                        <details open>
-                            <summary>Classes</summary>
-                            <ul>
-                                <li>
-                                    <button
-                                        onClick={() =>
-                                            createModal.current.showModal()
-                                        }
-                                    >
-                                        <i className="bi bi-plus-lg"></i>
-                                        New class
-                                    </button>
-                                </li>
-                                {user.instructed_classes.map((classModel) => (
-                                    <li>
-                                        <Link
-                                            href={route("faculty.classes.show", {
-                                                class: classModel.id,
-                                            })}
-                                            title={classModel.subject.name}
-                                            className="flex flex-col items-start gap-0"
-                                        >
-                                            <span className="font-medium text-xs">
-                                                {classModel.section.name}
-                                            </span>
-                                            <span className="line-clamp-1">
-                                                {classModel.subject.name}
-                                            </span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </details>
                     </li>
                     <li>
                         <a href="#">
@@ -225,8 +139,6 @@ export default function FacultyLayout({ user, header, children }) {
                     </li>
                 </ul>
             </div>
-
-            <AddClassModal ref={createModal} />
         </div>
     );
 }
