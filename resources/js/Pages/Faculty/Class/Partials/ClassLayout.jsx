@@ -6,16 +6,16 @@ export default function ClassLayout({ user, classModel, children }) {
             {/* {JSON.stringify(classModel)} */}
             <div className="grow flex gap-8">
                 <div className="grow">
-                    <h2 className="font-bold text-2xl">
-                        [{classModel.section.name}] {classModel.subject.name}
-                    </h2>
+                    <div>
+                        <h2 className="font-bold md:text-2xl text-lg">
+                            {classModel.subject.name}
+                        </h2>
+                        <h3 className="font-bold text-gray-600">{classModel.section.name}</h3>
+                    </div>
 
-                    <div role="tablist" className="tabs tabs-bordered">
-                        <a role="tab" className="tab">
+                    <div role="tablist" className="mt-4 tabs tabs-bordered">
+                        <a role="tab" className={`tab ${route().current('faculty.classes.show') ? 'tab-active' : ''}`}>
                             Students
-                        </a>
-                        <a role="tab" className="tab tab-active">
-                            Join Requests
                         </a>
                         <a role="tab" className="tab">
                             Examinations
