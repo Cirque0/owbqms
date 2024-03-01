@@ -1,13 +1,16 @@
+import JoinClassModal from "@/Pages/Student/Partials/JoinClassModal";
 import { Link } from "@inertiajs/react";
 import { useRef } from "react";
 
 export default function StudentLayout({ user, header, children }) {
+    const joinModalRef = useRef(null);
+
     return (
         <div className="drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
-                <div className="sticky top-0 z-40 w-full navbar bg-primary text-white">
+                <div className="sticky top-0 z-40 w-full navbar bg-gradient-to-r from-70% from-primary to-secondary text-white">
                     <div className="flex-none lg:hidden">
                         <label
                             htmlFor="my-drawer-3"
@@ -74,7 +77,7 @@ export default function StudentLayout({ user, header, children }) {
                                 </Link>
                             </li>
                             <li>
-                                <button>
+                                <button onClick={() => joinModalRef.current.showModal()}>
                                     <i className="bi bi-plus-square"></i>
                                     Join a class
                                 </button>
@@ -136,7 +139,7 @@ export default function StudentLayout({ user, header, children }) {
                         </Link>
                     </li>
                     <li>
-                        <button>
+                        <button onClick={() => joinModalRef.current.showModal()}>
                             <i className="bi bi-plus-square"></i>
                             Join a class
                         </button>
@@ -155,6 +158,8 @@ export default function StudentLayout({ user, header, children }) {
                     </li>
                 </ul>
             </div>
+
+            <JoinClassModal ref={joinModalRef} />
         </div>
     );
 }
