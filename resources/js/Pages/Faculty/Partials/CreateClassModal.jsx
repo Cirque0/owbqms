@@ -102,6 +102,9 @@ const CreateClassModal = forwardRef(({}, ref) => {
                         form="create_form"
                         disabled={processing}
                     >
+                        {processing && (
+                            <span className="loading loading-spinner loading-sm"></span>
+                        )}
                         Create new class
                     </button>
                     <button
