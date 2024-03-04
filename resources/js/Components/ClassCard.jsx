@@ -9,7 +9,9 @@ export default function ClassCard({ classObj, href = '#', student = false }) {
             <div className="grow flex flex-col text-lg font-bold">
                 <p className="text-maroon">{classObj.subject.name}</p>
                 <p>{classObj.section.name}</p>
-                <p className="font-medium text-base">{classObj.instructor.profile.full_name}</p>
+                {student && (
+                    <p className="font-medium text-sm">{classObj.instructor.profile.full_name}</p>
+                )}
             </div>
             <div className="flex gap-4">
                 <span className="inline-flex items-baseline gap-2">
