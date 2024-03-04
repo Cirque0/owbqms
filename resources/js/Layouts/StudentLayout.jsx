@@ -91,7 +91,7 @@ export default function StudentLayout({ user, header, children }) {
                                         </button>
                                     </li>
                                     {user.enrolled_classes.map((classModel) => (
-                                        <li>
+                                        <li key={classModel.id}>
                                             <Link
                                                 href={route(
                                                     "student.classes.show",
@@ -181,7 +181,7 @@ export default function StudentLayout({ user, header, children }) {
                                 </button>
                             </li>
                             {user.enrolled_classes.map((classModel) => (
-                                <li>
+                                <li key={classModel.id}>
                                     <Link
                                         href={route("student.classes.show", {
                                             class: classModel.id,
