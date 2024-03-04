@@ -10,7 +10,7 @@ export default function StudentLayout({ user, header, children }) {
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
                 {/* Navbar */}
-                <div className="sticky top-0 z-40 w-full navbar bg-gradient-to-r from-70% from-primary to-secondary text-white">
+                <div className="sticky top-0 z-40 w-full navbar bg-maroon text-white">
                     <div className="flex-none lg:hidden">
                         <label
                             htmlFor="my-drawer-3"
@@ -39,19 +39,15 @@ export default function StudentLayout({ user, header, children }) {
                             className="md:block hidden h-16"
                         />
                     </div>
-                    <div className="px-4 font-bold">STUDENT / Classes</div>
-                </div>
-                {/* Page content here */}
-                <main className="min-h-screen md:px-16 px-4 py-12 gap-8 flex">
-                    <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
-                        <ul className="menu w-full text-base">
+                    <div className="px-4 font-bold">
+                        <ul className="menu md:menu-horizontal hidden w-full text-base">
                             <li>
                                 <details>
                                     <summary>
                                         <i className="bi bi-person-circle"></i>
                                         {user.username}
                                     </summary>
-                                    <ul className="text-base">
+                                    <ul className="text-neutral text-base">
                                         <li>
                                             <a href="#">
                                                 <i className="bi bi-gear"></i>
@@ -59,7 +55,11 @@ export default function StudentLayout({ user, header, children }) {
                                             </a>
                                         </li>
                                         <li className="text-error">
-                                            <Link href={route('logout')} as="button" method="post">
+                                            <Link
+                                                href={route("logout")}
+                                                as="button"
+                                                method="post"
+                                            >
                                                 <i className="bi bi-box-arrow-right"></i>
                                                 Logout
                                             </Link>
@@ -67,26 +67,48 @@ export default function StudentLayout({ user, header, children }) {
                                     </ul>
                                 </details>
                             </li>
+                        </ul>
+                    </div>
+                </div>
+                {/* Page content here */}
+                <main className="min-h-screen md:px-16 px-4 py-12 gap-8 flex">
+                    <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
+                        <ul className="menu w-full text-base">
                             <li>
-                                <div className="menu-title divider py-0 my-0"></div>
-                            </li>
-                            <li>
-                                <Link href={route('student.home')}>
-                                    <i className="bi bi-house-door"></i>
-                                    Home
-                                </Link>
-                            </li>
-                            <li>
-                                <button onClick={() => joinModalRef.current.showModal()}>
-                                    <i className="bi bi-plus-square"></i>
-                                    Join a class
-                                </button>
-                            </li>
-                            <li>
-                                <a href="#">
+                                <Link href={route("student.home")}>
                                     <i className="bi bi-mortarboard"></i>
                                     Classes
-                                </a>
+                                </Link>
+                                <ul className="text-sm">
+                                    <li>
+                                        <button
+                                            onClick={() =>
+                                                joinModalRef.current.showModal()
+                                            }
+                                        >
+                                            <i className="bi bi-plus-square"></i>
+                                            Join a class
+                                        </button>
+                                    </li>
+                                    {user.enrolled_classes.map((classModel) => (
+                                        <li>
+                                            <Link
+                                                href={route(
+                                                    "student.classes.show",
+                                                    { class: classModel.id }
+                                                )}
+                                                className="flex flex-col items-start gap-0"
+                                            >
+                                                <span className="font-medium">
+                                                    {classModel.subject.name}
+                                                </span>
+                                                <span>
+                                                    {classModel.section.name}
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
                             </li>
                             <li>
                                 <a href="#">
@@ -121,7 +143,11 @@ export default function StudentLayout({ user, header, children }) {
                                     </a>
                                 </li>
                                 <li className="text-error">
-                                    <Link href={route('logout')} as="button" method="post">
+                                    <Link
+                                        href={route("logout")}
+                                        as="button"
+                                        method="post"
+                                    >
                                         <i className="bi bi-box-arrow-right"></i>
                                         Logout
                                     </Link>
@@ -133,22 +159,43 @@ export default function StudentLayout({ user, header, children }) {
                         <div className="menu-title divider py-0 my-0"></div>
                     </li>
                     <li>
-                        <Link href={route('student.home')}>
+                        <Link href={route("student.home")}>
                             <i className="bi bi-house-door"></i>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <button onClick={() => joinModalRef.current.showModal()}>
-                            <i className="bi bi-plus-square"></i>
-                            Join a class
-                        </button>
-                    </li>
-                    <li>
-                        <a href="#">
+                        <Link href={route("student.home")}>
                             <i className="bi bi-mortarboard"></i>
                             Classes
-                        </a>
+                        </Link>
+                        <ul className="text-base">
+                            <li>
+                                <button
+                                    onClick={() =>
+                                        joinModalRef.current.showModal()
+                                    }
+                                >
+                                    <i className="bi bi-plus-square"></i>
+                                    Join a class
+                                </button>
+                            </li>
+                            {user.enrolled_classes.map((classModel) => (
+                                <li>
+                                    <Link
+                                        href={route("student.classes.show", {
+                                            class: classModel.id,
+                                        })}
+                                        className="flex flex-col items-start gap-0"
+                                    >
+                                        <span className="font-medium">
+                                            {classModel.subject.name}
+                                        </span>
+                                        <span>{classModel.section.name}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </li>
                     <li>
                         <a href="#">

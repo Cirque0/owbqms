@@ -10,8 +10,10 @@ use Inertia\Inertia;
 
 class StudentClassesController extends Controller
 {
-    public function index() {
-        return Inertia::render('Student/Classes');
+    public function show(ClassModel $class) {
+        return Inertia::render('Student/Class/Class', [
+            'classModel' => $class,
+        ]);
     }
     
     public function store(Request $request) {

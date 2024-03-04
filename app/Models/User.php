@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ClassModel::class, 'instructor_id');
     }
+
+    public function enrolled_classes(): BelongsToMany
+    {
+        return $this->belongsToMany(ClassModel::class, 'class_student', 'student_id', 'class_id')->withPivot('status');
+    }
 }

@@ -29,10 +29,23 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        if($user->roles()->where('roles.name', 'student')->exists()) {
+            $user->load([
+                'enrolled_classes' => [
+                    'section:id,name',
+                    'subject:id,name',
+                    'instructor:id' => [
+                        'profile'
+                    ],
+                ],
+            ]);
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
         ];
     }
