@@ -10,7 +10,7 @@ const JoinClassModal = forwardRef(({}, ref) => {
 
     const join = (e) => {
         e.preventDefault();
-        post(route("student.classes.join"));
+        post(route("student.classes.store"));
     };
 
     return (
