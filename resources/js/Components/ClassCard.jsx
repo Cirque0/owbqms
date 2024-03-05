@@ -1,32 +1,67 @@
 import { Link } from "@inertiajs/react";
 
-export default function ClassCard({ classObj, href = '#', student = false }) {
+export default function ClassCard({ classObj, href = '#', student = false, disabled = false }) {
     return (
-        <Link
-            href={href}
-            className="px-6 py-2 flex flex-col bg-gray-100 rounded-xl drop-shadow-lg"
-        >
-            <div className="grow flex flex-col text-lg font-bold">
-                <p className="text-maroon">{classObj.subject.name}</p>
-                <p>{classObj.section.name}</p>
-                {student && (
-                    <p className="font-medium text-sm">{classObj.instructor.profile.full_name}</p>
-                )}
+        <div className="px-4 py-2 flex justify-between bg-gray-100 roundex-xl drop-shadow-lg">
+            <Link
+                as="button"
+                href={href}
+                className="flex flex-col grow"
+                disabled={disabled}
+            >
+                <div className="grow flex flex-col text-lg font-bold items-start">
+                    <p className="text-maroon">{classObj.subject.name}</p>
+                    <p>{classObj.section.name}</p>
+                    {student && (
+                        <p className="flex gap-2 font-medium text-sm">
+                            <i className="bi bi-person-video3"></i>
+                            {classObj.instructor.profile.full_name}
+                        </p>
+                    )}
+                </div>
+                <div className="flex gap-4 mt-2">
+                    {!student && (
+                        <>
+                            <span className="inline-flex items-baseline gap-2">
+                                <i className="bi bi-people text-lg"></i>
+                                24
+                            </span>
+                            <span className="inline-flex items-baseline gap-2">
+                                <i className="bi bi-person-plus text-lg"></i>8
+                            </span>
+                        </>
+                    )}
+                    {(student && classObj.pivot.status === 'pending') && (
+                        <span className="badge badge-secondary">
+                            Pending
+                        </span>
+                    )}
+                </div>
+            </Link>
+            <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-xs btn-ghost btn-circle">
+                    <i className="bi bi-three-dots-vertical"></i>
+                </div>
+                <ul tabIndex={0} className="dropdown-content z-[1] menu menu-xs p-2 shadow bg-base-100 rounded-box w-52">
+                    {student ? (
+                        classObj.pivot.status === 'pending' ? (
+                            <li>
+                                <Link>Cancel Request</Link>
+                            </li>
+                        ) : (
+                            <li>
+                                <Link>Leave Class</Link>
+                            </li>
+                        )
+                    ) : (
+                        <>
+                            <li>
+                                <Link>Delete Class</Link>
+                            </li>
+                        </>
+                    )}
+                </ul>
             </div>
-            <div className="flex gap-4">
-                <span className="inline-flex items-baseline gap-2">
-                    <i className="bi bi-people text-lg"></i>
-                    24
-                </span>
-                <span className="inline-flex items-baseline gap-2">
-                    <i className="bi bi-person-plus text-lg"></i>8
-                </span>
-                {(student && classObj.pivot.status === 'pending') && (
-                    <span className="badge badge-secondary">
-                        Pending
-                    </span>
-                )}
-            </div>
-        </Link>
+        </div>
     );
 }
