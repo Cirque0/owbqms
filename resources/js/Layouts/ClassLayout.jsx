@@ -5,10 +5,16 @@ export default function ClassLayout({ classModel, children }) {
         <div className="grow flex gap-8">
             <div className="grow">
                 <div>
+                    <h3 className="font-bold text-gray-600 md:text-base text-sm">{classModel.section.name}</h3>
                     <h2 className="font-bold md:text-2xl text-lg">
                         {classModel.subject.name}
                     </h2>
-                    <h3 className="font-bold text-gray-600">{classModel.section.name}</h3>
+                    {classModel.instructor && (
+                        <h3 className="flex gap-2 font-medium md:text-base text-sm">
+                            <i className="bi bi-person-video3"></i>
+                            {classModel.instructor.profile.full_name}
+                        </h3>
+                    )}
                 </div>
 
                 <div role="tablist" className="mt-4 tabs tabs-bordered">

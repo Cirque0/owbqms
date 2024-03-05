@@ -71,7 +71,7 @@ export default function StudentLayout({ user, header, children }) {
                     </div>
                 </div>
                 {/* Page content here */}
-                <main className="min-h-screen md:px-16 px-4 py-12 gap-8 flex">
+                <main className="min-h-screen md:px-16 px-4 md:py-12 py-6 gap-8 flex">
                     <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
                         <ul className="menu w-full text-base">
                             <li>

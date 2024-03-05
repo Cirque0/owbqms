@@ -11,6 +11,13 @@ use Inertia\Inertia;
 class StudentClassesController extends Controller
 {
     public function show(ClassModel $class) {
+        $class->load([
+            'section:id,name',
+            'subject:id,name',
+            'instructor:id,username' => ['profile'],
+            'students:id,username,birthdate' => ['profile'],
+        ]);
+
         return Inertia::render('Student/Class/Class', [
             'classModel' => $class,
         ]);
