@@ -52,4 +52,16 @@ class StudentClassesController extends Controller
 
         return back();
     }
+
+    public function destroy(ClassModel $class) {
+        $class->students()->detach(Auth::id());
+
+        return to_route('student.home');
+    }
+
+    public function cancel(ClassModel $class) {
+        $class->requests()->detach(Auth::id());
+
+        return to_route('student.home');
+    }
 }

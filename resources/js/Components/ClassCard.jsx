@@ -1,6 +1,11 @@
 import { Link } from "@inertiajs/react";
 
-export default function ClassCard({ classObj, href = '#', student = false, disabled = false }) {
+export default function ClassCard({
+    classObj,
+    href = "#",
+    student = false,
+    disabled = false,
+}) {
     return (
         <div className="px-4 py-2 flex justify-between bg-gray-100 roundex-xl drop-shadow-lg">
             <Link
@@ -31,26 +36,51 @@ export default function ClassCard({ classObj, href = '#', student = false, disab
                             </span>
                         </>
                     )}
-                    {(student && classObj.pivot.status === 'pending') && (
-                        <span className="badge badge-secondary">
-                            Pending
-                        </span>
+                    {student && classObj.pivot.status === "pending" && (
+                        <span className="badge badge-secondary">Pending</span>
                     )}
                 </div>
             </Link>
             <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="btn btn-xs btn-ghost btn-circle">
+                <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-xs btn-ghost btn-circle"
+                >
                     <i className="bi bi-three-dots-vertical"></i>
                 </div>
-                <ul tabIndex={0} className="dropdown-content z-[1] menu menu-xs p-2 shadow bg-base-100 rounded-box w-52">
+                <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu menu-xs p-2 shadow bg-base-100 rounded-box w-52"
+                >
                     {student ? (
-                        classObj.pivot.status === 'pending' ? (
+                        classObj.pivot.status === "pending" ? (
                             <li>
-                                <Link>Cancel Request</Link>
+                                <Link
+                                    className="text-error font-medium"
+                                    as="button"
+                                    href={route("student.requests.cancel", {
+                                        class: classObj.id,
+                                    })}
+                                    method="delete"
+                                >
+                                    <i className="bi bi-x-lg"></i>
+                                    Cancel Request
+                                </Link>
                             </li>
                         ) : (
                             <li>
-                                <Link>Leave Class</Link>
+                                <Link
+                                    className="text-error font-medium"
+                                    as="button"
+                                    href={route("student.classes.destroy", {
+                                        class: classObj.id,
+                                    })}
+                                    method="delete"
+                                >
+                                    <i className="bi bi-box-arrow-left"></i>
+                                    Leave Class
+                                </Link>
                             </li>
                         )
                     ) : (

@@ -48,7 +48,8 @@ Route::middleware('auth')->group(function () {
         // Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
         // Route::get('/classes/{class}', [StudentClassesController::class, 'show'])->name('classes.show');
         // Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
-        Route::resource('classes', StudentClassesController::class)->only(['show', 'store']);
+        Route::resource('classes', StudentClassesController::class)->only(['show', 'store', 'destroy']);
+        Route::delete('requests/{class}/cancel', [StudentClassesController::class, 'cancel'])->name('requests.cancel');
     });
 });
 
