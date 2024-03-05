@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import ClassLayout from "./Partials/ClassLayout";
+import ClassLayout from "@/Layouts/ClassLayout";
 
 export default function Class({ auth, classModel }) {
     return (
