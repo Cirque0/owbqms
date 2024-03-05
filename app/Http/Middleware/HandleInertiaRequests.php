@@ -33,13 +33,6 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
         if($user->roles()->where('roles.name', 'student')->exists()) {
             $user->load([
-                // 'enrolled_classes' => [
-                //     'section:id,name',
-                //     'subject:id,name',
-                //     'instructor:id' => [
-                //         'profile'
-                //     ],
-                // ],
                 'enrolled_classes' => function ( $query) {
                     $query->with([
                         'section:id,name',
