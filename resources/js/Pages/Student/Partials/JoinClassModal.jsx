@@ -68,6 +68,10 @@ const JoinClassModal = forwardRef(({}, ref) => {
                     </button>
                 </div>
             </div>
+
+            <form method="dialog" className="modal-backdrop">
+                <button className="cursor-default">close</button>
+            </form>
         </dialog>
     );
 });
