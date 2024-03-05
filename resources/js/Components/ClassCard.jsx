@@ -41,67 +41,35 @@ export default function ClassCard({
                     )}
                 </div>
             </Link>
-            <div className="dropdown dropdown-end">
-                <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-xs btn-ghost btn-circle"
-                >
-                    <i className="bi bi-three-dots-vertical"></i>
+            {student && classObj.pivot.status === "pending" && (
+                <div className="dropdown dropdown-end">
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-xs btn-ghost btn-circle"
+                    >
+                        <i className="bi bi-three-dots-vertical"></i>
+                    </div>
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[1] menu menu-xs p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                        <li>
+                            <Link
+                                className="text-error font-medium"
+                                as="button"
+                                href={route("student.requests.cancel", {
+                                    class: classObj.id,
+                                })}
+                                method="delete"
+                            >
+                                <i className="bi bi-x-lg"></i>
+                                Cancel Request
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
-                <ul
-                    tabIndex={0}
-                    className="dropdown-content z-[1] menu menu-xs p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                    {student ? (
-                        classObj.pivot.status === "pending" ? (
-                            <li>
-                                <Link
-                                    className="text-error font-medium"
-                                    as="button"
-                                    href={route("student.requests.cancel", {
-                                        class: classObj.id,
-                                    })}
-                                    method="delete"
-                                >
-                                    <i className="bi bi-x-lg"></i>
-                                    Cancel Request
-                                </Link>
-                            </li>
-                        ) : (
-                            <li>
-                                <Link
-                                    className="text-error font-medium"
-                                    as="button"
-                                    href={route("student.classes.destroy", {
-                                        class: classObj.id,
-                                    })}
-                                    method="delete"
-                                >
-                                    <i className="bi bi-box-arrow-left"></i>
-                                    Leave Class
-                                </Link>
-                            </li>
-                        )
-                    ) : (
-                        <>
-                            <li>
-                                <Link
-                                    className="text-error font-medium"
-                                    as="button"
-                                    href={route("faculty.classes.destroy", {
-                                        class: classObj.id,
-                                    })}
-                                    method="delete"
-                                >
-                                    <i className="bi bi-trash"></i>
-                                    Delete Class
-                                </Link>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            </div>
+            )}
         </div>
     );
 }
