@@ -86,7 +86,17 @@ export default function ClassCard({
                     ) : (
                         <>
                             <li>
-                                <Link>Delete Class</Link>
+                                <Link
+                                    className="text-error font-medium"
+                                    as="button"
+                                    href={route("faculty.classes.destroy", {
+                                        class: classObj.id,
+                                    })}
+                                    method="delete"
+                                >
+                                    <i className="bi bi-trash"></i>
+                                    Delete Class
+                                </Link>
                             </li>
                         </>
                     )}

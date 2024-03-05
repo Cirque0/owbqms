@@ -11,6 +11,8 @@ use Inertia\Inertia;
 class StudentClassesController extends Controller
 {
     public function show(ClassModel $class) {
+        $this->authorize('view', $class);
+        
         $class->load([
             'section:id,name',
             'subject:id,name',

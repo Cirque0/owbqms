@@ -14,6 +14,8 @@ use Inertia\Inertia;
 class FacultyClassesController extends Controller
 {
     public function show(ClassModel $class) {
+        $this->authorize('view', $class);
+
         $class->load([
             'section:id,name',
             'subject:id,name',
@@ -27,6 +29,8 @@ class FacultyClassesController extends Controller
     }
 
     public function store(ClassRequest $request) {
+        $this->authorize('create', ClassModel::class);
+
         $course = Course::firstOrCreate([
             'name' => $request->course,
         ]);
@@ -59,5 +63,12 @@ class FacultyClassesController extends Controller
 
             return back();
         }
+    }
+
+    public function destroy(ClassModel $class) {
+        $this->authorize('delete', $class);
+        $class->delete();
+
+        return to_route('faculty.home');
     }
 }
