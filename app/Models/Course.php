@@ -14,6 +14,11 @@ class Course extends Model
         'name',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function sections(): HasMany
     {
         return $this->hasMany(Section::class);

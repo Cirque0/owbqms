@@ -14,6 +14,11 @@ class Subject extends Model
         'name',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function classes(): HasMany
     {
         return $this->hasMany(ClassModel::class);
