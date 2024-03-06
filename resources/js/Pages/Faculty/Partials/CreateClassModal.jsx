@@ -1,19 +1,26 @@
 import Combobox from "@/Components/Combobox";
 import { useForm } from "@inertiajs/react";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 
-const CreateClassModal = forwardRef(({}, ref) => {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+const CreateClassModal = forwardRef(({courses, subjects}, ref) => {
+    const { data, setData, post, reset, errors, processing, recentlySuccessful } =
         useForm({
             course: "",
             section: "",
             subject: "",
         });
+    
+    useEffect(() => {
+        reset('section');
+    }, [data.course])
 
     const create = (e) => {
         e.preventDefault();
         post(route("faculty.classes.store"), {
-            onSuccess: () => ref.current.close(),
+            onSuccess: () => {
+                ref.current.close();
+                reset();
+            },
         });
     };
 
@@ -35,13 +42,7 @@ const CreateClassModal = forwardRef(({}, ref) => {
                                 value={data.course}
                                 onChange={(value) => setData("course", value)}
                                 placeholder="Select a course"
-                                options={[
-                                    "Durward Reynolds",
-                                    "Kenton Towne",
-                                    "Therese Wunsch",
-                                    "Benedict Kessler",
-                                    "Katelyn Rohan",
-                                ]}
+                                options={Object.keys(courses)}
                             />
                             <div className="label">
                                 <span className="label-text-alt text-error">{errors.course}</span>
@@ -54,18 +55,13 @@ const CreateClassModal = forwardRef(({}, ref) => {
                             </div>
                             <Combobox
                                 className={
-                                    "w-full input input-sm input-bordered"
+                                    `w-full input input-sm input-bordered ${!data.course ? 'bg-gray-100' : ''}`
                                 }
                                 value={data.section}
                                 onChange={(value) => setData("section", value)}
                                 placeholder="Select a section"
-                                options={[
-                                    "Durward Reynolds",
-                                    "Kenton Towne",
-                                    "Therese Wunsch",
-                                    "Benedict Kessler",
-                                    "Katelyn Rohan",
-                                ]}
+                                options={courses[data.course]}
+                                disabled={!data.course}
                             />
                             <div className="label">
                                 <span className="label-text-alt text-error">{errors.section}</span>
@@ -82,13 +78,7 @@ const CreateClassModal = forwardRef(({}, ref) => {
                             value={data.subject}
                             onChange={(value) => setData("subject", value)}
                             placeholder="Select a subject"
-                            options={[
-                                "Durward Reynolds",
-                                "Kenton Towne",
-                                "Therese Wunsch",
-                                "Benedict Kessler",
-                                "Katelyn Rohan",
-                            ]}
+                            options={subjects}
                         />
                         <div className="label">
                             <span className="label-text-alt text-error">{errors.subject}</span>

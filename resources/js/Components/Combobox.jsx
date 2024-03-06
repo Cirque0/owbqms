@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Combobox as HeadlessCombobox } from "@headlessui/react";
 
-export default function Combobox({ options = [], value, onChange, className, placeholder = "" }) {
+export default function Combobox({
+    options = [],
+    value,
+    onChange,
+    className,
+    placeholder = "",
+    disabled = false,
+}) {
     const [query, setQuery] = useState("");
 
     const filteredOptions =
@@ -12,7 +19,7 @@ export default function Combobox({ options = [], value, onChange, className, pla
               });
 
     return (
-        <HeadlessCombobox value={value} onChange={onChange}>
+        <HeadlessCombobox value={value} onChange={onChange} disabled={disabled}>
             <div className="relative">
                 <div className={"flex " + className}>
                     <HeadlessCombobox.Input
@@ -30,12 +37,29 @@ export default function Combobox({ options = [], value, onChange, className, pla
                         "absolute z-50 w-full max-h-60 mt-2 bg-gray-100 text-sm shadow rounded-lg overflow-auto"
                     }
                 >
-                    {query.length > 0 && (
+                    {(query.length > 0 && !filteredOptions.length) && (
                         <HeadlessCombobox.Option
                             value={query}
-                            className={({active}) => `px-4 py-2 ${active ? 'bg-info text-info-content' : ''}`}
+                            className={({ active }) =>
+                                `px-4 py-2 ${
+                                    active ? "bg-info text-info-content" : ""
+                                }`
+                            }
                         >
                             Create "{query}"
+                        </HeadlessCombobox.Option>
+                    )}
+
+                    {!options.length && (
+                        <HeadlessCombobox.Option
+                            className={({ active }) =>
+                                `px-4 py-2 ${
+                                    active ? "bg-info text-info-content" : ""
+                                }`
+                            }
+                            disabled
+                        >
+                            No options available. Try creating one.
                         </HeadlessCombobox.Option>
                     )}
 
@@ -43,7 +67,11 @@ export default function Combobox({ options = [], value, onChange, className, pla
                         <HeadlessCombobox.Option
                             key={option}
                             value={option}
-                            className={({active}) => `px-4 py-2 ${active ? 'bg-info text-info-content' : ''}`}
+                            className={({ active }) =>
+                                `px-4 py-2 ${
+                                    active ? "bg-info text-info-content" : ""
+                                }`
+                            }
                         >
                             {option}
                         </HeadlessCombobox.Option>

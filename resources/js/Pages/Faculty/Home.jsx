@@ -4,7 +4,7 @@ import { useRef } from "react";
 import CreateClassModal from "./Partials/CreateClassModal";
 import ClassCard from "@/Components/ClassCard";
 
-export default function Home({ auth, classes }) {
+export default function Home({ auth, classes, courses, subjects }) {
     const addClassRef = useRef(null);
 
     return (
@@ -44,7 +44,7 @@ export default function Home({ auth, classes }) {
                     </div>
                 </div>
 
-                <CreateClassModal ref={addClassRef} />
+                <CreateClassModal ref={addClassRef} courses={courses} subjects={subjects} />
             </FacultyLayout>
         </>
     );
