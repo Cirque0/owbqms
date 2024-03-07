@@ -130,10 +130,10 @@ export default function FacultyLayout({ user, header, children }) {
                         </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link href={route("faculty.exams.index")}>
                             <i className="bi bi-journal-text"></i>
                             Exams
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
