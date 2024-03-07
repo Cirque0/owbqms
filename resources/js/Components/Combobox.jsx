@@ -8,6 +8,8 @@ export default function Combobox({
     className,
     placeholder = "",
     disabled = false,
+    disableInput = false,
+    canCreateOptions = true,
 }) {
     const [query, setQuery] = useState("");
 
@@ -27,6 +29,7 @@ export default function Combobox({
                         onChange={(event) => setQuery(event.target.value)}
                         placeholder={placeholder}
                         autoComplete="off"
+                        readOnly={disableInput}
                     />
                     <HeadlessCombobox.Button>
                         <i className="bi bi-chevron-expand"></i>
@@ -37,7 +40,7 @@ export default function Combobox({
                         "absolute z-50 w-full max-h-60 mt-2 bg-gray-100 text-sm shadow rounded-lg overflow-auto"
                     }
                 >
-                    {(query.length > 0 && !filteredOptions.length) && (
+                    {(canCreateOptions && query.length > 0 && !filteredOptions.length) && (
                         <HeadlessCombobox.Option
                             value={query}
                             className={({ active }) =>
@@ -59,7 +62,7 @@ export default function Combobox({
                             }
                             disabled
                         >
-                            No options available. Try creating one.
+                            No options available.
                         </HeadlessCombobox.Option>
                     )}
 
