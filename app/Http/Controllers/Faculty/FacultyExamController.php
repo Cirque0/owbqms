@@ -13,8 +13,15 @@ use Inertia\Inertia;
 class FacultyExamController extends Controller
 {
     public function index() {
+        $exams = Exam::with(['subject:id,name'])
+            ->where('instructor_id', Auth::id())
+            ->get();
+            
+        $subjects = Subject::all()->pluck('name');
+
         return Inertia::render('Faculty/ExamsList', [
-            'subjects' => Subject::all()->pluck('name'),
+            'exams' => $exams,
+            'subjects' => $subjects,
         ]);
     }
 
