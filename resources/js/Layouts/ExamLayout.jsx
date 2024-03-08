@@ -27,7 +27,17 @@ export default function ExamLayout({ children, exam }) {
                     >
                         Assignees
                     </Link>
-                    <Link href="#" role="tab" className="tab">
+                    <Link
+                        href={route("faculty.exams.questions.index", {
+                            exam: exam.id,
+                        })}
+                        role="tab"
+                        className={`tab ${
+                            route().current("faculty.exams.questions.index")
+                                ? "tab-active"
+                                : ""
+                        }`}
+                    >
                         Questions
                     </Link>
                     <Link href="#" role="tab" className="tab">

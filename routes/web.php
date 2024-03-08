@@ -4,6 +4,7 @@ use App\Http\Controllers\Faculty\ClassMembersController;
 use App\Http\Controllers\Faculty\FacultyClassesController;
 use App\Http\Controllers\Faculty\FacultyExamController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
+use App\Http\Controllers\Faculty\FacultyQuestionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentClassesController;
 use App\Http\Controllers\Student\StudentHomeController;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
 
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
+
+        Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index'])->shallow();
     });
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
