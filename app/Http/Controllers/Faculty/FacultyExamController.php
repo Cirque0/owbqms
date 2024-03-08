@@ -25,6 +25,14 @@ class FacultyExamController extends Controller
         ]);
     }
 
+    public function show(Exam $exam) {
+        $exam->load(['subject:id,name']);
+        
+        return Inertia::render('Faculty/Exam/AssignedClasses', [
+            'exam' => $exam,
+        ]);
+    }
+
     public function store(ExamRequest $request) {
         $subject = Subject::firstWhere('name', $request->subject);
 

@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('classes/{class}/requests/{student}/deny', [ClassMembersController::class, 'deny'])->name('classes.requests.deny');
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
 
-        Route::resource('exams', FacultyExamController::class)->only(['index', 'store']);
+        Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
     });
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {

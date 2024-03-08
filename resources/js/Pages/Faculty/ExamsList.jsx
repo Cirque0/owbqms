@@ -1,5 +1,5 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import CreateExamModal from "./Partials/CreateExamModal";
 import { useRef } from "react";
 
@@ -41,7 +41,9 @@ export default function ExamsList({ auth, exams, subjects }) {
                                         {exams.length ? (
                                             exams.map((exam) => (
                                                 <tr>
-                                                    <td className="text-maroon font-bold">{exam.title}</td>
+                                                    <td className="text-maroon font-bold">
+                                                        <Link href={route("faculty.exams.show", {exam: exam.id})}>{exam.title}</Link>
+                                                    </td>
                                                     <td>{exam.subject.name}</td>
                                                     <td>
                                                         <div className="dropdown">
