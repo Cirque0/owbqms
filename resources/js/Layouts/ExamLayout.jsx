@@ -15,7 +15,7 @@ export default function ExamLayout({ children, exam }) {
                     </div>
                 </div>
 
-                <div role="tab-list" className="mt-4 tabs tabs-bordered">
+                <div role="tab-list" className="mt-4 tabs tabs-bordered sm:tabs-md tabs-xs">
                     <Link
                         href={route("faculty.exams.show", { exam: exam.id })}
                         role="tab"
