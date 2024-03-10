@@ -73,8 +73,6 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
             <div className="modal-box md:overflow-auto">
                 <h3 className="font-bold text-lg">Update question</h3>
 
-                {JSON.stringify(errors)}
-
                 <form id="update_question" className="mt-4" onSubmit={submit}>
                     <label className="form-control w-full">
                         <div className="label">
