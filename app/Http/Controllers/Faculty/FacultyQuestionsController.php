@@ -38,4 +38,19 @@ class FacultyQuestionsController extends Controller
 
         return back();
     }
+
+    public function update(QuestionRequest $request, Question $question) {
+        $question->update($request->except('choices'));
+
+        if($request->type === 'Multiple Choice') {
+            $question->choices = $request->choices;
+        }
+        else {
+            $question->choices = null;
+        }
+
+        $question->save();
+
+        return back();
+    }
 }

@@ -1,8 +1,11 @@
 import ExamLayout from "@/Layouts/ExamLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head } from "@inertiajs/react";
-import { useRef } from "react";
+import { createContext, useContext, useReducer, useRef } from "react";
 import CreateQuestionModal from "./Partials/CreateQuestionModal";
+import UpdateQuestionModal from "./Partials/UpdateQuestionModal";
+
+const QuestionsContext = createContext(null);
 
 export default function Questions({
     auth,
@@ -13,62 +16,87 @@ export default function Questions({
     multipleChoice,
 }) {
     const createModalRef = useRef(null);
+    const updateModalRef = useRef(null);
+
+    const [state, dispatch] = useReducer((prevState, action) => {
+        switch(action.type) {
+            case 'set_update_question':
+                return {
+                    ...prevState,
+                    updateQuestion: action.updateQuestion
+                }
+        }
+    }, {
+        updateQuestion: null
+    });
+
+    const showUpdateModal = (question) => {
+        dispatch({type: 'set_update_question', updateQuestion: question});
+        updateModalRef.current.showModal();
+    }
 
     return (
         <>
             <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
             <FacultyLayout user={auth.user}>
                 <ExamLayout exam={exam}>
-                    <div className="mt-4 flex justify-end">
-                        <button
-                            className="btn btn-sm btn-primary"
-                            onClick={() => createModalRef.current.showModal()}
+                    <QuestionsContext.Provider value={{state, dispatch, showUpdateModal}}>
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                className="btn btn-sm btn-primary"
+                                onClick={() => createModalRef.current.showModal()}
+                            >
+                                <i className="bi bi-plus-lg"></i>
+                                New Question
+                            </button>
+                        </div>
+
+                        <QuestionsTable title={'Identification'} questions={identification} />
+
+                        <QuestionsTable title={'True or False'} questions={trueOrFalse} />
+
+                        <QuestionsTable title={'Fill in the Blanks'} questions={fillInTheBlanks} />
+
+                        <QuestionsTable title={'Multiple Choice'} questions={multipleChoice} />
+
+                        {/* <details
+                            open
+                            className="mt-8 collapse collapse-arrow bg-gray-100"
                         >
-                            <i className="bi bi-plus-lg"></i>
-                            New Question
-                        </button>
-                    </div>
+                            <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
+                                Essay
+                            </summary>
+                            <div className="collapse-content">
+                                <p>content</p>
+                            </div>
+                        </details>
 
-                    <QuestionsTable title={'Identification'} questions={identification} />
-
-                    <QuestionsTable title={'True or False'} questions={trueOrFalse} />
-
-                    <QuestionsTable title={'Fill in the Blanks'} questions={fillInTheBlanks} />
-
-                    <QuestionsTable title={'Multiple Choice'} questions={multipleChoice} />
-
-                    {/* <details
-                        open
-                        className="mt-8 collapse collapse-arrow bg-gray-100"
-                    >
-                        <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
-                            Essay
-                        </summary>
-                        <div className="collapse-content">
-                            <p>content</p>
-                        </div>
-                    </details>
-
-                    <details
-                        open
-                        className="mt-8 collapse collapse-arrow bg-gray-100"
-                    >
-                        <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
-                            Coding
-                        </summary>
-                        <div className="collapse-content">
-                            <p>content</p>
-                        </div>
-                    </details> */}
+                        <details
+                            open
+                            className="mt-8 collapse collapse-arrow bg-gray-100"
+                        >
+                            <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
+                                Coding
+                            </summary>
+                            <div className="collapse-content">
+                                <p>content</p>
+                            </div>
+                        </details> */}
+                    </QuestionsContext.Provider>
                 </ExamLayout>
 
-                <CreateQuestionModal examId={exam.id} ref={createModalRef} />
+                <CreateQuestionModal ref={createModalRef} examId={exam.id} />
+
+                {/* <UpdateQuestionModal key={state.updateQuestion?.id} ref={updateModalRef} question={state.updateQuestion} /> */}
+                <UpdateQuestionModal ref={updateModalRef} question={state.updateQuestion} />
             </FacultyLayout>
         </>
     );
 }
 
 function QuestionsTable({ title, questions }) {
+    const { showUpdateModal } = useContext(QuestionsContext);
+
     return (
         <details open className="mt-4 collapse collapse-arrow bg-gray-100">
             <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
@@ -85,7 +113,7 @@ function QuestionsTable({ title, questions }) {
                         <tbody>
                             {questions.length ? (
                                 questions.map((question) => (
-                                    <tr>
+                                    <tr key={question.id}>
                                         <td>
                                             <div>
                                                 <div className="flex justify-between items-baseline gap-2">
@@ -106,7 +134,7 @@ function QuestionsTable({ title, questions }) {
                                                             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
                                                         >
                                                             <li>
-                                                                <button>
+                                                                <button onClick={() => showUpdateModal(question)}>
                                                                     <i className="bi bi-pencil-square"></i>
                                                                     Edit
                                                                 </button>
@@ -128,8 +156,9 @@ function QuestionsTable({ title, questions }) {
                                                         </h4>
                                                         <div className="w-full mt-2 join join-vertical bg-gray-200 font-medium">
                                                             {question.choices.map(
-                                                                (choice) => (
+                                                                (choice, index) => (
                                                                     <div
+                                                                        key={index}
                                                                         className={`join-item flex items-center p-2 gap-2 ${
                                                                             choice ===
                                                                             question.answer

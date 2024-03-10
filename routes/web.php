@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
 
-        Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store'])->shallow();
+        Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update'])->shallow();
     });
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
