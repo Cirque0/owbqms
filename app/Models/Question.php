@@ -22,6 +22,11 @@ class Question extends Model
         'choices' => 'array',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function exam(): BelongsTo
     {
         return $this->belongsTo(Exam::class);
