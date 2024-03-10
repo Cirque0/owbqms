@@ -26,15 +26,13 @@ class FacultyQuestionsController extends Controller
     public function store(QuestionRequest $request, Exam $exam) {
         $question = new Question;
 
-        $question->exam_id = $exam->id;
-
         $question->fill($request->except('choices'));
 
         if($request->type === 'Multiple Choice') {
             $question->choices = $request->choices;
         }
 
-        $question->save();
+        $exam->questions()->save($question);
 
         return back();
     }

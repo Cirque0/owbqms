@@ -4,7 +4,6 @@ import { forwardRef, useEffect, useState } from "react";
 
 const CreateQuestionModal = forwardRef(({ examId }, ref) => {
     const { data, setData, post, reset, errors, processing } = useForm({
-        exam_id: examId,
         type: "",
         description: "",
         answer: "",
