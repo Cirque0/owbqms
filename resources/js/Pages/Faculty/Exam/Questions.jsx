@@ -4,7 +4,14 @@ import { Head } from "@inertiajs/react";
 import { useRef } from "react";
 import CreateQuestionModal from "./Partials/CreateQuestionModal";
 
-export default function Questions({ auth, exam }) {
+export default function Questions({
+    auth,
+    exam,
+    identification,
+    trueOrFalse,
+    fillInTheBlanks,
+    multipleChoice,
+}) {
     const createModalRef = useRef(null);
 
     return (
@@ -38,16 +45,38 @@ export default function Questions({ auth, exam }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <p className="font-bold">
-                                                        Q: What's the question?
-                                                    </p>
-                                                    <p>A: Answer</p>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {identification.length ? (
+                                            identification.map((q) => (
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <p className="font-bold">
+                                                                Q:{" "}
+                                                                {q.description}
+                                                            </p>
+                                                            <div className="mt-2">
+                                                                <h4 className="font-bold text-xs">Answer:</h4>
+                                                                <p className="mt-2 bg-green-200 p-2 rounded-lg font-medium">
+                                                                    {q.answer}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <p>
+                                                            There are no
+                                                            questions for this
+                                                            category, yet.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -70,16 +99,38 @@ export default function Questions({ auth, exam }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <p className="font-bold">
-                                                        Q: What's the question?
-                                                    </p>
-                                                    <p>A: Answer</p>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {trueOrFalse.length ? (
+                                            trueOrFalse.map((q) => (
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <p className="font-bold">
+                                                                Q:{" "}
+                                                                {q.description}
+                                                            </p>
+                                                            <div className="mt-2">
+                                                                <h4 className="font-bold text-xs">Answer:</h4>
+                                                                <p className="mt-2 bg-green-200 p-2 rounded-lg font-medium">
+                                                                    {q.answer}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <p>
+                                                            There are no
+                                                            questions for this
+                                                            category, yet.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -102,16 +153,38 @@ export default function Questions({ auth, exam }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <p className="font-bold">
-                                                        Q: What's the question?
-                                                    </p>
-                                                    <p>A: Answer</p>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {fillInTheBlanks.length ? (
+                                            fillInTheBlanks.map((q) => (
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <p className="font-bold">
+                                                                Q:{" "}
+                                                                {q.description}
+                                                            </p>
+                                                            <div className="mt-2">
+                                                                <h4 className="font-bold text-xs">Answer:</h4>
+                                                                <p className="mt-2 bg-green-200 p-2 rounded-lg font-medium">
+                                                                    {q.answer}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <p>
+                                                            There are no
+                                                            questions for this
+                                                            category, yet.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -134,16 +207,63 @@ export default function Questions({ auth, exam }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <p className="font-bold">
-                                                        Q: What's the question?
-                                                    </p>
-                                                    <p>A: Answer</p>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {multipleChoice.length ? (
+                                            multipleChoice.map((q) => (
+                                                <tr>
+                                                    <td>
+                                                        <div>
+                                                            <p className="font-bold">
+                                                                Q:{" "}
+                                                                {q.description}
+                                                            </p>
+                                                            <div className="mt-2">
+                                                                <h4 className="font-bold text-xs">
+                                                                    Choices:
+                                                                </h4>
+                                                                <div className="w-full mt-2 join join-vertical bg-gray-200">
+                                                                    {q.choices.map(
+                                                                        (
+                                                                            choice
+                                                                        ) => (
+                                                                            <div
+                                                                                className={`join-item flex items-center p-2 gap-2 ${
+                                                                                    choice ===
+                                                                                    q.answer
+                                                                                        ? "bg-green-200"
+                                                                                        : ""
+                                                                                }`}
+                                                                            >
+                                                                                {choice ===
+                                                                                q.answer ? (
+                                                                                    <i className="bi bi-check-circle-fill text-xl text-success"></i>
+                                                                                ) : (
+                                                                                    <i className="bi bi-x-lg text-xl text-error"></i>
+                                                                                )}
+                                                                                {
+                                                                                    choice
+                                                                                }
+                                                                            </div>
+                                                                        )
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <p>
+                                                            There are no
+                                                            questions for this
+                                                            category, yet.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>

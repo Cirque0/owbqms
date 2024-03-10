@@ -13,9 +13,13 @@ class FacultyQuestionsController extends Controller
 {
     public function index(Exam $exam) {
         $exam->load(['subject:id,name']);
-        
+
         return Inertia::render('Faculty/Exam/Questions', [
             'exam' => $exam,
+            'identification' => $exam->questions()->where('type', 'Identification')->get(),
+            'trueOrFalse' => $exam->questions()->where('type', 'True or False')->get(),
+            'fillInTheBlanks' => $exam->questions()->where('type', 'Fill in the Blanks')->get(),
+            'multipleChoice' => $exam->questions()->where('type', 'Multiple Choice')->get(),
         ]);
     }
     
