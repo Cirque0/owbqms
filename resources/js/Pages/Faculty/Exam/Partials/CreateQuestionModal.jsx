@@ -51,8 +51,6 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
             <div className="modal-box md:overflow-auto">
                 <h3 className="font-bold text-lg">Create a new question</h3>
 
-                {JSON.stringify(data)}
-
                 <form id="create_question" className="mt-4" onSubmit={submit}>
                     <label className="form-control w-full">
                         <div className="label">
@@ -281,7 +279,7 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                         {processing && (
                             <span className="loading loading-spinner loading-sm"></span>
                         )}
-                        Create new class
+                        Create new question
                     </button>
                     <button
                         className="btn btn-sm"
