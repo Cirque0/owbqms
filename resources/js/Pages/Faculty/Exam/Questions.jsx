@@ -4,6 +4,7 @@ import { Head } from "@inertiajs/react";
 import { createContext, useContext, useReducer, useRef } from "react";
 import CreateQuestionModal from "./Partials/CreateQuestionModal";
 import UpdateQuestionModal from "./Partials/UpdateQuestionModal";
+import DeleteQuestionModal from "./Partials/DeleteQuestionModal";
 
 const QuestionsContext = createContext(null);
 
@@ -17,17 +18,24 @@ export default function Questions({
 }) {
     const createModalRef = useRef(null);
     const updateModalRef = useRef(null);
+    const deleteModalRef = useRef(null);
 
     const [state, dispatch] = useReducer((prevState, action) => {
         switch(action.type) {
             case 'set_update_question':
                 return {
                     ...prevState,
-                    updateQuestion: action.updateQuestion
+                    updateQuestion: action.updateQuestion,
+                }
+            case 'set_delete_question':
+                return {
+                    ...prevState,
+                    deleteQuestion: action.deleteQuestion,
                 }
         }
     }, {
-        updateQuestion: null
+        updateQuestion: null,
+        deleteQuestion: null,
     });
 
     const showUpdateModal = (question) => {
@@ -35,12 +43,17 @@ export default function Questions({
         updateModalRef.current.showModal();
     }
 
+    const showDeleteModal = (question) => {
+        dispatch({type: 'set_delete_question', deleteQuestion: question});
+        deleteModalRef.current.showModal();
+    }
+
     return (
         <>
             <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
             <FacultyLayout user={auth.user}>
                 <ExamLayout exam={exam}>
-                    <QuestionsContext.Provider value={{state, dispatch, showUpdateModal}}>
+                    <QuestionsContext.Provider value={{state, dispatch, showUpdateModal, showDeleteModal}}>
                         <div className="mt-4 flex justify-end">
                             <button
                                 className="btn btn-sm btn-primary"
@@ -89,13 +102,15 @@ export default function Questions({
 
                 {/* <UpdateQuestionModal key={state.updateQuestion?.id} ref={updateModalRef} question={state.updateQuestion} /> */}
                 <UpdateQuestionModal ref={updateModalRef} question={state.updateQuestion} />
+
+                <DeleteQuestionModal ref={deleteModalRef} question={state.deleteQuestion} />
             </FacultyLayout>
         </>
     );
 }
 
 function QuestionsTable({ title, questions }) {
-    const { showUpdateModal } = useContext(QuestionsContext);
+    const { showUpdateModal, showDeleteModal } = useContext(QuestionsContext);
 
     return (
         <details open className="mt-4 collapse collapse-arrow bg-gray-100">
@@ -140,7 +155,7 @@ function QuestionsTable({ title, questions }) {
                                                                 </button>
                                                             </li>
                                                             <li className="text-error">
-                                                                <button>
+                                                                <button onClick={() => showDeleteModal(question)}>
                                                                     <i className="bi bi-trash"></i>
                                                                     Delete
                                                                 </button>

@@ -51,4 +51,10 @@ class FacultyQuestionsController extends Controller
 
         return back();
     }
+
+    public function destroy(Question $question) {
+        $question->delete();
+
+        return back();
+    }
 }
