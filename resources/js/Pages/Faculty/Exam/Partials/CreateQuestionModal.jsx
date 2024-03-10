@@ -3,7 +3,7 @@ import { useForm } from "@inertiajs/react";
 import { forwardRef, useEffect, useState } from "react";
 
 const CreateQuestionModal = forwardRef(({ examId }, ref) => {
-    const { data, setData, reset, errors, processing } = useForm({
+    const { data, setData, post, reset, errors, processing } = useForm({
         exam_id: examId,
         type: "",
         description: "",
@@ -20,7 +20,12 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
 
     const submit = (e) => {
         e.preventDefault();
-        console.log("submit");
+        post(route('faculty.exams.questions.store', {exam: examId}), {
+            onSuccess: () => {
+                reset();
+                ref.current.close();
+            },
+        })
     };
 
     const createChoice = (e) => {

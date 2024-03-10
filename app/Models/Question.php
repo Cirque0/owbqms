@@ -18,6 +18,10 @@ class Question extends Model
         'choices',
     ];
 
+    protected $casts = [
+        'choices' => 'array',
+    ];
+
     public function exam(): BelongsTo
     {
         return $this->belongsTo(Exam::class);
