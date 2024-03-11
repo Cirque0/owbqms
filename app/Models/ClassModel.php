@@ -38,11 +38,25 @@ class ClassModel extends Model
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')->wherePivot('status', 'enrolled');
+        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')
+            ->wherePivot('status', 'enrolled');
     }
 
     public function requests(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')->wherePivot('status', 'pending');
+        return $this->belongsToMany(User::class, 'class_student', 'class_id', 'student_id')
+            ->wherePivot('status', 'pending');
+    }
+
+    public function exams(): BelongsToMany
+    {
+        return $this->belongsToMany(Exam::class)
+            ->withPivot(
+                'passing_rate',
+                'exam_period',
+                'opened_at',
+                'closed_at',
+            )
+            ->using(ClassExam::class);
     }
 }
