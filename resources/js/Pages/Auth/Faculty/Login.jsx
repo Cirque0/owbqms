@@ -13,7 +13,7 @@ export default function Login() {
     }
 
     return (
-        <main className="min-h-screen flex flex-col justify-center items-center">
+        <div className="min-h-screen flex flex-col justify-center items-center">
             <Head title="Login / Faculty" />
             <div className="card w-full max-w-md bg-base-200 shadow">
                 <div className="card-body">
@@ -88,6 +88,6 @@ export default function Login() {
                     </form>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }

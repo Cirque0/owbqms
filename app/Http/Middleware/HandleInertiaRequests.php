@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -29,10 +30,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        if($user && $user->roles()->where('roles.name', 'student')->exists()) {
+            $user->load([
+                'enrolled_classes' => function ( $query) {
+                    $query->with([
+                        'section:id,name',
+                        'subject:id,name',
+                        'instructor:id' => [
+                            'profile',
+                        ],
+                    ])->wherePivot('status', 'enrolled');
+                }
+            ]);
+        }
+
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
         ];
     }

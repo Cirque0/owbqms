@@ -14,6 +14,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                montserrat: ['Montserrat'],
             },
             colors: {
                 maroon: '#880000',
@@ -24,6 +25,21 @@ export default {
     plugins: [require('daisyui')],
 
     daisyui: {
-        themes: ['bumblebee']
+        themes: [
+            {
+                puptheme: {
+                    "primary": "#880000",
+                    "secondary": "#fde047",
+                    "accent": "#22d3ee",
+                    "neutral": "#374151",
+                    "base-100": "#ffffff",
+                    "info": "#2563eb",
+                    "success": "#4ade80",
+                    "warning": "#fde047",
+                    "error": "#ef4444",
+                },
+            },
+            'bumblebee',
+        ]
     }
 };

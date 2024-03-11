@@ -12,9 +12,9 @@ export default function Welcome() {
 
                     <div className="mx-4 mt-12 flex flex-col gap-4">
                         <p className='text-center text-xl'>Login as...</p>
-                        <Link href={route('student.login')} className='btn btn-primary btn-lg'>Student</Link>
+                        <Link href={route('student.login')} className='btn btn-secondary btn-lg'>Student</Link>
                         <div className="divider before:bg-white after:bg-white">OR</div>
-                        <Link href={route('faculty.login')} className='btn btn-primary btn-lg'>Faculty</Link>
+                        <Link href={route('faculty.login')} className='btn btn-secondary btn-lg'>Faculty</Link>
                     </div>
                 </div>
 
