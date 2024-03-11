@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('class_id')->constrained()->cascadeOnDelete();
             $table->foreignId('exam_id')->constrained()->cascadeOnDelete();
-            $table->integer('passing_rate');
+            $table->integer('passing_score');
             $table->integer('exam_period');
             $table->dateTime('opened_at')->nullable();
             $table->dateTime('closed_at')->nullable();

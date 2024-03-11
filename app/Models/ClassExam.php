@@ -11,7 +11,7 @@ class ClassExam extends Pivot
     protected $fillable = [
         'class_id',
         'exam_id',
-        'passing_rate',
+        'passing_score',
         'exam_period',
         'opened_at',
         'closed_at',
