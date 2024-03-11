@@ -54,23 +54,34 @@ export default function Questions({
             <FacultyLayout user={auth.user}>
                 <ExamLayout exam={exam}>
                     <QuestionsContext.Provider value={{state, dispatch, showUpdateModal, showDeleteModal}}>
-                        <div className="mt-4 flex justify-end">
-                            <button
-                                className="btn btn-sm btn-primary"
-                                onClick={() => createModalRef.current.showModal()}
-                            >
-                                <i className="bi bi-plus-lg"></i>
-                                New Question
-                            </button>
+                        <div className="mt-4 card bg-gray-100">
+                            <div className="card-body sm:p-8 p-4">
+                                <div className="flex justify-between items-baseline">
+                                    <h2 className="card-title">Exam Questions</h2>
+
+                                    <div className="mt-4 flex justify-end">
+                                        <button
+                                            className="btn btn-sm btn-primary"
+                                            onClick={() => createModalRef.current.showModal()}
+                                        >
+                                            <i className="bi bi-plus-lg"></i>
+                                            <span className="sm:block hidden">
+                                                New Question
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <QuestionsTable title={'Identification'} questions={identification} />
+
+                                <QuestionsTable title={'True or False'} questions={trueOrFalse} />
+
+                                <QuestionsTable title={'Fill in the Blanks'} questions={fillInTheBlanks} />
+
+                                <QuestionsTable title={'Multiple Choice'} questions={multipleChoice} />
+                            </div>
                         </div>
 
-                        <QuestionsTable title={'Identification'} questions={identification} />
-
-                        <QuestionsTable title={'True or False'} questions={trueOrFalse} />
-
-                        <QuestionsTable title={'Fill in the Blanks'} questions={fillInTheBlanks} />
-
-                        <QuestionsTable title={'Multiple Choice'} questions={multipleChoice} />
 
                         {/* <details
                             open
@@ -113,7 +124,7 @@ function QuestionsTable({ title, questions }) {
     const { showUpdateModal, showDeleteModal } = useContext(QuestionsContext);
 
     return (
-        <details open className="mt-4 collapse collapse-arrow bg-gray-100">
+        <details open className="mt-4 collapse collapse-arrow bg-gray-50">
             <summary className="collapse-title md:text-xl text-base font-bold bg-primary text-primary-content">
                 {title}
             </summary>
