@@ -17,7 +17,12 @@ export default function AssignedClasses({ auth, exam, classes }) {
                             <div className="flex justify-between items-baseline">
                                 <h2 className="card-title">Assigned Classes</h2>
                                 <div className="flex">
-                                    <button className="btn btn-sm btn-primary" onClick={() => assignModalRef.current.showModal()}>
+                                    <button
+                                        className="btn btn-sm btn-primary"
+                                        onClick={() =>
+                                            assignModalRef.current.showModal()
+                                        }
+                                    >
                                         <i className="bi bi-plus-lg"></i>
                                         Assign Exam
                                     </button>
@@ -36,18 +41,23 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                     <tr>
                                         <td>
                                             <div>
-                                                <p className="font-bold">BSIT 4-1N</p>
-                                                <p className="font-medium">Web Development</p>
+                                                <p className="font-bold">
+                                                    BSIT 4-1N
+                                                </p>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="text-xs max-w-40">
                                                 <div className="flex justify-between">
-                                                    <span className="font-bold">Passing Score</span>
+                                                    <span className="font-bold">
+                                                        Passing Score
+                                                    </span>
                                                     <span>75%</span>
                                                 </div>
                                                 <div className="flex justify-between">
-                                                    <span className="font-bold">Exam Period</span>
+                                                    <span className="font-bold">
+                                                        Exam Period
+                                                    </span>
                                                     <span>60 mins</span>
                                                 </div>
                                             </div>
@@ -55,11 +65,12 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                         <td>
                                             <div>
                                                 {/* <span className="badge badge-error text-white">Closed</span> */}
-                                                <span className="text-xs font-bold">Open until</span>
+                                                <span className="text-xs font-bold">
+                                                    Open until
+                                                </span>
                                                 <p className="">
                                                     2024-03-11 19:00
                                                 </p>
-                                                
                                             </div>
                                         </td>
                                         <td>
@@ -68,14 +79,122 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                             </button>
                                         </td>
                                     </tr>
+                                    {exam.classes.length &&
+                                        exam.classes.map((classModel) => (
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <p className="font-bold">
+                                                            {
+                                                                classModel
+                                                                    .section
+                                                                    .name
+                                                            }
+                                                        </p>
+                                                        {/* <p className="font-medium">
+                                                            Web Development
+                                                        </p> */}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="text-xs max-w-40">
+                                                        <div className="flex justify-between">
+                                                            <span className="font-bold">
+                                                                Passing Score
+                                                            </span>
+                                                            <span>
+                                                                {
+                                                                    classModel
+                                                                        .pivot
+                                                                        .passing_score
+                                                                }
+                                                                %
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between">
+                                                            <span className="font-bold">
+                                                                Exam Period
+                                                            </span>
+                                                            <span>
+                                                                {
+                                                                    classModel
+                                                                        .pivot
+                                                                        .exam_period
+                                                                }{" "}
+                                                                mins
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        {classModel.pivot
+                                                            .opened_at ? (
+                                                            <>
+                                                                <span className="text-xs font-bold">
+                                                                    Open until
+                                                                </span>
+                                                                <p className="">
+                                                                    {
+                                                                        classModel
+                                                                            .pivot
+                                                                            .closed_at
+                                                                    }
+                                                                </p>
+                                                            </>
+                                                        ) : (
+                                                            <span className="badge badge-error text-white">
+                                                                Closed
+                                                            </span>
+                                                        )}
+                                                        {/* <span className="badge badge-error text-white">Closed</span> */}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div className="join">
+                                                        <button className="join-item btn btn-sm btn-primary">
+                                                            Open
+                                                        </button>
+                                                        <div className="join-item dropdown dropdown-end bg-maroon">
+                                                            <div
+                                                                tabIndex={0}
+                                                                role="button"
+                                                                className="btn btn-sm btn-primary"
+                                                            >
+                                                                <i className="bi bi-chevron-down"></i>
+                                                            </div>
+                                                            <ul
+                                                                tabIndex={0}
+                                                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                                                            >
+                                                                <li>
+                                                                    <a>
+                                                                        Item 1
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>
+                                                                        Item 2
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </ExamLayout>
 
-                <AssignClassModal ref={assignModalRef} exam={exam} classes={classes} />
+                <AssignClassModal
+                    ref={assignModalRef}
+                    exam={exam}
+                    classes={classes}
+                />
             </FacultyLayout>
         </>
-    )
+    );
 }

@@ -27,7 +27,12 @@ class FacultyExamController extends Controller
     }
 
     public function show(Request $request, Exam $exam) {
-        $exam->load(['subject:id,name']);
+        $exam->load([
+            'subject:id,name',
+            'classes:id,section_id,subject_id' => [
+                'section:id,name'
+            ],
+        ]);
         
         return Inertia::render('Faculty/Exam/AssignedClasses', [
             'exam' => $exam,

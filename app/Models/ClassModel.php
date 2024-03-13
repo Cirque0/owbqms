@@ -50,7 +50,7 @@ class ClassModel extends Model
 
     public function exams(): BelongsToMany
     {
-        return $this->belongsToMany(Exam::class)
+        return $this->belongsToMany(Exam::class, 'class_exam', 'class_id', 'exam_id')
             ->withPivot(
                 'passing_score',
                 'exam_period',

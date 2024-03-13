@@ -36,7 +36,7 @@ class Exam extends Model
 
     public function classes(): BelongsToMany
     {
-        return $this->belongsToMany(ClassModel::class)
+        return $this->belongsToMany(ClassModel::class, 'class_exam', 'exam_id', 'class_id')
             ->withPivot(
                 'passing_score',
                 'exam_period',

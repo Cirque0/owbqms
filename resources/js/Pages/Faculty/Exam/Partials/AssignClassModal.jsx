@@ -2,14 +2,27 @@ import { router, useForm } from "@inertiajs/react";
 import { forwardRef, useState } from "react";
 
 const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
-    const { data, setData, errors, processing } = useForm({
+    const { data, setData, post, reset, errors, processing } = useForm({
         class_id: "",
         passing_score: 75,
         exam_period: 60,
     });
 
     const submit = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
+
+        post(
+            route("faculty.exams.classes.store", {
+                class: data.class_id,
+                exam: exam.id,
+            }),
+            {
+                onSuccess: () => {
+                    ref.current.close();
+                    reset();
+                },
+            }
+        );
     };
 
     return (
@@ -30,10 +43,15 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
                             }
                             required
                         >
-                            <option value="" disabled>Select a class</option>
-                            {classes.length &&
+                            <option value="" disabled>
+                                Select a class
+                            </option>
+                            {classes.length > 0 &&
                                 classes.map((classModel) => (
-                                    <option key={classModel.id} value={classModel.id}>
+                                    <option
+                                        key={classModel.id}
+                                        value={classModel.id}
+                                    >
                                         {classModel.section.name}
                                     </option>
                                 ))}
@@ -89,7 +107,7 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
                             />
                             <div className="label">
                                 <span className="label-text-alt text-error">
-                                    {errors.passing_score}
+                                    {errors.exam_period}
                                 </span>
                             </div>
                         </label>
@@ -98,7 +116,7 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
 
                 <div className="modal-action">
                     <button
-                        className="btn btn-sm btn-error text-white"
+                        className="btn btn-sm btn-info text-white"
                         form="assign_class"
                         disabled={processing}
                     >
