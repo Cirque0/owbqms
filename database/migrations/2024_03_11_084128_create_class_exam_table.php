@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('exam_id')->constrained()->cascadeOnDelete();
             $table->integer('passing_score');
             $table->integer('exam_period');
+            $table->boolean('is_answers_shown')->default(false);
             $table->dateTime('opened_at')->nullable();
             $table->dateTime('closed_at')->nullable();
             $table->timestamps();

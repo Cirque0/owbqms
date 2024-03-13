@@ -18,13 +18,14 @@ class FacultyClassExamController extends Controller
             'class_id' => ['required', 'uuid', 'exists:classes,id'],
             'passing_score' => ['required', 'integer', 'gt:0', 'lte:100'],
             'exam_period' => ['required', 'integer', 'gt:0'],
+            'is_answers_shown' => ['required', 'boolean'],
         ]);
 
         if($exam->classes()->where('class_id', $request->class_id)->exists()) {
             return back()->withErrors(['class_id' => 'This exam is already assigned to this class.']);
         }
 
-        $exam->classes()->attach($request->class_id, $request->only('passing_score', 'exam_period'));
+        $exam->classes()->attach($request->class_id, $request->except('class_id'));
 
         return back();
     }

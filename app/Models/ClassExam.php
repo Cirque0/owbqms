@@ -15,6 +15,7 @@ class ClassExam extends Pivot
         'exam_id',
         'passing_score',
         'exam_period',
+        'is_answers_shown',
         'opened_at',
         'closed_at',
     ];

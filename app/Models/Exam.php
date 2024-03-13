@@ -40,6 +40,7 @@ class Exam extends Model
             ->withPivot(
                 'passing_score',
                 'exam_period',
+                'is_answers_shown',
                 'opened_at',
                 'closed_at',
             )

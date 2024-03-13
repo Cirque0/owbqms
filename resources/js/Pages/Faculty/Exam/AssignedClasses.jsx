@@ -87,7 +87,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                             </button>
                                         </td>
                                     </tr>
-                                    {exam.classes.length &&
+                                    {exam.classes.length > 0 &&
                                         exam.classes.map((classModel) => (
                                             <tr>
                                                 <td>

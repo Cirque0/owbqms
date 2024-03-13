@@ -6,6 +6,7 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
         class_id: "",
         passing_score: 75,
         exam_period: 60,
+        is_answers_shown: false,
     });
 
     const submit = (e) => {
@@ -112,6 +113,18 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
                             </div>
                         </label>
                     </div>
+
+                    <label className="label">
+                        <span className="label-text">
+                            Show answers after submitting
+                        </span>
+                        <input
+                            type="checkbox"
+                            className="toggle toggle-sm toggle-primary"
+                            checked={data.is_answers_shown}
+                            onChange={(e) => setData('is_answers_shown', e.target.checked)}
+                        />
+                    </label>
                 </form>
 
                 <div className="modal-action">
