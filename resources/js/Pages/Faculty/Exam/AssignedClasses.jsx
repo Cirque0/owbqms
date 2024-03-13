@@ -1,8 +1,12 @@
 import ExamLayout from "@/Layouts/ExamLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head } from "@inertiajs/react";
+import { useRef } from "react";
+import AssignClassModal from "./Partials/AssignClassModal";
 
-export default function AssignedClasses({ auth, exam }) {
+export default function AssignedClasses({ auth, exam, classes }) {
+    const assignModalRef = useRef(null);
+
     return (
         <>
             <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
@@ -10,7 +14,15 @@ export default function AssignedClasses({ auth, exam }) {
                 <ExamLayout exam={exam}>
                     <div className="mt-4 card w-full bg-gray-100">
                         <div className="card-body">
-                            <h2 className="card-title">Assigned Classes</h2>
+                            <div className="flex justify-between items-baseline">
+                                <h2 className="card-title">Assigned Classes</h2>
+                                <div className="flex">
+                                    <button className="btn btn-sm btn-primary" onClick={() => assignModalRef.current.showModal()}>
+                                        <i className="bi bi-plus-lg"></i>
+                                        Assign Exam
+                                    </button>
+                                </div>
+                            </div>
                             <table className="table">
                                 <thead>
                                     <tr>
@@ -61,6 +73,8 @@ export default function AssignedClasses({ auth, exam }) {
                         </div>
                     </div>
                 </ExamLayout>
+
+                <AssignClassModal ref={assignModalRef} exam={exam} classes={classes} />
             </FacultyLayout>
         </>
     )

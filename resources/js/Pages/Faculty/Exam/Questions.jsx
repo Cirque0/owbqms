@@ -59,7 +59,7 @@ export default function Questions({
                                 <div className="flex justify-between items-baseline">
                                     <h2 className="card-title">Exam Questions</h2>
 
-                                    <div className="mt-4 flex justify-end">
+                                    <div className="flex justify-end">
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() => createModalRef.current.showModal()}

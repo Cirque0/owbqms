@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Faculty\ExamRequest;
+use App\Models\ClassModel;
 use App\Models\Exam;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -25,11 +26,14 @@ class FacultyExamController extends Controller
         ]);
     }
 
-    public function show(Exam $exam) {
+    public function show(Request $request, Exam $exam) {
         $exam->load(['subject:id,name']);
         
         return Inertia::render('Faculty/Exam/AssignedClasses', [
             'exam' => $exam,
+            'classes' => $request->user()->instructed_classes()
+                ->with(['section:id,name'])
+                ->where('subject_id', $exam->subject_id)->get(),
         ]);
     }
 
