@@ -111,10 +111,10 @@ export default function StudentLayout({ user, header, children }) {
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">
+                                <Link href={route("student.exams.index")}>
                                     <i className="bi bi-journal-text"></i>
                                     Exams
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -198,10 +198,10 @@ export default function StudentLayout({ user, header, children }) {
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link href={route("student.exams.index")}>
                             <i className="bi bi-journal-text"></i>
                             Exams
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

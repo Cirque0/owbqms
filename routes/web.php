@@ -8,6 +8,7 @@ use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentClassesController;
+use App\Http\Controllers\Student\StudentExamsController;
 use App\Http\Controllers\Student\StudentHomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,8 @@ Route::middleware('auth')->group(function () {
         // Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
         Route::resource('classes', StudentClassesController::class)->only(['show', 'store', 'destroy']);
         Route::delete('requests/{class}/cancel', [StudentClassesController::class, 'cancel'])->name('requests.cancel');
+
+        Route::resource('exams', StudentExamsController::class)->only(['index']);
     });
 });
 
