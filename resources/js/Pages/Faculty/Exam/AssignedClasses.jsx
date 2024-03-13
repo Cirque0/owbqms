@@ -4,15 +4,22 @@ import { Head } from "@inertiajs/react";
 import { useRef, useState } from "react";
 import AssignClassModal from "./Partials/AssignClassModal";
 import UnassignClassModal from "./Partials/UnassignClassModal";
+import UpdateAssignedModal from "./Partials/UpdateAssignedModal";
 
 export default function AssignedClasses({ auth, exam, classes }) {
     const [selectedClass, setSelectedClass] = useState(null);
     const assignModalRef = useRef(null);
     const unassignModalRef = useRef(null);
+    const updateModalRef = useRef(null);
 
     const openUnassignModal = (classModel) => {
         setSelectedClass(classModel);
         unassignModalRef.current.showModal();
+    }
+
+    const openUpdateModal = (classModel) => {
+        setSelectedClass(classModel);
+        updateModalRef.current.showModal();
     }
 
     return (
@@ -89,7 +96,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                     </tr>
                                     {exam.classes.length > 0 &&
                                         exam.classes.map((classModel) => (
-                                            <tr>
+                                            <tr key={classModel.id}>
                                                 <td>
                                                     <div>
                                                         <p className="font-bold">
@@ -176,10 +183,10 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
                                                             >
                                                                 <li>
-                                                                    <a>
+                                                                    <button onClick={() => openUpdateModal(classModel)}>
                                                                         <i className="bi bi-gear"></i>
                                                                         Settings
-                                                                    </a>
+                                                                    </button>
                                                                 </li>
                                                                 <li className="text-error">
                                                                     <button onClick={() => openUnassignModal(classModel)}>
@@ -207,6 +214,12 @@ export default function AssignedClasses({ auth, exam, classes }) {
 
                 <UnassignClassModal
                     ref={unassignModalRef}
+                    exam={exam}
+                    classModel={selectedClass}
+                />
+
+                <UpdateAssignedModal
+                    ref={updateModalRef}
                     exam={exam}
                     classModel={selectedClass}
                 />

@@ -1,21 +1,28 @@
 import { router, useForm } from "@inertiajs/react";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
-const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
-    const { data, setData, post, reset, errors, processing } = useForm({
-        class_id: "",
-        passing_score: 75,
-        exam_period: 60,
+const UpdateAssignedModal = forwardRef(({ exam, classModel }, ref) => {
+    const { data, setData, patch, reset, errors, processing } = useForm({
+        passing_score: "",
+        exam_period: "",
         is_answers_shown: false,
     });
+
+    useEffect(() => {
+        setData({
+            passing_score: classModel?.pivot.passing_score || "",
+            exam_period: classModel?.pivot.exam_period || "",
+            is_answers_shown: classModel?.pivot.is_answers_shown || false,
+        });
+    }, [classModel]);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(
-            route("faculty.exams.classes.store", {
-                class: data.class_id,
+        patch(
+            route("faculty.exams.classes.update", {
                 exam: exam.id,
+                class: classModel.id,
             }),
             {
                 onSuccess: () => {
@@ -31,32 +38,17 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
             <div className="modal-box md:overflow-auto">
                 <h3 className="font-bold text-lg">Assign exam to class</h3>
 
-                <form id="assign_class" className="mt-4" onSubmit={submit}>
+                <form id="update_assigned" className="mt-4" onSubmit={submit}>
                     <label className="form-control w-full">
                         <div className="label">
                             <span className="label-text">Class</span>
                         </div>
-                        <select
-                            className="select select-sm select-bordered"
-                            value={data.class_id}
-                            onChange={(e) =>
-                                setData("class_id", e.target.value)
-                            }
-                            required
-                        >
-                            <option value="" disabled>
-                                Select a class
-                            </option>
-                            {classes.length > 0 &&
-                                classes.map((classModel) => (
-                                    <option
-                                        key={classModel.id}
-                                        value={classModel.id}
-                                    >
-                                        {classModel.section.name}
-                                    </option>
-                                ))}
-                        </select>
+                        <input
+                            type="text"
+                            className="input input-sm input-bordered font-bold"
+                            value={classModel?.section.name || ""}
+                            readOnly
+                        />
                         <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.class_id}
@@ -123,7 +115,9 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
                             type="checkbox"
                             className="toggle toggle-sm toggle-primary"
                             checked={data.is_answers_shown}
-                            onChange={(e) => setData('is_answers_shown', e.target.checked)}
+                            onChange={(e) =>
+                                setData("is_answers_shown", e.target.checked)
+                            }
                         />
                     </label>
                 </form>
@@ -131,13 +125,13 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
                 <div className="modal-action">
                     <button
                         className="btn btn-sm btn-info text-white"
-                        form="assign_class"
+                        form="update_assigned"
                         disabled={processing}
                     >
                         {processing && (
                             <span className="loading loading-spinner loading-sm"></span>
                         )}
-                        Assign exam
+                        Update
                     </button>
                     <button
                         className="btn btn-sm"
@@ -156,4 +150,4 @@ const AssignClassModal = forwardRef(({ exam, classes }, ref) => {
     );
 });
 
-export default AssignClassModal;
+export default UpdateAssignedModal;

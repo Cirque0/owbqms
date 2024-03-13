@@ -30,6 +30,16 @@ class FacultyClassExamController extends Controller
         return back();
     }
 
+    public function update(Request $request, Exam $exam, ClassModel $class) {
+        $request->validate([
+            'passing_score' => ['required', 'integer', 'gt:0', 'lte:100'],
+            'exam_period' => ['required', 'integer', 'gt:0'],
+            'is_answers_shown' => ['required', 'boolean'],
+        ]);
+
+        $exam->classes()->updateExistingPivot($class->id, $request->all());
+    }
+
     public function destroy(Exam $exam, ClassModel $class) {
         $exam->classes()->detach($class->id);
 
