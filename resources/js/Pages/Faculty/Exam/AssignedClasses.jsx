@@ -1,11 +1,19 @@
 import ExamLayout from "@/Layouts/ExamLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head } from "@inertiajs/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import AssignClassModal from "./Partials/AssignClassModal";
+import UnassignClassModal from "./Partials/UnassignClassModal";
 
 export default function AssignedClasses({ auth, exam, classes }) {
+    const [selectedClass, setSelectedClass] = useState(null);
     const assignModalRef = useRef(null);
+    const unassignModalRef = useRef(null);
+
+    const openUnassignModal = (classModel) => {
+        setSelectedClass(classModel);
+        unassignModalRef.current.showModal();
+    }
 
     return (
         <>
@@ -150,10 +158,10 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                         {/* <span className="badge badge-error text-white">Closed</span> */}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td className="flex justify-end">
                                                     <div className="join">
                                                         <button className="join-item btn btn-sm btn-primary">
-                                                            Open
+                                                            Open exam
                                                         </button>
                                                         <div className="join-item dropdown dropdown-end bg-maroon">
                                                             <div
@@ -165,17 +173,19 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                             </div>
                                                             <ul
                                                                 tabIndex={0}
-                                                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                                                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
                                                             >
                                                                 <li>
                                                                     <a>
-                                                                        Item 1
+                                                                        <i className="bi bi-gear"></i>
+                                                                        Settings
                                                                     </a>
                                                                 </li>
-                                                                <li>
-                                                                    <a>
-                                                                        Item 2
-                                                                    </a>
+                                                                <li className="text-error">
+                                                                    <button onClick={() => openUnassignModal(classModel)}>
+                                                                        <i className="bi bi-x-lg"></i>
+                                                                        Unassign
+                                                                    </button>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -193,6 +203,12 @@ export default function AssignedClasses({ auth, exam, classes }) {
                     ref={assignModalRef}
                     exam={exam}
                     classes={classes}
+                />
+
+                <UnassignClassModal
+                    ref={unassignModalRef}
+                    exam={exam}
+                    classModel={selectedClass}
                 />
             </FacultyLayout>
         </>

@@ -28,4 +28,10 @@ class FacultyClassExamController extends Controller
 
         return back();
     }
+
+    public function destroy(Exam $exam, ClassModel $class) {
+        $exam->classes()->detach($class->id);
+
+        return back();
+    }
 }
