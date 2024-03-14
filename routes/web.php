@@ -41,10 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
         Route::get('/', [FacultyHomeController::class, 'index'])->name('home');
-        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
         Route::post('classes/{class}/requests/{student}/accept', [ClassMembersController::class, 'accept'])->name('classes.requests.accept');
         Route::delete('classes/{class}/requests/{student}/deny', [ClassMembersController::class, 'deny'])->name('classes.requests.deny');
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
+        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
+        Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
 
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
         Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update', 'destroy'])->shallow();

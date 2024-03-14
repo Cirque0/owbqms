@@ -1,7 +1,7 @@
 import { router, useForm } from "@inertiajs/react";
 import { forwardRef, useEffect, useState } from "react";
 
-const UpdateAssignedModal = forwardRef(({ exam, classModel }, ref) => {
+const UpdateAssignedModal = forwardRef(({ exam, classModel, pivot }, ref) => {
     const { data, setData, patch, reset, errors, processing } = useForm({
         passing_score: "",
         exam_period: "",
@@ -10,11 +10,11 @@ const UpdateAssignedModal = forwardRef(({ exam, classModel }, ref) => {
 
     useEffect(() => {
         setData({
-            passing_score: classModel?.pivot.passing_score || "",
-            exam_period: classModel?.pivot.exam_period || "",
-            is_answers_shown: classModel?.pivot.is_answers_shown || false,
+            passing_score: pivot?.passing_score || "",
+            exam_period: pivot?.exam_period || "",
+            is_answers_shown: pivot?.is_answers_shown || false,
         });
-    }, [classModel]);
+    }, [pivot]);
 
     const submit = (e) => {
         e.preventDefault();

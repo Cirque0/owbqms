@@ -8,11 +8,22 @@ use App\Models\ClassExam;
 use App\Models\ClassModel;
 use App\Models\Exam;
 use Illuminate\Http\Request;
-
-use function Laravel\Prompts\error;
+use Inertia\Inertia;
 
 class FacultyClassExamController extends Controller
 {
+    public function index(ClassModel $class) {
+        $class->load([
+            'section:id,name',
+            'subject:id,name',
+            'exams:id,subject_id,title,type' => ['subject:id,name']
+        ]);
+
+        return Inertia::render('Faculty/Class/ClassExams', [
+            'classModel' => $class,
+        ]);
+    }
+
     public function store(Request $request, Exam $exam) {
         $request->validate([
             'class_id' => ['required', 'uuid', 'exists:classes,id'],
