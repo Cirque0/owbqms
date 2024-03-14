@@ -5,21 +5,35 @@ import { useRef, useState } from "react";
 import AssignClassModal from "./Partials/AssignClassModal";
 import UnassignClassModal from "./Partials/UnassignClassModal";
 import UpdateAssignedModal from "./Partials/UpdateAssignedModal";
+import OpenAssignedModal from "./Partials/OpenAssignedModal";
+import CloseAssignedModal from "./Partials/CloseAssignedModal";
 
 export default function AssignedClasses({ auth, exam, classes }) {
     const [selectedClass, setSelectedClass] = useState(null);
     const assignModalRef = useRef(null);
     const unassignModalRef = useRef(null);
     const updateModalRef = useRef(null);
+    const openModalRef = useRef(null);
+    const closeModalRef = useRef(null);
 
-    const openUnassignModal = (classModel) => {
+    const showUnassignModal = (classModel) => {
         setSelectedClass(classModel);
         unassignModalRef.current.showModal();
     };
 
-    const openUpdateModal = (classModel) => {
+    const showUpdateModal = (classModel) => {
         setSelectedClass(classModel);
         updateModalRef.current.showModal();
+    };
+
+    const showOpenModal = (classModel) => {
+        setSelectedClass(classModel);
+        openModalRef.current.showModal();
+    };
+
+    const showCloseModal = (classModel) => {
+        setSelectedClass(classModel);
+        closeModalRef.current.showModal();
     };
 
     return (
@@ -47,7 +61,9 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                 <thead>
                                     <tr>
                                         <th>Class</th>
-                                        <th className="md:table-cell hidden">Exam Information</th>
+                                        <th className="md:table-cell hidden">
+                                            Exam Information
+                                        </th>
                                         <th className="md:table-cell hidden"></th>
                                     </tr>
                                 </thead>
@@ -56,7 +72,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                         exam.classes.map((classModel) => (
                                             <tr key={classModel.id}>
                                                 <td>
-                                                    <div className="flex gap-2 md:justify-normal justify-between items-baseline">
+                                                    <div className="flex md:flex-col gap-2 md:justify-normal justify-between items-baseline">
                                                         <Link
                                                             href={route(
                                                                 "faculty.classes.show",
@@ -72,7 +88,16 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                     .name
                                                             }
                                                         </Link>
-                                                        <div className="badge badge-sm badge-error text-white">Closed</div>
+                                                        {classModel.pivot
+                                                            .is_open ? (
+                                                            <div className="badge badge-sm badge-success">
+                                                                Open
+                                                            </div>
+                                                        ) : (
+                                                            <div className="badge badge-sm badge-error text-white">
+                                                                Closed
+                                                            </div>
+                                                        )}
                                                     </div>
                                                     <div className="md:hidden mt-2 text-xs">
                                                         <div className="flex justify-between">
@@ -101,11 +126,65 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 mins
                                                             </span>
                                                         </div>
+                                                        {classModel.pivot
+                                                            .opened_at &&
+                                                            classModel.pivot
+                                                                .closed_at && (
+                                                                <>
+                                                                    <div className="flex justify-between">
+                                                                        <span className="font-bold">
+                                                                            Open
+                                                                            from
+                                                                        </span>
+                                                                        <span>
+                                                                            {new Date(
+                                                                                classModel.pivot.opened_at
+                                                                            ).toLocaleString(
+                                                                                "en-PH"
+                                                                            )}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex justify-between">
+                                                                        <span className="font-bold">
+                                                                            Open
+                                                                            until
+                                                                        </span>
+                                                                        <span>
+                                                                            {new Date(
+                                                                                classModel.pivot.closed_at
+                                                                            ).toLocaleString(
+                                                                                "en-PH"
+                                                                            )}
+                                                                        </span>
+                                                                    </div>
+                                                                </>
+                                                            )}
                                                     </div>
                                                     <div className="md:hidden mt-4 join w-full">
-                                                        <button className="join-item btn btn-sm btn-primary grow">
-                                                            Open exam
-                                                        </button>
+                                                        {classModel.pivot
+                                                            .is_open ? (
+                                                            <button
+                                                                className="join-item btn btn-sm btn-primary grow"
+                                                                onClick={() =>
+                                                                    showCloseModal(
+                                                                        classModel
+                                                                    )
+                                                                }
+                                                            >
+                                                                Close exam
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="join-item btn btn-sm btn-primary grow"
+                                                                onClick={() =>
+                                                                    showOpenModal(
+                                                                        classModel
+                                                                    )
+                                                                }
+                                                            >
+                                                                Open exam
+                                                            </button>
+                                                        )}
                                                         <div className="join-item dropdown dropdown-end bg-maroon">
                                                             <div
                                                                 tabIndex={0}
@@ -121,7 +200,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 <li>
                                                                     <button
                                                                         onClick={() =>
-                                                                            openUpdateModal(
+                                                                            showUpdateModal(
                                                                                 classModel
                                                                             )
                                                                         }
@@ -133,7 +212,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 <li className="text-error">
                                                                     <button
                                                                         onClick={() =>
-                                                                            openUnassignModal(
+                                                                            showUnassignModal(
                                                                                 classModel
                                                                             )
                                                                         }
@@ -147,7 +226,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                     </div>
                                                 </td>
                                                 <td className="md:table-cell hidden">
-                                                    <div className="text-xs max-w-40">
+                                                    <div className="text-xs">
                                                         <div className="flex justify-between">
                                                             <span className="font-bold">
                                                                 Passing Score
@@ -174,13 +253,67 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 mins
                                                             </span>
                                                         </div>
+                                                        {classModel.pivot
+                                                            .opened_at &&
+                                                            classModel.pivot
+                                                                .closed_at && (
+                                                                <>
+                                                                    <div className="flex justify-between">
+                                                                        <span className="font-bold">
+                                                                            Open
+                                                                            from
+                                                                        </span>
+                                                                        <span>
+                                                                            {new Date(
+                                                                                classModel.pivot.opened_at
+                                                                            ).toLocaleString(
+                                                                                "en-PH"
+                                                                            )}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex justify-between">
+                                                                        <span className="font-bold">
+                                                                            Open
+                                                                            until
+                                                                        </span>
+                                                                        <span>
+                                                                            {new Date(
+                                                                                classModel.pivot.closed_at
+                                                                            ).toLocaleString(
+                                                                                "en-PH"
+                                                                            )}
+                                                                        </span>
+                                                                    </div>
+                                                                </>
+                                                            )}
                                                     </div>
                                                 </td>
                                                 <td className="md:flex hidden justify-end">
                                                     <div className="join">
-                                                        <button className="join-item btn btn-sm btn-primary">
-                                                            Open exam
-                                                        </button>
+                                                        {classModel.pivot
+                                                            .is_open ? (
+                                                            <button
+                                                                className="join-item btn btn-sm btn-primary"
+                                                                onClick={() =>
+                                                                    showCloseModal(
+                                                                        classModel
+                                                                    )
+                                                                }
+                                                            >
+                                                                Close exam
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="join-item btn btn-sm btn-primary"
+                                                                onClick={() =>
+                                                                    showOpenModal(
+                                                                        classModel
+                                                                    )
+                                                                }
+                                                            >
+                                                                Open exam
+                                                            </button>
+                                                        )}
                                                         <div className="join-item dropdown dropdown-end bg-maroon">
                                                             <div
                                                                 tabIndex={0}
@@ -196,7 +329,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 <li>
                                                                     <button
                                                                         onClick={() =>
-                                                                            openUpdateModal(
+                                                                            showUpdateModal(
                                                                                 classModel
                                                                             )
                                                                         }
@@ -208,7 +341,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                 <li className="text-error">
                                                                     <button
                                                                         onClick={() =>
-                                                                            openUnassignModal(
+                                                                            showUnassignModal(
                                                                                 classModel
                                                                             )
                                                                         }
@@ -227,8 +360,8 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                         <tr>
                                             <td colSpan={4}>
                                                 <div className="flex justify-center text-center">
-                                                    There are no classes assigned
-                                                    to this exam, yet.
+                                                    There are no classes
+                                                    assigned to this exam, yet.
                                                 </div>
                                             </td>
                                         </tr>
@@ -253,6 +386,20 @@ export default function AssignedClasses({ auth, exam, classes }) {
 
                 <UpdateAssignedModal
                     ref={updateModalRef}
+                    exam={exam}
+                    classModel={selectedClass}
+                    pivot={selectedClass?.pivot}
+                />
+
+                <OpenAssignedModal
+                    ref={openModalRef}
+                    exam={exam}
+                    classModel={selectedClass}
+                    pivot={selectedClass?.pivot}
+                />
+
+                <CloseAssignedModal
+                    ref={closeModalRef}
                     exam={exam}
                     classModel={selectedClass}
                     pivot={selectedClass?.pivot}

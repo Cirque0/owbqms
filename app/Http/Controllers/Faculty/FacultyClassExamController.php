@@ -56,4 +56,30 @@ class FacultyClassExamController extends Controller
 
         return back();
     }
+
+    public function open(Exam $exam, ClassModel $class) {
+        $classExam = ClassExam::firstWhere([
+            'class_id' => $class->id,
+            'exam_id' => $exam->id,
+        ]);
+
+        $opened_at = now();
+        $closed_at = clone $opened_at;
+        $closed_at->modify("+{$classExam->exam_period} minutes");
+
+        $exam->classes()->updateExistingPivot($class->id, [
+            'opened_at' => $opened_at,
+            'closed_at' => $closed_at,
+        ]);
+
+        return back();
+    }
+
+    public function close(Exam $exam, ClassModel $class) {
+        $exam->classes()->updateExistingPivot($class->id, [
+            'closed_at' => now(),
+        ]);
+
+        return back();
+    }
 }

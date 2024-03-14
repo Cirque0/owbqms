@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
         Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update', 'destroy'])->shallow();
 
+        Route::patch('exams/{exam}/classes/{class}/open', [FacultyClassExamController::class, 'open'])->name('exams.classes.open');
+        Route::patch('exams/{exam}/classes/{class}/close', [FacultyClassExamController::class, 'close'])->name('exams.classes.close');
         Route::resource('exams.classes', FacultyClassExamController::class)->only(['store', 'update', 'destroy']);
     });
 
