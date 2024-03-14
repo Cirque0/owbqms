@@ -29,7 +29,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                 <ExamLayout exam={exam}>
                     <div className="mt-4 card w-full bg-gray-100">
                         <div className="card-body">
-                            <div className="flex justify-between items-baseline">
+                            <div className="flex sm:flex-row flex-col sm:justify-between items-baseline">
                                 <h2 className="card-title">Assigned Classes</h2>
                                 <div className="flex">
                                     <button
@@ -47,58 +47,16 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                 <thead>
                                     <tr>
                                         <th>Class</th>
-                                        <th>Specifications</th>
-                                        <th>Status</th>
-                                        <th></th>
+                                        <th className="md:table-cell hidden">Exam Information</th>
+                                        <th className="md:table-cell hidden"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div>
-                                                <p className="font-bold">
-                                                    BSIT 4-1N
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div className="text-xs max-w-40">
-                                                <div className="flex justify-between">
-                                                    <span className="font-bold">
-                                                        Passing Score
-                                                    </span>
-                                                    <span>75%</span>
-                                                </div>
-                                                <div className="flex justify-between">
-                                                    <span className="font-bold">
-                                                        Exam Period
-                                                    </span>
-                                                    <span>60 mins</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>
-                                                {/* <span className="badge badge-error text-white">Closed</span> */}
-                                                <span className="text-xs font-bold">
-                                                    Open until
-                                                </span>
-                                                <p className="">
-                                                    2024-03-11 19:00
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button className="btn btn-sm btn-circle btn-ghost">
-                                                <i className="bi bi-three-dots-vertical"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
                                     {exam.classes.length > 0 ? (
                                         exam.classes.map((classModel) => (
                                             <tr key={classModel.id}>
                                                 <td>
-                                                    <div>
+                                                    <div className="flex gap-2 md:justify-normal justify-between items-baseline">
                                                         <Link
                                                             href={route(
                                                                 "faculty.classes.show",
@@ -114,12 +72,81 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                                     .name
                                                             }
                                                         </Link>
-                                                        {/* <p className="font-medium">
-                                                            Web Development
-                                                        </p> */}
+                                                        <div className="badge badge-sm badge-error text-white">Closed</div>
+                                                    </div>
+                                                    <div className="md:hidden mt-2 text-xs">
+                                                        <div className="flex justify-between">
+                                                            <span className="font-bold">
+                                                                Passing Score
+                                                            </span>
+                                                            <span>
+                                                                {
+                                                                    classModel
+                                                                        .pivot
+                                                                        .passing_score
+                                                                }
+                                                                %
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between">
+                                                            <span className="font-bold">
+                                                                Exam Period
+                                                            </span>
+                                                            <span>
+                                                                {
+                                                                    classModel
+                                                                        .pivot
+                                                                        .exam_period
+                                                                }{" "}
+                                                                mins
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="md:hidden mt-4 join w-full">
+                                                        <button className="join-item btn btn-sm btn-primary grow">
+                                                            Open exam
+                                                        </button>
+                                                        <div className="join-item dropdown dropdown-end bg-maroon">
+                                                            <div
+                                                                tabIndex={0}
+                                                                role="button"
+                                                                className="btn btn-sm btn-primary"
+                                                            >
+                                                                <i className="bi bi-chevron-down"></i>
+                                                            </div>
+                                                            <ul
+                                                                tabIndex={0}
+                                                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
+                                                            >
+                                                                <li>
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            openUpdateModal(
+                                                                                classModel
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <i className="bi bi-gear"></i>
+                                                                        Settings
+                                                                    </button>
+                                                                </li>
+                                                                <li className="text-error">
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            openUnassignModal(
+                                                                                classModel
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <i className="bi bi-x-lg"></i>
+                                                                        Unassign
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td className="md:table-cell hidden">
                                                     <div className="text-xs max-w-40">
                                                         <div className="flex justify-between">
                                                             <span className="font-bold">
@@ -149,31 +176,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div>
-                                                        {classModel.pivot
-                                                            .opened_at ? (
-                                                            <>
-                                                                <span className="text-xs font-bold">
-                                                                    Open until
-                                                                </span>
-                                                                <p className="">
-                                                                    {
-                                                                        classModel
-                                                                            .pivot
-                                                                            .closed_at
-                                                                    }
-                                                                </p>
-                                                            </>
-                                                        ) : (
-                                                            <span className="badge badge-error text-white">
-                                                                Closed
-                                                            </span>
-                                                        )}
-                                                        {/* <span className="badge badge-error text-white">Closed</span> */}
-                                                    </div>
-                                                </td>
-                                                <td className="flex justify-end">
+                                                <td className="md:flex hidden justify-end">
                                                     <div className="join">
                                                         <button className="join-item btn btn-sm btn-primary">
                                                             Open exam
