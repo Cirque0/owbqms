@@ -32,7 +32,8 @@ export default function Class({ auth, classModel }) {
                                                         )}
                                                     </div>
                                                     <div className="text-sm">
-                                                        {exam.pivot.closed_at ? (
+                                                        {exam.pivot
+                                                            .closed_at ? (
                                                             <p>
                                                                 Exam{" "}
                                                                 {exam.pivot
@@ -41,13 +42,18 @@ export default function Class({ auth, classModel }) {
                                                                     : "closed"}{" "}
                                                                 at{" "}
                                                                 <span className="font-bold">
-                                                                    {
-                                                                       new Date(exam.pivot.closed_at).toLocaleString('en-PH')
-                                                                    }
+                                                                    {new Date(
+                                                                        exam.pivot.closed_at
+                                                                    ).toLocaleString(
+                                                                        "en-PH"
+                                                                    )}
                                                                 </span>
                                                             </p>
                                                         ) : (
-                                                            <p>Exam is not open, yet.</p>
+                                                            <p>
+                                                                Exam is not
+                                                                open, yet.
+                                                            </p>
                                                         )}
                                                         <p>
                                                             Score{" "}
@@ -57,6 +63,13 @@ export default function Class({ auth, classModel }) {
                                                                         .passing_score
                                                                 }
                                                                 %
+                                                            </span>{" "}
+                                                            out of{" "}
+                                                            <span className="font-bold">
+                                                                {
+                                                                    exam.questions_count
+                                                                }{" "}
+                                                                {exam.questions_count > 1 ? 'questions' : 'question'}
                                                             </span>{" "}
                                                             within{" "}
                                                             <span className="font-bold">
