@@ -1,5 +1,6 @@
-import ClassLayout from "@/Layouts/ClassLayout";
+import ClassLayout from "@/Pages/Student/Class/ClassLayout";
 import StudentLayout from "@/Layouts/StudentLayout";
+import { Link } from "@inertiajs/react";
 
 export default function Class({ auth, classModel }) {
     return (
@@ -7,9 +8,89 @@ export default function Class({ auth, classModel }) {
             <ClassLayout classModel={classModel}>
                 <div className="mt-8 card bg-gray-100">
                     <div className="card-body">
+                        <h2 className="card-title">Assigned Exams</h2>
+                        <table className="table">
+                            <tbody>
+                                {classModel.exams.length ? (
+                                    classModel.exams.map((exam) => (
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <div className="w-full flex md:flex-row flex-col-reverse justify-between gap-2">
+                                                        <Link className="text-lg font-bold text-maroon">
+                                                            [{exam.type}]{" "}
+                                                            {exam.title}
+                                                        </Link>
+                                                        {exam.pivot.is_open ? (
+                                                            <span className="badge badge-success text-white font-bold">
+                                                                Open
+                                                            </span>
+                                                        ) : (
+                                                            <span className="badge badge-error text-white font-bold">
+                                                                Closed
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="text-sm">
+                                                        {exam.pivot.closed_at ? (
+                                                            <p>
+                                                                Exam{" "}
+                                                                {exam.pivot
+                                                                    .is_open
+                                                                    ? "will close"
+                                                                    : "closed"}{" "}
+                                                                at{" "}
+                                                                <span className="font-bold">
+                                                                    {
+                                                                       new Date(exam.pivot.closed_at).toLocaleString('en-PH')
+                                                                    }
+                                                                </span>
+                                                            </p>
+                                                        ) : (
+                                                            <p>Exam is not open, yet.</p>
+                                                        )}
+                                                        <p>
+                                                            Score{" "}
+                                                            <span className="font-bold">
+                                                                {
+                                                                    exam.pivot
+                                                                        .passing_score
+                                                                }
+                                                                %
+                                                            </span>{" "}
+                                                            within{" "}
+                                                            <span className="font-bold">
+                                                                {
+                                                                    exam.pivot
+                                                                        .exam_period
+                                                                }{" "}
+                                                                minutes
+                                                            </span>{" "}
+                                                            to pass.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={2}>
+                                            <div className="flex justify-center text-center">
+                                                There are no exams assigned to
+                                                this class, yet.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {/* <div className="mt-8 card bg-gray-100">
+                    <div className="card-body">
                         <h2 className="card-title">Enrolled Students</h2>
                         <table className="table">
-                            {/* head */}
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -59,7 +140,7 @@ export default function Class({ auth, classModel }) {
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> */}
             </ClassLayout>
         </StudentLayout>
     );

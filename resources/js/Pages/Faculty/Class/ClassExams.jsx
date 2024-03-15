@@ -1,4 +1,4 @@
-import ClassLayout from "@/Layouts/ClassLayout";
+import ClassLayout from "@/Pages/Faculty/Class/ClassLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import { Head, Link } from "@inertiajs/react";
 import { useRef, useState } from "react";

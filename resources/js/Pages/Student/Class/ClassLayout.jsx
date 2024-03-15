@@ -22,12 +22,10 @@ export default function ClassLayout({ classModel, children }) {
                             <h2 className="font-bold md:text-2xl text-lg">
                                 {classModel.subject.name}
                             </h2>
-                            {classModel.instructor && (
-                                <h3 className="flex gap-2 font-medium md:text-base text-sm">
-                                    <i className="bi bi-person-video3"></i>
-                                    {classModel.instructor.profile.full_name}
-                                </h3>
-                            )}
+                            <h3 className="flex gap-2 font-medium md:text-base text-sm">
+                                <i className="bi bi-person-video3"></i>
+                                {classModel.instructor.profile.full_name}
+                            </h3>
                         </div>
                         <div className="dropdown dropdown-end">
                             <div
@@ -51,63 +49,44 @@ export default function ClassLayout({ classModel, children }) {
                                         Share code
                                     </button>
                                 </li>
-                                {route().current("faculty.*") ? (
-                                    <li>
-                                        <Link
-                                            className="text-error font-medium"
-                                            as="button"
-                                            href={route(
-                                                "faculty.classes.destroy",
-                                                {
-                                                    class: classModel.id,
-                                                }
-                                            )}
-                                            method="delete"
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                            Delete class
-                                        </Link>
-                                    </li>
-                                ) : (
-                                    <li>
-                                        <Link
-                                            className="text-error font-medium"
-                                            as="button"
-                                            href={route(
-                                                "student.classes.destroy",
-                                                {
-                                                    class: classModel.id,
-                                                }
-                                            )}
-                                            method="delete"
-                                        >
-                                            <i className="bi bi-box-arrow-left"></i>
-                                            Leave class
-                                        </Link>
-                                    </li>
-                                )}
+                                <li>
+                                    <Link
+                                        className="text-error font-medium"
+                                        as="button"
+                                        href={route(
+                                            "student.classes.destroy",
+                                            {
+                                                class: classModel.id,
+                                            }
+                                        )}
+                                        method="delete"
+                                    >
+                                        <i className="bi bi-box-arrow-left"></i>
+                                        Leave class
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <div role="tablist" className="mt-4 tabs tabs-bordered">
                         <Link
-                            href={route("faculty.classes.show", {
+                            href={route("student.classes.show", {
                                 class: classModel.id,
                             })}
                             role="tab"
                             className={`tab ${
-                                route().current("faculty.classes.show")
+                                route().current("student.classes.show")
                                     ? "tab-active"
                                     : ""
                             }`}
                         >
-                            Students
+                            Examinations
                         </Link>
                         <Link
-                            href={route("faculty.classes.exams.index", {
-                                class: classModel.id,
-                            })}
+                            // href={route("faculty.classes.exams.index", {
+                            //     class: classModel.id,
+                            // })}
                             role="tab"
                             className={`tab ${
                                 route().current("faculty.classes.exams.index")
@@ -115,10 +94,10 @@ export default function ClassLayout({ classModel, children }) {
                                     : ""
                             }`}
                         >
-                            Examinations
+                            Students
                         </Link>
                         <a role="tab" className="tab">
-                            Grades
+                            My Grades
                         </a>
                     </div>
 
