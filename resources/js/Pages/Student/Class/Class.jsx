@@ -17,7 +17,16 @@ export default function Class({ auth, classModel }) {
                                             <td>
                                                 <div>
                                                     <div className="w-full flex md:flex-row flex-col-reverse justify-between gap-2">
-                                                        <Link className="text-lg font-bold text-maroon">
+                                                        <Link
+                                                            href={route(
+                                                                "student.classes.exams.show",
+                                                                {
+                                                                    class: classModel.id,
+                                                                    exam: exam.id,
+                                                                }
+                                                            )}
+                                                            className="text-lg font-bold text-maroon"
+                                                        >
                                                             [{exam.type}]{" "}
                                                             {exam.title}
                                                         </Link>
@@ -69,7 +78,10 @@ export default function Class({ auth, classModel }) {
                                                                 {
                                                                     exam.questions_count
                                                                 }{" "}
-                                                                {exam.questions_count > 1 ? 'questions' : 'question'}
+                                                                {exam.questions_count >
+                                                                1
+                                                                    ? "questions"
+                                                                    : "question"}
                                                             </span>{" "}
                                                             within{" "}
                                                             <span className="font-bold">
