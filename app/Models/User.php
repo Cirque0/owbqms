@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,6 +68,24 @@ class User extends Authenticatable
 
     public function enrolled_classes(): BelongsToMany
     {
-        return $this->belongsToMany(ClassModel::class, 'class_student', 'student_id', 'class_id')->withPivot('status');
+        return $this->belongsToMany(ClassModel::class, 'class_student', 'student_id', 'class_id')
+            ->withPivot('status');
+    }
+
+    public function created_exams(): HasMany
+    {
+        return $this->hasMany(Exam::class, 'instructor_id');
+    }
+
+    public function assigned_exams(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            ClassExam::class,
+            ClassStudent::class,
+            'student_id',
+            'class_id',
+            'id',
+            'class_id'
+        );
     }
 }
