@@ -30,7 +30,9 @@ class StudentClassExamController extends Controller
 
         $exam->load([
             'subject:id,name',
-            'questions',
+            'questions' => function ($query) {
+                $query->select('id', 'exam_id', 'type', 'description', 'choices')->inRandomOrder();
+            },
         ]);
 
         return Inertia::render('Student/Exam/ExamForm', [
