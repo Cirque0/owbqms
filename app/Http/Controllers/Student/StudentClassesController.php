@@ -18,6 +18,7 @@ class StudentClassesController extends Controller
             'subject:id,name',
             'instructor:id,username' => ['profile'],
             'students:id,username,birthdate' => ['profile'],
+            'exams:id,subject_id,title,type' => ['subject:id,name']
         ]);
 
         return Inertia::render('Student/Class/Class', [

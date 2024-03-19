@@ -75,6 +75,12 @@ export default function StudentLayout({ user, header, children }) {
                     <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
                         <ul className="menu w-full text-base">
                             <li>
+                                <Link href={route("student.exams.index")}>
+                                    <i className="bi bi-journal-text"></i>
+                                    Exams
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href={route("student.home")}>
                                     <i className="bi bi-mortarboard"></i>
                                     Classes
@@ -109,12 +115,6 @@ export default function StudentLayout({ user, header, children }) {
                                         </li>
                                     ))}
                                 </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i className="bi bi-journal-text"></i>
-                                    Exams
-                                </a>
                             </li>
                         </ul>
                     </div>
@@ -159,9 +159,9 @@ export default function StudentLayout({ user, header, children }) {
                         <div className="menu-title divider py-0 my-0"></div>
                     </li>
                     <li>
-                        <Link href={route("student.home")}>
-                            <i className="bi bi-house-door"></i>
-                            Home
+                        <Link href={route("student.exams.index")}>
+                            <i className="bi bi-journal-text"></i>
+                            Exams
                         </Link>
                     </li>
                     <li>
@@ -196,12 +196,6 @@ export default function StudentLayout({ user, header, children }) {
                                 </li>
                             ))}
                         </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i className="bi bi-journal-text"></i>
-                            Exams
-                        </a>
                     </li>
                 </ul>
             </div>

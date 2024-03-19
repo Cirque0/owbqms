@@ -8,7 +8,7 @@ export default function ClassLayout({ classModel, children }) {
     const copy = () => {
         navigator.clipboard.writeText(classModel.id);
         setCopied(true);
-    }
+    };
 
     return (
         <>
@@ -16,16 +16,16 @@ export default function ClassLayout({ classModel, children }) {
                 <div className="grow">
                     <div className="flex">
                         <div className="grow">
-                            <h3 className="font-bold text-gray-600 md:text-base text-sm">{classModel.section.name}</h3>
+                            <h3 className="font-bold text-gray-600 md:text-base text-sm">
+                                {classModel.section.name}
+                            </h3>
                             <h2 className="font-bold md:text-2xl text-lg">
                                 {classModel.subject.name}
                             </h2>
-                            {classModel.instructor && (
-                                <h3 className="flex gap-2 font-medium md:text-base text-sm">
-                                    <i className="bi bi-person-video3"></i>
-                                    {classModel.instructor.profile.full_name}
-                                </h3>
-                            )}
+                            <h3 className="flex gap-2 font-medium md:text-base text-sm">
+                                <i className="bi bi-person-video3"></i>
+                                {classModel.instructor.profile.full_name}
+                            </h3>
                         </div>
                         <div className="dropdown dropdown-end">
                             <div
@@ -41,77 +41,85 @@ export default function ClassLayout({ classModel, children }) {
                             >
                                 <li>
                                     <button
-                                        onClick={() => codeModalRef.current.showModal()}
+                                        onClick={() =>
+                                            codeModalRef.current.showModal()
+                                        }
                                     >
                                         <i className="bi bi-share"></i>
                                         Share code
                                     </button>
                                 </li>
-                                {route().current('faculty.*') ? (
-                                    <li>
-                                        <Link
-                                            className="text-error font-medium"
-                                            as="button"
-                                            href={route("faculty.classes.destroy", {
+                                <li>
+                                    <Link
+                                        className="text-error font-medium"
+                                        as="button"
+                                        href={route(
+                                            "student.classes.destroy",
+                                            {
                                                 class: classModel.id,
-                                            })}
-                                            method="delete"
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                            Delete class
-                                        </Link>
-                                    </li>
-                                ) : (
-                                    <li>
-                                        <Link
-                                            className="text-error font-medium"
-                                            as="button"
-                                            href={route("student.classes.destroy", {
-                                                class: classModel.id,
-                                            })}
-                                            method="delete"
-                                        >
-                                            <i className="bi bi-box-arrow-left"></i>
-                                            Leave class
-                                        </Link>
-                                    </li>
-                                )}
+                                            }
+                                        )}
+                                        method="delete"
+                                    >
+                                        <i className="bi bi-box-arrow-left"></i>
+                                        Leave class
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
 
                     <div role="tablist" className="mt-4 tabs tabs-bordered">
-                        <Link href={route('faculty.classes.show', {class: classModel.id})} role="tab" className={`tab ${route().current('faculty.classes.show') ? 'tab-active' : ''}`}>
+                        <Link
+                            href={route("student.classes.show", {
+                                class: classModel.id,
+                            })}
+                            role="tab"
+                            className={`tab ${
+                                route().current("student.classes.show")
+                                    ? "tab-active"
+                                    : ""
+                            }`}
+                        >
+                            Examinations
+                        </Link>
+                        <Link
+                            // href={route("faculty.classes.exams.index", {
+                            //     class: classModel.id,
+                            // })}
+                            role="tab"
+                            className={`tab ${
+                                route().current("faculty.classes.exams.index")
+                                    ? "tab-active"
+                                    : ""
+                            }`}
+                        >
                             Students
                         </Link>
                         <a role="tab" className="tab">
-                            Examinations
-                        </a>
-                        <a role="tab" className="tab">
-                            Grades
+                            My Grades
                         </a>
                     </div>
-                
+
                     {children}
                 </div>
 
                 <div className="md:card hidden w-full max-w-xs bg-gray-100">
                     <div className="card-body">
                         <h2 className="card-title">Ongoing Exams</h2>
-
                     </div>
                 </div>
             </div>
 
-            <dialog ref={codeModalRef} className="modal modal-bottom md:modal-middle">
+            <dialog
+                ref={codeModalRef}
+                className="modal modal-bottom md:modal-middle"
+            >
                 <div className="modal-box md:overflow-visible">
                     <h3 className="font-bold text-lg">Class code</h3>
 
                     <div className="mt-4 flex w-full input input-sm input-bordered">
-                        <p
-                            type="text"
-                            className="grow select-all"
-                        >
+                        <p type="text" className="grow select-all">
                             {classModel.id}
                         </p>
                         <button className="btn btn-sm btn-ghost" onClick={copy}>
