@@ -1,4 +1,36 @@
+import { useForm } from "@inertiajs/react";
+
 export default function ExamForm({ auth, classModel, exam, pivot }) {
+    const { data, setData, post } = useForm({
+        answers: exam.questions.reduce(
+            (acc, curr) => ({
+                ...acc,
+                [curr.id]: {
+                    question_id: curr.id,
+                    answer: "",
+                },
+            }),
+            {}
+        ),
+    });
+
+    const changeAnswer = (e, key) => setData((value) => (
+        {
+            answers: {
+                ...value.answers,
+                [key]: {
+                    question_id: key,
+                    answer: e.target.value,
+                },
+            },
+        }
+    ));
+
+    const submit = (e) => {
+        e.preventDefault();
+        console.log(data);
+    }
+
     return (
         <main className="relative min-h-screen">
             <nav className="sticky z-50 top-0 p-2 bg-primary text-primary-content">
@@ -19,12 +51,18 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                             </h4>
                         </div>
                         <p className="font-medium sm:text-base text-sm">
-                            A score of <b>{pivot.passing_score}%</b> out
-                            of <b>{exam.questions_count} questions</b> is needed to pass.
+                            A score of <b>{pivot.passing_score}%</b> out of{" "}
+                            <b>{exam.questions_count} questions</b> is needed to
+                            pass.
                         </p>
                         <p className="font-medium sm:text-base text-sm">
                             Be sure to submit your answers before{" "}
-                            <span className="font-bold">{new Date(pivot.closed_at).toLocaleString("en-PH")}</span>.
+                            <span className="font-bold">
+                                {new Date(pivot.closed_at).toLocaleString(
+                                    "en-PH"
+                                )}
+                            </span>
+                            .
                         </p>
                     </div>
                 </div>
@@ -35,7 +73,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                             pivot.is_open ? (
                                 <>
                                     <h2 className="card-title">Questions</h2>
-                                    <div className="flex flex-col gap-12 mt-4">
+                                    <form onSubmit={submit} className="flex flex-col gap-12 mt-4">
                                         {exam.questions.map((question) => (
                                             <div key={question.id}>
                                                 <p className="font-semibold">
@@ -50,6 +88,8 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                     type="text"
                                                                     className="mt-4 w-full input input-bordered"
                                                                     placeholder="Answer"
+                                                                    value={data.answers[question.id].answer}
+                                                                    onChange={(e) => changeAnswer(e, question.id)}
                                                                 />
                                                             );
                                                         case "True or False":
@@ -63,6 +103,9 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                 question.id
                                                                             }
                                                                             className="radio checked:bg-maroon"
+                                                                            value={"True"}
+                                                                            checked={data.answers[question.id].answer === "True"}
+                                                                            onChange={(e) => changeAnswer(e, question.id)}
                                                                         />
                                                                         <span>
                                                                             True
@@ -76,6 +119,9 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                 question.id
                                                                             }
                                                                             className="radio checked:bg-maroon"
+                                                                            value={"False"}
+                                                                            checked={data.answers[question.id].answer === "False"}
+                                                                            onChange={(e) => changeAnswer(e, question.id)}
                                                                         />
                                                                         <span>
                                                                             False
@@ -88,9 +134,9 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                 <>
                                                                     {question.choices.map(
                                                                         (
-                                                                            choice
+                                                                            choice, index
                                                                         ) => (
-                                                                            <label className="mt-4 flex items-center gap-4 cursor-pointer">
+                                                                            <label key={index} className="mt-4 flex items-center gap-4 cursor-pointer">
                                                                                 <input
                                                                                     type="radio"
                                                                                     name={
@@ -98,12 +144,14 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                         question.id
                                                                                     }
                                                                                     className="radio checked:bg-maroon"
+                                                                                    value={choice}
+                                                                                    checked={data.answers[question.id].answer === choice}
+                                                                                    onChange={(e) => changeAnswer(e, question.id)}
                                                                                 />
                                                                                 <span>
                                                                                     {
                                                                                         choice
                                                                                     }{" "}
-                                                                                    lorem
                                                                                 </span>
                                                                             </label>
                                                                         )
@@ -115,7 +163,8 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                 {/* <input type="text" className="mt-2 input input-sm input-bordered" /> */}
                                             </div>
                                         ))}
-                                    </div>
+                                        <button className="btn btn-sm btn-primary">Submit</button>
+                                    </form>
                                 </>
                             ) : (
                                 <>
