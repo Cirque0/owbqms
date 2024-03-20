@@ -18,10 +18,13 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                 [{classModel.section.name}] {exam.subject.name}
                             </h4>
                         </div>
-                        <p className="font-medium text-justify">
-                            You need to score <b>{pivot.passing_score}%</b> out
-                            of <b>{exam.questions_count} questions</b> within{" "}
-                            <b>{pivot.exam_period} minutes</b> to pass.
+                        <p className="font-medium sm:text-base text-sm">
+                            A score of <b>{pivot.passing_score}%</b> out
+                            of <b>{exam.questions_count} questions</b> is needed to pass.
+                        </p>
+                        <p className="font-medium sm:text-base text-sm">
+                            Be sure to submit your answers before{" "}
+                            <span className="font-bold">{new Date(pivot.closed_at).toLocaleString("en-PH")}</span>.
                         </p>
                     </div>
                 </div>
@@ -34,7 +37,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                     <h2 className="card-title">Questions</h2>
                                     <div className="flex flex-col gap-12 mt-4">
                                         {exam.questions.map((question) => (
-                                            <div>
+                                            <div key={question.id}>
                                                 <p className="font-semibold">
                                                     {question.description}
                                                 </p>
