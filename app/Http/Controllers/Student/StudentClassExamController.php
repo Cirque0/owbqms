@@ -41,4 +41,15 @@ class StudentClassExamController extends Controller
             'pivot' => $pivot,
         ]);
     }
+    
+    public function store(Request $request, ClassModel $class, Exam $exam) {
+        $request->validate([
+            'answers' => ['required', 'array'],
+            'answers.*' => ['array'],
+            'answers.*.question_id' => ['required', 'integer', 'exists:questions,id'],
+            'answers.*.answer' => ['required', 'string'],
+        ]);
+
+        return back();
+    }
 }

@@ -2,31 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Question extends Model
+class StudentExam extends Pivot
 {
-    use HasFactory;
-
     protected $fillable = [
+        'student_id',
         'exam_id',
-        'type',
-        'description',
-        'answer',
-        'choices',
+        'score',
     ];
 
-    protected $casts = [
-        'choices' => 'array',
-    ];
-
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-    ];
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function exam(): BelongsTo
     {

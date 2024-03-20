@@ -58,4 +58,9 @@ class Exam extends Model
             )
             ->using(ClassExam::class);
     }
+
+    public function student_exams(): HasMany
+    {
+        return $this->hasMany(StudentExam::class);
+    }
 }
