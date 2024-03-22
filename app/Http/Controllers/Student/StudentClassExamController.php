@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ClassExam;
 use App\Models\ClassModel;
 use App\Models\Exam;
+use App\Models\Question;
+use App\Models\QuestionAnswer;
+use App\Models\StudentExam;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -42,13 +45,44 @@ class StudentClassExamController extends Controller
         ]);
     }
     
-    public function store(Request $request, ClassModel $class, Exam $exam) {
+    public function submit(Request $request, ClassModel $class, Exam $exam) {
         $request->validate([
             'answers' => ['required', 'array'],
             'answers.*' => ['array'],
             'answers.*.question_id' => ['required', 'integer', 'exists:questions,id'],
             'answers.*.answer' => ['required', 'string'],
         ]);
+
+        $classExam = ClassExam::firstWhere([
+            'class_id' => $class->id,
+            'exam_id' => $exam->id,
+        ]);
+
+        if(!$classExam) {
+            return abort(404);
+        }
+
+        if(!$classExam->is_open) {
+            return back()->withErrors([
+                'answers' => 'The submission period for this exam has ended.',
+            ]);
+        }
+
+        $studentExam = StudentExam::create([
+            'student_id' => $request->user()->id,
+            'class_exam_id' => $classExam->id,
+        ]);
+
+        foreach($request->answers as $answer) {
+            $studentExam->answers()->create([
+                'question_id' => $answer['question_id'],
+                'answer' => $answer['answer'],
+                'is_correct' => strtolower(Question::find($answer['question_id'])->answer) == strtolower($answer['answer']),
+            ]);
+        }
+
+        $studentExam->score = $studentExam->answers()->where('is_correct', true)->count();
+        $studentExam->save();
 
         return back();
     }

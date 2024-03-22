@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class StudentExam extends Pivot
 {
+    public $incrementing = true;
+    
     protected $fillable = [
         'student_id',
-        'exam_id',
+        'class_exam_id',
         'score',
     ];
 
@@ -19,13 +21,13 @@ class StudentExam extends Pivot
         return $this->belongsTo(User::class);
     }
 
-    public function exam(): BelongsTo
+    public function class_exam(): BelongsTo
     {
-        return $this->belongsTo(Exam::class);
+        return $this->belongsTo(ClassExam::class);
     }
 
     public function answers(): HasMany
     {
-        return $this->hasMany(QuestionAnswer::class);
+        return $this->hasMany(QuestionAnswer::class, 'student_exam_id');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ClassExam extends Pivot
@@ -57,5 +58,10 @@ class ClassExam extends Pivot
     public function exam(): BelongsTo
     {
         return $this->belongsTo(Exam::class);
+    }
+    
+    public function student_exams(): HasMany
+    {
+        return $this->hasMany(StudentExam::class);
     }
 }

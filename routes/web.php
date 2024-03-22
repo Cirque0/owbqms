@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         // Route::get('/classes/{class}', [StudentClassesController::class, 'show'])->name('classes.show');
         // Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
         Route::resource('classes', StudentClassesController::class)->only(['show', 'store', 'destroy']);
+        Route::post('classes/{class}/exams/{exam}/submit', [StudentClassExamController::class, 'submit'])->name('classes.exams.submit');
         Route::resource('classes.exams', StudentClassExamController::class)->only(['show']);
         Route::delete('requests/{class}/cancel', [StudentClassesController::class, 'cancel'])->name('requests.cancel');
 

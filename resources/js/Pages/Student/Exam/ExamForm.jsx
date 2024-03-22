@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/react";
 
 export default function ExamForm({ auth, classModel, exam, pivot }) {
-    const { data, setData, post } = useForm({
+    const { data, setData, post, errors, processing } = useForm({
         answers: exam.questions.reduce(
             (acc, curr) => ({
                 ...acc,
@@ -29,6 +29,10 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
     const submit = (e) => {
         e.preventDefault();
         console.log(data);
+        post(route("student.classes.exams.submit", {
+            class: classModel.id,
+            exam: exam.id
+        }));
     }
 
     return (
@@ -163,7 +167,12 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                 {/* <input type="text" className="mt-2 input input-sm input-bordered" /> */}
                                             </div>
                                         ))}
-                                        <button className="btn btn-sm btn-primary">Submit</button>
+                                        <button className="btn btn-sm btn-primary" disabled={processing}>
+                                            {processing && (
+                                                <span className="loading loading-spinner loading-sm"></span>
+                                            )}
+                                            Submit
+                                        </button>
                                     </form>
                                 </>
                             ) : (
