@@ -16,7 +16,13 @@ use Inertia\Inertia;
 class StudentClassExamController extends Controller
 {
     public function show(ClassModel $class, Exam $exam) {
-        $pivot = ClassExam::with(['student_exams'])->firstWhere([
+        $pivot = ClassExam::with([
+                'student_exams' => [
+                    'answers:id,student_exam_id,question_id,answer,is_correct' => [
+                        'question:id,type,description,answer,choices'
+                    ],
+                ],
+            ])->firstWhere([
             'class_id' => $class->id,
             'exam_id' => $exam->id,
         ]);
@@ -35,7 +41,7 @@ class StudentClassExamController extends Controller
         $exam->load([
             'subject:id,name',
             'questions' => function ($query) {
-                $query->select('id', 'exam_id', 'type', 'description', 'choices')->inRandomOrder();
+                $query->select('id', 'exam_id', 'type', 'description', 'choices');
             },
         ]);
 

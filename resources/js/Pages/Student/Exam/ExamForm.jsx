@@ -78,14 +78,14 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                     <div className="card-body">
                         {pivot.student_exams.length > 0 ? (
                             <div className="flex flex-col gap-2 font-medium">
-                                <p className="text-2xl">
+                                <p className="sm:text-2xl text-lg">
                                     You completed the exam!
                                 </p>
-                                <p className="text-xl">
+                                <p className="sm:text-xl text-base">
                                     {pivot.student_exams[0].is_passed ? (
-                                        <i className="bi bi-check-circle-fill text-2xl text-success"></i>
+                                        <i className="bi bi-check-circle-fill sm:text-2xl text-lg text-success"></i>
                                     ) : (
-                                        <i className="bi bi-x-circle-fill text-2xl text-error"></i>
+                                        <i className="bi bi-x-circle-fill sm:text-2xl text-lg text-error"></i>
                                     )}{" "}
                                     You{" "}
                                     {pivot.student_exams[0].is_passed
@@ -101,177 +101,50 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                     ).toFixed(2)}
                                     %).
                                 </p>
-                                <p>
-                                    Please, wait for your instructor to
-                                    release the answers.
-                                </p>
+                                {pivot.is_answers_shown ? (
+                                    <>
+                                        <h2 className="card-title">
+                                            Your Answers
+                                        </h2>
+                                        <div className="flex flex-col gap-12 mt-4">
+                                            {pivot.student_exams[0].answers.map(
+                                                (questionAnswer) => (
+                                                    <QuestionAnswer
+                                                        key={questionAnswer.id}
+                                                        questionAnswer={
+                                                            questionAnswer
+                                                        }
+                                                    />
+                                                )
+                                            )}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <p>
+                                        Please, wait for your instructor to
+                                        release the answers.
+                                    </p>
+                                )}
                             </div>
                         ) : pivot.closed_at ? (
                             pivot.is_open ? (
                                 <>
                                     <h2 className="card-title">Questions</h2>
+                                    {JSON.stringify(data.answers)}
                                     <form
                                         onSubmit={submit}
                                         className="flex flex-col gap-12 mt-4"
                                     >
                                         {exam.questions.map((question) => (
-                                            <div key={question.id}>
-                                                <p className="font-semibold">
-                                                    {question.description}
-                                                </p>
-                                                {(() => {
-                                                    switch (question.type) {
-                                                        case "Identification":
-                                                        case "Fill in the Blanks":
-                                                            return (
-                                                                <input
-                                                                    type="text"
-                                                                    className="mt-4 w-full input input-bordered"
-                                                                    placeholder="Answer"
-                                                                    value={
-                                                                        data
-                                                                            .answers[
-                                                                            question
-                                                                                .id
-                                                                        ].answer
-                                                                    }
-                                                                    onChange={(
-                                                                        e
-                                                                    ) =>
-                                                                        changeAnswer(
-                                                                            e,
-                                                                            question.id
-                                                                        )
-                                                                    }
-                                                                />
-                                                            );
-                                                        case "True or False":
-                                                            return (
-                                                                <>
-                                                                    <label className="mt-4 flex items-center gap-4 cursor-pointer">
-                                                                        <input
-                                                                            type="radio"
-                                                                            name={
-                                                                                "q" +
-                                                                                question.id
-                                                                            }
-                                                                            className="radio checked:bg-maroon"
-                                                                            value={
-                                                                                "True"
-                                                                            }
-                                                                            checked={
-                                                                                data
-                                                                                    .answers[
-                                                                                    question
-                                                                                        .id
-                                                                                ]
-                                                                                    .answer ===
-                                                                                "True"
-                                                                            }
-                                                                            onChange={(
-                                                                                e
-                                                                            ) =>
-                                                                                changeAnswer(
-                                                                                    e,
-                                                                                    question.id
-                                                                                )
-                                                                            }
-                                                                        />
-                                                                        <span>
-                                                                            True
-                                                                        </span>
-                                                                    </label>
-                                                                    <label className="mt-4 flex items-center gap-4 cursor-pointer">
-                                                                        <input
-                                                                            type="radio"
-                                                                            name={
-                                                                                "q" +
-                                                                                question.id
-                                                                            }
-                                                                            className="radio checked:bg-maroon"
-                                                                            value={
-                                                                                "False"
-                                                                            }
-                                                                            checked={
-                                                                                data
-                                                                                    .answers[
-                                                                                    question
-                                                                                        .id
-                                                                                ]
-                                                                                    .answer ===
-                                                                                "False"
-                                                                            }
-                                                                            onChange={(
-                                                                                e
-                                                                            ) =>
-                                                                                changeAnswer(
-                                                                                    e,
-                                                                                    question.id
-                                                                                )
-                                                                            }
-                                                                        />
-                                                                        <span>
-                                                                            False
-                                                                        </span>
-                                                                    </label>
-                                                                </>
-                                                            );
-                                                        case "Multiple Choice":
-                                                            return (
-                                                                <>
-                                                                    {question.choices.map(
-                                                                        (
-                                                                            choice,
-                                                                            index
-                                                                        ) => (
-                                                                            <label
-                                                                                key={
-                                                                                    index
-                                                                                }
-                                                                                className="mt-4 flex items-center gap-4 cursor-pointer"
-                                                                            >
-                                                                                <input
-                                                                                    type="radio"
-                                                                                    name={
-                                                                                        "q" +
-                                                                                        question.id
-                                                                                    }
-                                                                                    className="radio checked:bg-maroon"
-                                                                                    value={
-                                                                                        choice
-                                                                                    }
-                                                                                    checked={
-                                                                                        data
-                                                                                            .answers[
-                                                                                            question
-                                                                                                .id
-                                                                                        ]
-                                                                                            .answer ===
-                                                                                        choice
-                                                                                    }
-                                                                                    onChange={(
-                                                                                        e
-                                                                                    ) =>
-                                                                                        changeAnswer(
-                                                                                            e,
-                                                                                            question.id
-                                                                                        )
-                                                                                    }
-                                                                                />
-                                                                                <span>
-                                                                                    {
-                                                                                        choice
-                                                                                    }{" "}
-                                                                                </span>
-                                                                            </label>
-                                                                        )
-                                                                    )}
-                                                                </>
-                                                            );
-                                                    }
-                                                })()}
-                                                {/* <input type="text" className="mt-2 input input-sm input-bordered" /> */}
-                                            </div>
+                                            <Question
+                                                key={question.id}
+                                                question={question}
+                                                value={
+                                                    data.answers[question.id]
+                                                        .answer
+                                                }
+                                                changeAnswer={changeAnswer}
+                                            />
                                         ))}
                                         <button
                                             className="btn btn-sm btn-primary"
@@ -310,5 +183,165 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                 </div>
             </div>
         </main>
+    );
+}
+
+function Question({ question, value, changeAnswer }) {
+    return (
+        <div>
+            <p className="font-semibold">{question.description}</p>
+            {(() => {
+                switch (question.type) {
+                    case "Identification":
+                    case "Fill in the Blanks":
+                        return (
+                            <input
+                                type="text"
+                                className="mt-4 w-full input input-bordered"
+                                placeholder="Answer"
+                                value={value}
+                                onChange={(e) => changeAnswer(e, question.id)}
+                            />
+                        );
+                    case "True or False":
+                        return (
+                            <>
+                                <label className="mt-4 flex items-center gap-4 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name={"q" + question.id}
+                                        className="radio checked:bg-maroon"
+                                        value={"True"}
+                                        checked={value === "True"}
+                                        onChange={(e) =>
+                                            changeAnswer(e, question.id)
+                                        }
+                                    />
+                                    <span>True</span>
+                                </label>
+                                <label className="mt-4 flex items-center gap-4 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name={"q" + question.id}
+                                        className="radio checked:bg-maroon"
+                                        value={"False"}
+                                        checked={value === "False"}
+                                        onChange={(e) =>
+                                            changeAnswer(e, question.id)
+                                        }
+                                    />
+                                    <span>False</span>
+                                </label>
+                            </>
+                        );
+                    case "Multiple Choice":
+                        return (
+                            <>
+                                {question.choices.map((choice, index) => (
+                                    <label
+                                        key={index}
+                                        className="mt-4 flex items-center gap-4 cursor-pointer"
+                                    >
+                                        <input
+                                            type="radio"
+                                            name={"q" + question.id}
+                                            className="radio checked:bg-maroon"
+                                            value={choice}
+                                            checked={value === choice}
+                                            onChange={(e) =>
+                                                changeAnswer(e, question.id)
+                                            }
+                                        />
+                                        <span>{choice} </span>
+                                    </label>
+                                ))}
+                            </>
+                        );
+                }
+            })()}
+            {/* <input type="text" className="mt-2 input input-sm input-bordered" /> */}
+        </div>
+    );
+}
+
+function QuestionAnswer({ questionAnswer }) {
+    return (
+        <div>
+            <p className="font-semibold">
+                {questionAnswer.question.description}
+            </p>
+            {(() => {
+                switch (questionAnswer.question.type) {
+                    case "Identification":
+                    case "Fill in the Blanks":
+                    case "True or False":
+                        return (
+                            <div
+                                className={
+                                    "mt-4 p-4 w-full rounded-xl " +
+                                    (questionAnswer.is_correct
+                                        ? "bg-green-200 text-success-content"
+                                        : "bg-red-200 text-error-content")
+                                }
+                            >
+                                <div className="text-xs font-bold">
+                                    Your answer
+                                </div>
+                                <div>
+                                    {questionAnswer.is_correct ? (
+                                        <i className="bi bi-check-circle-fill mr-2 text-xl text-success"></i>
+                                    ) : (
+                                        <i className="bi bi-x-circle-fill mr-2 text-xl text-error"></i>
+                                    )}
+                                    <span>{questionAnswer.answer}</span>
+                                </div>
+
+                                {!questionAnswer.is_correct && (
+                                    <>
+                                        <div className="mt-4 text-xs font-bold">
+                                            Correct answer
+                                        </div>
+                                        <div>
+                                            <i className="bi bi-check-circle-fill mr-2 text-xl text-error"></i>
+                                            <span>
+                                                {questionAnswer.question.answer}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        );
+                    case "Multiple Choice":
+                        return (
+                            <div className="w-full mt-4 flex flex-col">
+                                {questionAnswer.question.choices.map(
+                                    (choice) => (
+                                        <div
+                                            className={
+                                                "w-full p-4 rounded-xl flex items-center " +
+                                                (choice ===
+                                                questionAnswer.question.answer
+                                                    ? "bg-green-200 text-success-content"
+                                                    : questionAnswer.answer ===
+                                                      choice
+                                                    ? "bg-red-200 text-error-content"
+                                                    : "")
+                                            }
+                                        >
+                                            {choice ===
+                                            questionAnswer.question.answer ? (
+                                                <i className="bi bi-check-circle-fill mr-2 text-xl text-success"></i>
+                                            ) : (
+                                                <i className="bi bi-x-circle-fill mr-2 text-xl text-error"></i>
+                                            )}
+                                            <span>{choice}</span>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        );
+                }
+            })()}
+        </div>
     );
 }
