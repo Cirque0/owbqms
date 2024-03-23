@@ -17,11 +17,7 @@ class StudentClassExamController extends Controller
 {
     public function show(ClassModel $class, Exam $exam) {
         $pivot = ClassExam::with([
-                'student_exams' => [
-                    'answers:id,student_exam_id,question_id,answer,is_correct' => [
-                        'question:id,type,description,answer,choices'
-                    ],
-                ],
+                'student_exams'
             ])->firstWhere([
             'class_id' => $class->id,
             'exam_id' => $exam->id,
@@ -29,6 +25,14 @@ class StudentClassExamController extends Controller
 
         if(!$pivot) {
             return abort(404);
+        }
+
+        if($pivot->is_answers_shown) {
+            $pivot->load([
+                'student_exams.answers:id,student_exam_id,question_id,answer,is_correct' => [
+                    'question:id,type,description,answer,choices',
+                ],
+            ]);
         }
 
         $class->load([

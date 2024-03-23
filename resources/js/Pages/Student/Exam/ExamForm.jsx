@@ -78,7 +78,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                     <div className="card-body">
                         {pivot.student_exams.length > 0 ? (
                             <div className="flex flex-col gap-2 font-medium">
-                                <p className="sm:text-2xl text-lg">
+                                <p className="card-title sm:text-2xl text-lg">
                                     You completed the exam!
                                 </p>
                                 <p className="sm:text-xl text-base">
@@ -103,7 +103,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                 </p>
                                 {pivot.is_answers_shown ? (
                                     <>
-                                        <h2 className="card-title">
+                                        <h2 className="mt-4 card-title">
                                             Your Answers
                                         </h2>
                                         <div className="flex flex-col gap-12 mt-4">
@@ -130,7 +130,6 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                             pivot.is_open ? (
                                 <>
                                     <h2 className="card-title">Questions</h2>
-                                    {JSON.stringify(data.answers)}
                                     <form
                                         onSubmit={submit}
                                         className="flex flex-col gap-12 mt-4"

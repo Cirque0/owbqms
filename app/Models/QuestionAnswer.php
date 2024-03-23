@@ -17,6 +17,11 @@ class QuestionAnswer extends Model
         'is_correct',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function student_exam(): BelongsTo
     {
         return $this->belongsTo(StudentExam::class);
