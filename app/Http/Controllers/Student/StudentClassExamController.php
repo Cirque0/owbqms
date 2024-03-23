@@ -10,12 +10,13 @@ use App\Models\Question;
 use App\Models\QuestionAnswer;
 use App\Models\StudentExam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StudentClassExamController extends Controller
 {
     public function show(ClassModel $class, Exam $exam) {
-        $pivot = ClassExam::firstWhere([
+        $pivot = ClassExam::with(['student_exams'])->firstWhere([
             'class_id' => $class->id,
             'exam_id' => $exam->id,
         ]);

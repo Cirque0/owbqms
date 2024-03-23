@@ -14,8 +14,8 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
         ),
     });
 
-    const changeAnswer = (e, key) => setData((value) => (
-        {
+    const changeAnswer = (e, key) =>
+        setData((value) => ({
             answers: {
                 ...value.answers,
                 [key]: {
@@ -23,17 +23,18 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                     answer: e.target.value,
                 },
             },
-        }
-    ));
+        }));
 
     const submit = (e) => {
         e.preventDefault();
         console.log(data);
-        post(route("student.classes.exams.submit", {
-            class: classModel.id,
-            exam: exam.id
-        }));
-    }
+        post(
+            route("student.classes.exams.submit", {
+                class: classModel.id,
+                exam: exam.id,
+            })
+        );
+    };
 
     return (
         <main className="relative min-h-screen">
@@ -59,25 +60,60 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                             <b>{exam.questions_count} questions</b> is needed to
                             pass.
                         </p>
-                        <p className="font-medium sm:text-base text-sm">
-                            Be sure to submit your answers before{" "}
-                            <span className="font-bold">
-                                {new Date(pivot.closed_at).toLocaleString(
-                                    "en-PH"
-                                )}
-                            </span>
-                            .
-                        </p>
+                        {pivot.is_open && (
+                            <p className="font-medium sm:text-base text-sm">
+                                Be sure to submit your answers before{" "}
+                                <span className="font-bold">
+                                    {new Date(pivot.closed_at).toLocaleString(
+                                        "en-PH"
+                                    )}
+                                </span>
+                                .
+                            </p>
+                        )}
                     </div>
                 </div>
 
                 <div className="mt-4 card w-full bg-gray-100">
                     <div className="card-body">
-                        {pivot.closed_at ? (
+                        {pivot.student_exams.length > 0 ? (
+                            <div className="flex flex-col gap-2 font-medium">
+                                <p className="text-2xl">
+                                    You completed the exam!
+                                </p>
+                                <p className="text-xl">
+                                    {pivot.student_exams[0].is_passed ? (
+                                        <i className="bi bi-check-circle-fill text-2xl text-success"></i>
+                                    ) : (
+                                        <i className="bi bi-x-circle-fill text-2xl text-error"></i>
+                                    )}{" "}
+                                    You{" "}
+                                    {pivot.student_exams[0].is_passed
+                                        ? "passed"
+                                        : "failed"}{" "}
+                                    with a score of{" "}
+                                    {pivot.student_exams[0].score} out of{" "}
+                                    {exam.questions_count} (
+                                    {(
+                                        (pivot.student_exams[0].score /
+                                            exam.questions_count) *
+                                        100
+                                    ).toFixed(2)}
+                                    %).
+                                </p>
+                                <p>
+                                    Please, wait for your instructor to
+                                    release the answers.
+                                </p>
+                            </div>
+                        ) : pivot.closed_at ? (
                             pivot.is_open ? (
                                 <>
                                     <h2 className="card-title">Questions</h2>
-                                    <form onSubmit={submit} className="flex flex-col gap-12 mt-4">
+                                    <form
+                                        onSubmit={submit}
+                                        className="flex flex-col gap-12 mt-4"
+                                    >
                                         {exam.questions.map((question) => (
                                             <div key={question.id}>
                                                 <p className="font-semibold">
@@ -92,8 +128,21 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                     type="text"
                                                                     className="mt-4 w-full input input-bordered"
                                                                     placeholder="Answer"
-                                                                    value={data.answers[question.id].answer}
-                                                                    onChange={(e) => changeAnswer(e, question.id)}
+                                                                    value={
+                                                                        data
+                                                                            .answers[
+                                                                            question
+                                                                                .id
+                                                                        ].answer
+                                                                    }
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        changeAnswer(
+                                                                            e,
+                                                                            question.id
+                                                                        )
+                                                                    }
                                                                 />
                                                             );
                                                         case "True or False":
@@ -107,9 +156,26 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                 question.id
                                                                             }
                                                                             className="radio checked:bg-maroon"
-                                                                            value={"True"}
-                                                                            checked={data.answers[question.id].answer === "True"}
-                                                                            onChange={(e) => changeAnswer(e, question.id)}
+                                                                            value={
+                                                                                "True"
+                                                                            }
+                                                                            checked={
+                                                                                data
+                                                                                    .answers[
+                                                                                    question
+                                                                                        .id
+                                                                                ]
+                                                                                    .answer ===
+                                                                                "True"
+                                                                            }
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                changeAnswer(
+                                                                                    e,
+                                                                                    question.id
+                                                                                )
+                                                                            }
                                                                         />
                                                                         <span>
                                                                             True
@@ -123,9 +189,26 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                 question.id
                                                                             }
                                                                             className="radio checked:bg-maroon"
-                                                                            value={"False"}
-                                                                            checked={data.answers[question.id].answer === "False"}
-                                                                            onChange={(e) => changeAnswer(e, question.id)}
+                                                                            value={
+                                                                                "False"
+                                                                            }
+                                                                            checked={
+                                                                                data
+                                                                                    .answers[
+                                                                                    question
+                                                                                        .id
+                                                                                ]
+                                                                                    .answer ===
+                                                                                "False"
+                                                                            }
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                changeAnswer(
+                                                                                    e,
+                                                                                    question.id
+                                                                                )
+                                                                            }
                                                                         />
                                                                         <span>
                                                                             False
@@ -138,9 +221,15 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                 <>
                                                                     {question.choices.map(
                                                                         (
-                                                                            choice, index
+                                                                            choice,
+                                                                            index
                                                                         ) => (
-                                                                            <label key={index} className="mt-4 flex items-center gap-4 cursor-pointer">
+                                                                            <label
+                                                                                key={
+                                                                                    index
+                                                                                }
+                                                                                className="mt-4 flex items-center gap-4 cursor-pointer"
+                                                                            >
                                                                                 <input
                                                                                     type="radio"
                                                                                     name={
@@ -148,9 +237,26 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                                                         question.id
                                                                                     }
                                                                                     className="radio checked:bg-maroon"
-                                                                                    value={choice}
-                                                                                    checked={data.answers[question.id].answer === choice}
-                                                                                    onChange={(e) => changeAnswer(e, question.id)}
+                                                                                    value={
+                                                                                        choice
+                                                                                    }
+                                                                                    checked={
+                                                                                        data
+                                                                                            .answers[
+                                                                                            question
+                                                                                                .id
+                                                                                        ]
+                                                                                            .answer ===
+                                                                                        choice
+                                                                                    }
+                                                                                    onChange={(
+                                                                                        e
+                                                                                    ) =>
+                                                                                        changeAnswer(
+                                                                                            e,
+                                                                                            question.id
+                                                                                        )
+                                                                                    }
                                                                                 />
                                                                                 <span>
                                                                                     {
@@ -167,7 +273,10 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                 {/* <input type="text" className="mt-2 input input-sm input-bordered" /> */}
                                             </div>
                                         ))}
-                                        <button className="btn btn-sm btn-primary" disabled={processing}>
+                                        <button
+                                            className="btn btn-sm btn-primary"
+                                            disabled={processing}
+                                        >
                                             {processing && (
                                                 <span className="loading loading-spinner loading-sm"></span>
                                             )}

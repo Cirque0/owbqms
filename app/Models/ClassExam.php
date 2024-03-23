@@ -62,6 +62,6 @@ class ClassExam extends Pivot
     
     public function student_exams(): HasMany
     {
-        return $this->hasMany(StudentExam::class);
+        return $this->hasMany(StudentExam::class, 'class_exam_id');
     }
 }
