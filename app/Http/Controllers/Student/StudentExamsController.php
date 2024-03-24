@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StudentExamsController extends Controller
@@ -17,6 +18,11 @@ class StudentExamsController extends Controller
                     'subject:id,name',
                     'instructor:id' => ['profile:user_id,first_name,middle_name,last_name'],
                 ],
+            ])
+            ->withCount([
+                'student_exams' => function ($query) {
+                    $query->where('student_id', Auth::id());
+                }
             ]);
         
         $classExams = $query->clone()->where(function ($query) {

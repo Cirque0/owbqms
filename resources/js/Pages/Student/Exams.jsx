@@ -66,15 +66,22 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             [{classExam.exam.type}]{" "}
                                             {classExam.exam.title}
                                         </Link>
-                                        {classExam.is_open ? (
-                                            <span className="badge badge-success text-white font-bold">
-                                                Open
-                                            </span>
-                                        ) : (
-                                            <span className="badge badge-error text-white font-bold">
-                                                Closed
-                                            </span>
-                                        )}
+                                        <div className="flex gap-2">
+                                            {classExam.student_exams_count > 0 && (
+                                                <span className="badge badge-info text-white font-bold">
+                                                    Submitted
+                                                </span>
+                                            )}
+                                            {classExam.is_open ? (
+                                                <span className="badge badge-success text-white font-bold">
+                                                    Open
+                                                </span>
+                                            ) : (
+                                                <span className="badge badge-error text-white font-bold">
+                                                    Closed
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="text-sm font-semibold">
                                         <span className="flex gap-2">
