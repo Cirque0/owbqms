@@ -46,6 +46,7 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
     const submit = (e) => {
         e.preventDefault();
         patch(route("faculty.questions.update", { question: question.id }), {
+            preserveScroll: true,
             onSuccess: () => ref.current.close(),
         });
     };
@@ -293,6 +294,12 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
                                 return null;
                         }
                     })()}
+
+                    <div className="label">
+                        <span className="label-text-alt text-error">
+                            {errors.question}
+                        </span>
+                    </div>
                 </form>
 
                 <form id="update_choice" hidden onSubmit={createChoice}></form>

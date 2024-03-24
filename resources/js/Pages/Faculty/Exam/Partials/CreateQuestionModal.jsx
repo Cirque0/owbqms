@@ -122,7 +122,7 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                                         />
                                         <div className="label">
                                             <span className="label-text-alt text-error">
-                                                {errors.description}
+                                                {errors.answer}
                                             </span>
                                         </div>
                                     </label>
@@ -149,7 +149,7 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                                         />
                                         <div className="label">
                                             <span className="label-text-alt text-error">
-                                                {errors.description}
+                                                {errors.answer}
                                             </span>
                                         </div>
                                     </label>
@@ -187,6 +187,11 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                                             <div className="label">
                                                 <span className="label-text-alt text-error">
                                                     {errors.choices}
+                                                </span>
+                                            </div>
+                                            <div className="label">
+                                                <span className="label-text-alt text-error">
+                                                    {errors.answer}
                                                 </span>
                                             </div>
                                         </label>
@@ -265,6 +270,12 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                                 return null;
                         }
                     })()}
+
+                    <div className="label">
+                        <span className="label-text-alt text-error">
+                            {errors.question}
+                        </span>
+                    </div>
                 </form>
 
                 <form id="create_choice" hidden onSubmit={createChoice}></form>
