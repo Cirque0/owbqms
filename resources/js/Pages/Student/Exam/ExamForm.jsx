@@ -71,6 +71,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                 .
                             </p>
                         )}
+                        {JSON.stringify(errors)}
                     </div>
                 </div>
 
@@ -145,6 +146,13 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                 changeAnswer={changeAnswer}
                                             />
                                         ))}
+
+                                        <div className="label">
+                                            <span className="label-text text-error">
+                                                {/* {errors.answers} */}
+                                                {JSON.stringify(errors)}
+                                            </span>
+                                        </div>
                                         <button
                                             className="btn btn-sm btn-primary"
                                             disabled={processing}
@@ -200,6 +208,7 @@ function Question({ question, value, changeAnswer }) {
                                 placeholder="Answer"
                                 value={value}
                                 onChange={(e) => changeAnswer(e, question.id)}
+                                required
                             />
                         );
                     case "True or False":
@@ -215,6 +224,7 @@ function Question({ question, value, changeAnswer }) {
                                         onChange={(e) =>
                                             changeAnswer(e, question.id)
                                         }
+                                        required
                                     />
                                     <span>True</span>
                                 </label>
@@ -228,6 +238,7 @@ function Question({ question, value, changeAnswer }) {
                                         onChange={(e) =>
                                             changeAnswer(e, question.id)
                                         }
+                                        required
                                     />
                                     <span>False</span>
                                 </label>
@@ -250,6 +261,7 @@ function Question({ question, value, changeAnswer }) {
                                             onChange={(e) =>
                                                 changeAnswer(e, question.id)
                                             }
+                                            required
                                         />
                                         <span>{choice} </span>
                                     </label>
