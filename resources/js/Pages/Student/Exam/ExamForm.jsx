@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 
 export default function ExamForm({ auth, classModel, exam, pivot }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -39,9 +39,9 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
     return (
         <main className="relative min-h-screen">
             <nav className="sticky z-50 top-0 p-2 bg-primary text-primary-content">
-                <button onClick={() => history.back()}>
+                <Link href={route("student.exams.index")}>
                     <i className="bi bi-arrow-left-short text-5xl"></i>
-                </button>
+                </Link>
             </nav>
 
             <div className="flex flex-col max-w-3xl items-center p-4 mx-auto">
@@ -62,7 +62,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                         </p>
                         {pivot.is_open && (
                             <p className="font-medium sm:text-base text-sm">
-                                Be sure to submit your answers before{" "}
+                                The examination will close at{" "}
                                 <span className="font-bold">
                                     {new Date(pivot.closed_at).toLocaleString(
                                         "en-PH"
@@ -121,8 +121,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                     </>
                                 ) : (
                                     <p>
-                                        Please, wait for your instructor to
-                                        release the answers.
+                                        Your instructor will release the answers at a later time.
                                     </p>
                                 )}
                             </div>
