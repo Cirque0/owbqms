@@ -17,9 +17,9 @@ class StudentExam extends Pivot
         'score',
     ];
 
-    protected $appends = [
-        'is_passed',
-    ];
+    // protected $appends = [
+    //     'is_passed',
+    // ];
 
     public function isPassed(): Attribute
     {

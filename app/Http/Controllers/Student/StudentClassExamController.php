@@ -33,8 +33,11 @@ class StudentClassExamController extends Controller
                     'question:id,type,description,answer,choices',
                 ],
             ]);
+            
         }
-
+        
+        $pivot->student_exams->each->append('is_passed');
+        
         $class->load([
             'section:id,course_id,name' => [
                 'course:id,name',

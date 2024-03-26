@@ -67,18 +67,25 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             {classExam.exam.title}
                                         </Link>
                                         <div className="flex gap-2">
-                                            {classExam.student_exams_count > 0 && (
-                                                <span className="badge badge-info text-white font-bold">
-                                                    Submitted
-                                                </span>
-                                            )}
                                             {classExam.is_open ? (
                                                 <span className="badge badge-success text-white font-bold">
                                                     Open
                                                 </span>
                                             ) : (
-                                                <span className="badge badge-error text-white font-bold">
-                                                    Closed
+                                                classExam.opened_at ? (
+                                                    <span className="badge badge-error text-white font-bold">
+                                                        Closed
+                                                    </span>
+                                                ) : (
+                                                    <span className="badge badge-warning font-bold">
+                                                        Upcoming
+                                                    </span>
+                                                )
+                                            )}
+                                            {classExam.student_exams.length > 0 && (
+                                                <span className="badge badge-info font-bold">
+                                                    {/* Submitted */}
+                                                    Score: {classExam.student_exams[0].score} / {classExam.exam.questions_count}
                                                 </span>
                                             )}
                                         </div>
