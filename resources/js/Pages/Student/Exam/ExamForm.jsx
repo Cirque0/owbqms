@@ -71,7 +71,6 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                 .
                             </p>
                         )}
-                        {JSON.stringify(errors)}
                     </div>
                 </div>
 
@@ -146,13 +145,7 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
                                                 changeAnswer={changeAnswer}
                                             />
                                         ))}
-
-                                        <div className="label">
-                                            <span className="label-text text-error">
-                                                {/* {errors.answers} */}
-                                                {JSON.stringify(errors)}
-                                            </span>
-                                        </div>
+                                        
                                         <button
                                             className="btn btn-sm btn-primary"
                                             disabled={processing}
