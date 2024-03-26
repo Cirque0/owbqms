@@ -30,15 +30,29 @@ export default function Class({ auth, classModel }) {
                                                             [{exam.type}]{" "}
                                                             {exam.title}
                                                         </Link>
-                                                        {exam.pivot.is_open ? (
-                                                            <span className="badge badge-success text-white font-bold">
-                                                                Open
-                                                            </span>
-                                                        ) : (
-                                                            <span className="badge badge-error text-white font-bold">
-                                                                Closed
-                                                            </span>
-                                                        )}
+                                                        <div className="flex gap-2">
+                                                            {exam.pivot.is_open ? (
+                                                                <span className="badge badge-success text-white font-bold">
+                                                                    Open
+                                                                </span>
+                                                            ) : (
+                                                                exam.pivot.opened_at ? (
+                                                                    <span className="badge badge-error text-white font-bold">
+                                                                        Closed
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="badge badge-warning font-bold">
+                                                                        Upcoming
+                                                                    </span>
+                                                                )
+                                                            )}
+                                                            {exam.student_exams.length > 0 && (
+                                                                <span className="badge badge-info font-bold">
+                                                                    {/* Submitted */}
+                                                                    Score: {exam.student_exams[0].score} / {exam.questions_count}
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     <div className="text-sm">
                                                         {exam.pivot
