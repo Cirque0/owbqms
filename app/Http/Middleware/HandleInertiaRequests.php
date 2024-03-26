@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user,
             ],
+            'searchParams' => $request->query(),
         ];
     }
 }

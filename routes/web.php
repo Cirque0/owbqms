@@ -4,6 +4,7 @@ use App\Http\Controllers\Faculty\ClassMembersController;
 use App\Http\Controllers\Faculty\FacultyClassesController;
 use App\Http\Controllers\Faculty\FacultyClassExamController;
 use App\Http\Controllers\Faculty\FacultyExamController;
+use App\Http\Controllers\Faculty\FacultyExamScores;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
 use App\Http\Controllers\ProfileController;
@@ -48,6 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
 
+        Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores');
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
         Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update', 'destroy'])->shallow();
 
