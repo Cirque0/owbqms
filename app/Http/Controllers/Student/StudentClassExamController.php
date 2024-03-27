@@ -17,7 +17,9 @@ class StudentClassExamController extends Controller
 {
     public function show(ClassModel $class, Exam $exam) {
         $pivot = ClassExam::with([
-                'student_exams'
+                'student_exams' => function ($query) {
+                    $query->where('student_id', Auth::id());
+                },
             ])->firstWhere([
             'class_id' => $class->id,
             'exam_id' => $exam->id,
