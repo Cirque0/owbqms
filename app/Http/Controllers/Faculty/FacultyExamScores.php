@@ -39,8 +39,12 @@ class FacultyExamScores extends Controller
 
         return Inertia::render('Faculty/Exam/Scores', [
             'exam' => $exam,
-            'student_exams' => $classExam->student_exams()->with([
-                'student:id,username' => ['profile:id,user_id,first_name,middle_name,last_name']
+            'examInfo' => $classExam,
+            'students' => $classExam->assigned_class->students()->select('users.id', 'username')->with([
+                'profile:id,user_id,first_name,middle_name,last_name',
+                'answered_exams' => function ($query) use ($classExam) {
+                    $query->where('class_exam_id', $classExam->id);
+                },
             ])->get(),
         ]);
     }
