@@ -1,6 +1,6 @@
 import ExamLayout from "@/Layouts/ExamLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 export default function Scores({
     auth,
@@ -112,7 +112,7 @@ export default function Scores({
                                                                 No submissions
                                                             </p>
                                                         )}
-                                                        <button
+                                                        <Link
                                                             className="md:hidden btn btn-xs btn-primary"
                                                             disabled={
                                                                 !student
@@ -122,7 +122,7 @@ export default function Scores({
                                                         >
                                                             <i className="bi bi-eye-fill"></i>
                                                             Answers
-                                                        </button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </td>
@@ -173,7 +173,15 @@ export default function Scores({
                                             </td>
                                             <td className="md:table-cell hidden">
                                                 <div className="flex justify-end">
-                                                    <button
+                                                    <Link
+                                                        href={
+                                                            student.answered_exams.length
+                                                                ? route("faculty.exams.scores.show", {
+                                                                    exam: exam.id,
+                                                                    student_exam: student.answered_exams[0].id,
+                                                                })
+                                                                : "#"
+                                                        }
                                                         className="btn btn-sm btn-primary"
                                                         disabled={
                                                             !student.answered_exams
@@ -182,7 +190,7 @@ export default function Scores({
                                                     >
                                                         <i className="bi bi-eye-fill"></i>
                                                         Answers
-                                                    </button>
+                                                    </Link>
                                                 </div>
                                             </td>
                                         </tr>

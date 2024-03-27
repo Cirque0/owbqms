@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Faculty\ClassMembersController;
+use App\Http\Controllers\Faculty\FacultyAnswersController;
 use App\Http\Controllers\Faculty\FacultyClassesController;
 use App\Http\Controllers\Faculty\FacultyClassExamController;
 use App\Http\Controllers\Faculty\FacultyExamController;
@@ -49,9 +50,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
 
-        Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores');
+        Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores.index');
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
         Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update', 'destroy'])->shallow();
+        Route::resource('exams.scores', FacultyAnswersController::class)->only(['show'])->parameters([
+            'scores' => 'student_exam',
+        ]);
 
         Route::patch('exams/{exam}/classes/{class}/open', [FacultyClassExamController::class, 'open'])->name('exams.classes.open');
         Route::patch('exams/{exam}/classes/{class}/close', [FacultyClassExamController::class, 'close'])->name('exams.classes.close');

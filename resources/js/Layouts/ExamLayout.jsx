@@ -44,10 +44,10 @@ export default function ExamLayout({ children, exam }) {
                         Questions
                     </Link>
                     <Link
-                        href={route("faculty.exams.scores", { exam: exam.id })}
+                        href={route("faculty.exams.scores.index", { exam: exam.id })}
                         role="tab"
                         className={`tab ${
-                            route().current("faculty.exams.scores")
+                            route().current("faculty.exams.scores.*")
                             ? "tab-active"
                             : ""
                         }`}
