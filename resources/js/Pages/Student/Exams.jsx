@@ -68,12 +68,12 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                         </Link>
                                         <div className="flex gap-2">
                                             {classExam.is_open ? (
-                                                <span className="badge badge-success text-white font-bold">
+                                                <span className="badge badge-success font-bold">
                                                     Open
                                                 </span>
                                             ) : (
                                                 classExam.opened_at ? (
-                                                    <span className="badge badge-error text-white font-bold">
+                                                    <span className="badge badge-error text-red-100 font-bold">
                                                         Closed
                                                     </span>
                                                 ) : (
