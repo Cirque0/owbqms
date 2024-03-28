@@ -16,6 +16,11 @@ class FacultyAnswersController extends Controller
         ]);
 
         $student_exam->load([
+            'class_exam' => [
+                'assigned_class:id,section_id' => [
+                    'section:id,name',
+                ],
+            ],
             'student:id,username' => [
                 'profile:id,user_id,first_name,middle_name,last_name',
             ],

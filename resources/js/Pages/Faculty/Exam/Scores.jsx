@@ -65,7 +65,7 @@ export default function Scores({
                                                                 .full_name
                                                         }
                                                     </p>
-                                                    <p className="font-bold text-gray-400">
+                                                    <p className="font-bold text-gray-500">
                                                         {student.username}
                                                     </p>
                                                     <div className="md:hidden flex justify-between items-end mt-2 gap-2 font-bold">
