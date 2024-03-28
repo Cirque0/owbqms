@@ -1,4 +1,4 @@
-export default function QuestionAnswer({ questionAnswer }) {
+export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
     return (
         <div>
             <p className="font-semibold">
@@ -19,7 +19,7 @@ export default function QuestionAnswer({ questionAnswer }) {
                                 }
                             >
                                 <div className="text-xs font-bold">
-                                    Student's answer
+                                    {isStudent ? "Your" : "Student\'s"} answer
                                 </div>
                                 <div>
                                     {questionAnswer.is_correct ? (
