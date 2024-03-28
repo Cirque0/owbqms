@@ -6,6 +6,7 @@ use App\Http\Controllers\Faculty\FacultyClassesController;
 use App\Http\Controllers\Faculty\FacultyClassExamController;
 use App\Http\Controllers\Faculty\FacultyExamController;
 use App\Http\Controllers\Faculty\FacultyExamScores;
+use App\Http\Controllers\Faculty\FacultyGradesController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
         Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
+        Route::resource('classes.grades', FacultyGradesController::class)->only(['index']);
 
         Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores.index');
         Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);

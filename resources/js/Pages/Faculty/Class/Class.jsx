@@ -9,7 +9,7 @@ export default function Class({ auth, classModel }) {
                 title={`[${classModel.section.name}] ${classModel.subject.name}`}
             />
             <FacultyLayout user={auth.user}>
-                <ClassLayout user={auth.user} classModel={classModel}>
+                <ClassLayout classModel={classModel}>
                     <div className="mt-8 card bg-gray-100">
                         <div className="card-body">
                             <h2 className="card-title">Pending requests</h2>

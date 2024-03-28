@@ -49,12 +49,9 @@ export default function ClassLayout({ classModel, children }) {
                                     <Link
                                         className="text-error font-medium"
                                         as="button"
-                                        href={route(
-                                            "faculty.classes.destroy",
-                                            {
-                                                class: classModel.id,
-                                            }
-                                        )}
+                                        href={route("faculty.classes.destroy", {
+                                            class: classModel.id,
+                                        })}
                                         method="delete"
                                     >
                                         <i className="bi bi-trash"></i>
@@ -92,9 +89,19 @@ export default function ClassLayout({ classModel, children }) {
                         >
                             Examinations
                         </Link>
-                        <a role="tab" className="tab">
+                        <Link
+                            href={route("faculty.classes.grades.index", {
+                                class: classModel.id,
+                            })}
+                            role="tab"
+                            className={`tab ${
+                                route().current("faculty.classes.grades.*")
+                                    ? "tab-active"
+                                    : ""
+                            }`}
+                        >
                             Grades
-                        </a>
+                        </Link>
                     </div>
 
                     {children}
