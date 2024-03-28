@@ -1,19 +1,17 @@
-import { router } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { forwardRef, useState } from "react";
 
 const OpenAssignedModal = forwardRef(({ exam, classModel, pivot }, ref) => {
-    const [processing, setProcessing] = useState(false);
+    const { patch, errors, processing } = useForm({});
 
     const open = () => {
-        setProcessing(true);
-        router.patch(
+        patch(
             route("faculty.exams.classes.open", {
                 exam: exam?.id,
                 class: classModel?.id,
-            }), {},
+            }),
             {
                 onSuccess: () => ref.current.close(),
-                onFinish: () => setProcessing(false),
             }
         );
     };
@@ -40,6 +38,12 @@ const OpenAssignedModal = forwardRef(({ exam, classModel, pivot }, ref) => {
                         <span className="font-bold">Exam Period</span>
                         <span>{pivot?.exam_period} mins</span>
                     </div>
+                </div>
+
+                <div className="label">
+                    <span className="label-text-alt text-error">
+                        {errors?.class_exam}
+                    </span>
                 </div>
 
                 <div className="modal-action">

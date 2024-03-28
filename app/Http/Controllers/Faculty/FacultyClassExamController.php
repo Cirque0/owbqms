@@ -58,6 +58,10 @@ class FacultyClassExamController extends Controller
     }
 
     public function open(Exam $exam, ClassModel $class) {
+        if(!$exam->questions()->count()) {
+            return back()->withErrors(['class_exam' => "You cannot open an exam without questions."]);
+        }
+
         $classExam = ClassExam::firstWhere([
             'class_id' => $class->id,
             'exam_id' => $exam->id,
