@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class StudentExamsController extends Controller
@@ -17,9 +18,18 @@ class StudentExamsController extends Controller
                     'subject:id,name',
                     'instructor:id' => ['profile:user_id,first_name,middle_name,last_name'],
                 ],
+                'student_exams' => function ($query) {
+                    $query->select('id', 'student_id', 'class_exam_id', 'score')
+                        ->where('student_id', Auth::id());
+                },
             ]);
+            // ->withCount([
+            //     'student_exams' => function ($query) {
+            //         $query->where('student_id', Auth::id());
+            //     }
+            // ]);
         
-        $classExams = $query->clone()->where(function ($query) {
+        $closedClassExams = (clone $query)->where(function ($query) {
             $query->whereNull('opened_at')
                 ->orWhereNull('closed_at');
         })->orWhere(function ($query) {
@@ -27,14 +37,14 @@ class StudentExamsController extends Controller
                 ->orWhere('closed_at', '<=', date('Y-m-d H:i:s'));
         })->get();
 
-        $ongoingClassExams = $query->whereNotNull('opened_at')
+        $ongoingClassExams = (clone $query)->whereNotNull('opened_at')
             ->whereNotNull('closed_at')
             ->where('opened_at', '<=', date('Y-m-d H:i:s'))
             ->where('closed_at', '>', date('Y-m-d H:i:s'))
             ->get();
 
         return Inertia::render('Student/Exams', [
-            'closedClassExams' => $classExams,
+            'closedClassExams' => $closedClassExams,
             'ongoingClassExams' => $ongoingClassExams,
         ]);
     }

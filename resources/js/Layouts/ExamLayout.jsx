@@ -15,7 +15,10 @@ export default function ExamLayout({ children, exam }) {
                     </div>
                 </div>
 
-                <div role="tab-list" className="mt-4 tabs tabs-bordered sm:tabs-md tabs-xs">
+                <div
+                    role="tab-list"
+                    className="mt-4 tabs tabs-bordered sm:tabs-md tabs-xs"
+                >
                     <Link
                         href={route("faculty.exams.show", { exam: exam.id })}
                         role="tab"
@@ -40,7 +43,15 @@ export default function ExamLayout({ children, exam }) {
                     >
                         Questions
                     </Link>
-                    <Link href="#" role="tab" className="tab">
+                    <Link
+                        href={route("faculty.exams.scores.index", { exam: exam.id })}
+                        role="tab"
+                        className={`tab ${
+                            route().current("faculty.exams.scores.*")
+                            ? "tab-active"
+                            : ""
+                        }`}
+                    >
                         Scores
                     </Link>
                     <Link href="#" role="tab" className="tab">

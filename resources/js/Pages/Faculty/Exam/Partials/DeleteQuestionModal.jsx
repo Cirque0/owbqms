@@ -1,14 +1,23 @@
-import { router } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { forwardRef, useState } from "react";
 
 const DeleteQuestionModal = forwardRef(({ question }, ref) => {
-    const [processing, setProcessing] = useState(false);
+    const { delete: destroy, errors, processing } = useForm();
 
-    const destroy = () => {
-        setProcessing(true);
-        router.delete(route("faculty.questions.destroy", { question: question?.id }), {
+    // const [processing, setProcessing] = useState(false);
+
+    // const destroy = () => {
+    //     setProcessing(true);
+    //     router.delete(route("faculty.questions.destroy", { question: question?.id }), {
+    //         onSuccess: () => ref.current.close(),
+    //         onFinish: () => setProcessing(false),
+    //     });
+    // }
+
+    const deleteQuestion = () => {
+        destroy(route("faculty.questions.destroy", { question: question?.id }), {
+            preserveScroll: true,
             onSuccess: () => ref.current.close(),
-            onFinish: () => setProcessing(false),
         });
     }
 
@@ -24,10 +33,16 @@ const DeleteQuestionModal = forwardRef(({ question }, ref) => {
                     </p>
                 </div>
 
+                <div className="label">
+                    <span className="label-text-alt text-error">
+                        {errors.question}
+                    </span>
+                </div>
+
                 <div className="modal-action">
                     <button
                         className="btn btn-sm btn-error text-white"
-                        onClick={destroy}
+                        onClick={deleteQuestion}
                         disabled={processing}
                     >
                         {processing && (

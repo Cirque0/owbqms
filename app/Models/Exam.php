@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Exam extends Model
 {
@@ -57,5 +58,10 @@ class Exam extends Model
                 'closed_at',
             )
             ->using(ClassExam::class);
+    }
+
+    public function student_exams(): HasManyThrough
+    {
+        return $this->hasManyThrough(StudentExam::class, ClassExam::class, 'exam_id', 'class_exam_id');
     }
 }

@@ -88,4 +88,9 @@ class User extends Authenticatable
             'class_id'
         );
     }
+
+    public function answered_exams(): HasMany
+    {
+        return $this->hasMany(StudentExam::class, 'student_id');
+    }
 }

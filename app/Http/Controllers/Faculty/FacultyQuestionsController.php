@@ -11,6 +11,15 @@ use Inertia\Inertia;
 
 class FacultyQuestionsController extends Controller
 {
+    public function hasOpenClassExam(Exam $exam) {
+        return $exam->classes()
+            ->wherePivotNotNull('opened_at')
+            ->wherePivotNotNull('closed_at')
+            ->wherePivot('opened_at', '<=', date('Y-m-d H:i:s'))
+            ->wherePivot('closed_at', '>', date('Y-m-d H:i:s'))
+            ->exists();
+    }
+
     public function index(Exam $exam) {
         $exam->load(['subject:id,name']);
 
@@ -24,6 +33,10 @@ class FacultyQuestionsController extends Controller
     }
     
     public function store(QuestionRequest $request, Exam $exam) {
+        if($this->hasOpenClassExam($exam)) {
+            return back()->withErrors(['question' => 'Questions cannot be added while a class is taking the exam.']);
+        }
+
         $question = new Question;
 
         $question->fill($request->except('choices'));
@@ -38,6 +51,10 @@ class FacultyQuestionsController extends Controller
     }
 
     public function update(QuestionRequest $request, Question $question) {
+        if($this->hasOpenClassExam($question->exam)) {
+            return back()->withErrors(['question' => 'Questions cannot be updated while a class is taking the exam.']);
+        }
+
         $question->update($request->except('choices'));
 
         if($request->type === 'Multiple Choice') {
@@ -53,6 +70,10 @@ class FacultyQuestionsController extends Controller
     }
 
     public function destroy(Question $question) {
+        if($this->hasOpenClassExam($question->exam)) {
+            return back()->withErrors(['question' => 'Questions cannot be deleted while a class is taking the exam.']);
+        }
+
         $question->delete();
 
         return back();

@@ -18,7 +18,13 @@ class StudentClassesController extends Controller
             'subject:id,name',
             'instructor:id,username' => ['profile'],
             'students:id,username,birthdate' => ['profile'],
-            'exams:id,subject_id,title,type' => ['subject:id,name']
+            'exams:id,subject_id,title,type' => [
+                'subject:id,name',
+                'student_exams' => function ($query) {
+                    $query->select('student_exam.id', 'student_id', 'class_exam_id', 'score')
+                        ->where('student_id', Auth::id());
+                },
+            ]
         ]);
 
         return Inertia::render('Student/Class/Class', [
