@@ -14,7 +14,12 @@ class FacultyGradesController extends Controller
             'section:id,name',
             'subject:id,name',
             'exams:id,title',
-            'students:id,username' => ['profile:id,user_id,first_name,middle_name,last_name'],
+            'students:id,username' => [
+                'profile:id,user_id,first_name,middle_name,last_name',
+                'answered_exams' => function ($query) use ($class) {
+                    $query->whereIn('class_exam_id', $class->exams->pluck('pivot.id'));
+                },
+            ],
         ]);
 
         return Inertia::render('Faculty/Class/Grades', [
