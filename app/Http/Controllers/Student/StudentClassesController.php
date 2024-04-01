@@ -17,7 +17,6 @@ class StudentClassesController extends Controller
             'section:id,name',
             'subject:id,name',
             'instructor:id,username' => ['profile'],
-            'students:id,username,birthdate' => ['profile'],
             'exams:id,subject_id,title,type' => [
                 'subject:id,name',
                 'student_exams' => function ($query) {
@@ -72,5 +71,20 @@ class StudentClassesController extends Controller
         $class->requests()->detach(Auth::id());
 
         return to_route('student.home');
+    }
+
+    public function students(ClassModel $class) {
+        $this->authorize('view', $class);
+
+        $class->load([
+            'section:id,name',
+            'subject:id,name',
+            'instructor:id,username' => ['profile'],
+            'students:id,username,email,birthdate' => ['profile'],
+        ]);
+
+        return Inertia::render('Student/Class/Students', [
+            'classModel' => $class,
+        ]);
     }
 }

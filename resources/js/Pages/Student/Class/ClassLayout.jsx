@@ -84,21 +84,18 @@ export default function ClassLayout({ classModel, children }) {
                             Examinations
                         </Link>
                         <Link
-                            // href={route("faculty.classes.exams.index", {
-                            //     class: classModel.id,
-                            // })}
+                            href={route("student.classes.students", {
+                                class: classModel.id,
+                            })}
                             role="tab"
                             className={`tab ${
-                                route().current("faculty.classes.exams.index")
+                                route().current("student.classes.students")
                                     ? "tab-active"
                                     : ""
                             }`}
                         >
                             Students
                         </Link>
-                        <a role="tab" className="tab">
-                            My Grades
-                        </a>
                     </div>
 
                     {children}
