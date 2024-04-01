@@ -8,7 +8,7 @@ export default function Home({ auth, classes }) {
             <Head title="Home \ Student" />
             <StudentLayout user={auth.user}>
                 <div className="grow flex gap-8">
-                    <div className="grow">
+                    <div className="grow max-w-4xl">
                         <div className="flex justify-between items-baseline">
                             <h2 className="font-bold text-2xl">Your Classes</h2>
                         </div>
@@ -33,12 +33,6 @@ export default function Home({ auth, classes }) {
                                     </span>
                                 </div>
                             )}
-                        </div>
-                    </div>
-
-                    <div className="md:card hidden w-full max-w-xs bg-gray-100">
-                        <div className="card-body">
-                            <h2 className="card-title">Ongoing Exams</h2>
                         </div>
                     </div>
                 </div>

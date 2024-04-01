@@ -13,7 +13,7 @@ export default function ClassLayout({ classModel, children }) {
     return (
         <>
             <div className="grow flex gap-8">
-                <div className="grow">
+                <div className="grow max-w-4xl">
                     <div className="flex">
                         <div className="grow">
                             <h3 className="font-bold text-gray-600 md:text-base text-sm">
@@ -102,12 +102,6 @@ export default function ClassLayout({ classModel, children }) {
                     </div>
 
                     {children}
-                </div>
-
-                <div className="md:card hidden w-full max-w-xs bg-gray-100">
-                    <div className="card-body">
-                        <h2 className="card-title">Ongoing Exams</h2>
-                    </div>
                 </div>
             </div>
 

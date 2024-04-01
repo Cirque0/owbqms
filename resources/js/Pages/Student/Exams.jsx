@@ -7,7 +7,7 @@ export default function Exams({ auth, closedClassExams, ongoingClassExams }) {
             <Head title="Exams \ Student" />
             <StudentLayout user={auth.user}>
                 <div className="grow flex gap-8">
-                    <div className="grow max-w-3xl">
+                    <div className="grow max-w-4xl">
                         <div className="flex justify-between items-baseline">
                             <h2 className="font-bold text-2xl">Your Exams</h2>
                         </div>

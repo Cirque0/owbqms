@@ -12,7 +12,7 @@ export default function Home({ auth, classes, courses, subjects }) {
             <Head title="Classes \ Faculty" />
             <FacultyLayout user={auth.user} header={"Classes"}>
                 <div className="grow flex gap-8">
-                    <div className="grow">
+                    <div className="grow max-w-4xl">
                         <div className="flex justify-between items-baseline">
                             <h2 className="font-bold text-2xl">Your Classes</h2>
                             <div className="flex">
@@ -33,13 +33,6 @@ export default function Home({ auth, classes, courses, subjects }) {
                                     <span className="md:text-xl font-semibold text-neutral">You don't have any classes, yet.</span>
                                 </div>
                             )}
-                        </div>
-                    </div>
-
-                    <div className="md:card hidden w-full max-w-xs bg-gray-100">
-                        <div className="card-body">
-                            <h2 className="card-title">Ongoing Exams</h2>
-
                         </div>
                     </div>
                 </div>
