@@ -22,7 +22,7 @@ export default function Class({ auth, classModel }) {
                                             Birthdate
                                         </th>
                                         <th className="md:table-cell hidden">
-                                            Contact No.
+                                            Contact Info
                                         </th>
                                         <th className="md:table-cell hidden"></th>
                                     </tr>
@@ -125,9 +125,14 @@ export default function Class({ auth, classModel }) {
                                                     )}
                                                 </td>
                                                 <td className="md:table-cell hidden">
-                                                    {request.profile
-                                                        .contact_num ||
-                                                        "No contact number."}
+                                                    <div>
+                                                        <p>{request.email}</p>
+                                                        <p>
+                                                            {request.profile
+                                                                .contact_num ||
+                                                                ""}
+                                                        </p>
+                                                    </div>
                                                 </td>
                                                 <td className="md:table-cell hidden">
                                                     <ul className="menu menu-horizontal gap-2">
@@ -195,7 +200,7 @@ export default function Class({ auth, classModel }) {
                                             Birthdate
                                         </th>
                                         <th className="md:table-cell hidden">
-                                            Contact No.
+                                            Contact Info
                                         </th>
                                         <th className="md:table-cell hidden"></th>
                                     </tr>
@@ -265,9 +270,14 @@ export default function Class({ auth, classModel }) {
                                                     )}
                                                 </td>
                                                 <td className="md:table-cell hidden">
-                                                    {student.profile
-                                                        .contact_num ||
-                                                        "No contact number."}
+                                                    <div>
+                                                        <p>{student.email}</p>
+                                                        <p>
+                                                            {student.profile
+                                                                .contact_num ||
+                                                                ""}
+                                                        </p>
+                                                    </div>
                                                 </td>
                                                 <td className="flex">
                                                     <div className="dropdown dropdown-end dropdown-top">
