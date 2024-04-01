@@ -19,8 +19,8 @@ class FacultyClassesController extends Controller
         $class->load([
             'section:id,name',
             'subject:id,name',
-            'students:id,username,birthdate' => ['profile'],
-            'requests:id,username,birthdate' => ['profile'],
+            'students:id,username,email,birthdate' => ['profile'],
+            'requests:id,username,email,birthdate' => ['profile'],
         ]);
 
         return Inertia::render('Faculty/Class/Class', [
