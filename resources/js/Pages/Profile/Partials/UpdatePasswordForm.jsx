@@ -1,10 +1,5 @@
 import { useRef } from "react";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
 import { useForm } from "@inertiajs/react";
-import { Transition } from "@headlessui/react";
 
 export default function UpdatePasswordForm({ className = "" }) {
     const passwordInput = useRef();
@@ -60,6 +55,7 @@ export default function UpdatePasswordForm({ className = "" }) {
                         </div>
                         <input
                             type="password"
+                            ref={currentPasswordInput}
                             className="input input-sm input-bordered w-full"
                             value={data.current_password}
                             onChange={(e) =>
@@ -80,6 +76,7 @@ export default function UpdatePasswordForm({ className = "" }) {
                         </div>
                         <input
                             type="password"
+                            ref={passwordInput}
                             className="input input-sm input-bordered w-full"
                             value={data.password}
                             onChange={(e) =>
