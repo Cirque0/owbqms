@@ -16,7 +16,9 @@ class FacultyHomeController extends Controller
         $classes = ClassModel::with([
             'section:id,name',
             'subject:id,name',
-        ])->where('instructor_id', Auth::id())->get();
+        ])
+        ->withCount(['requests', 'students'])
+        ->where('instructor_id', Auth::id())->get();
 
         $courses = Course::with(['sections'])->get()->pluck('sections.*.name', 'name');
 

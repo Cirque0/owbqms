@@ -24,15 +24,16 @@ export default function ClassCard({
                         </p>
                     )}
                 </div>
-                <div className="flex gap-4 mt-2">
+                <div className="flex gap-4 mt-2 font-medium">
                     {!student && (
                         <>
                             <span className="inline-flex items-baseline gap-2">
-                                <i className="bi bi-people text-lg"></i>
-                                24
+                                <i className="bi bi-people-fill text-lg"></i>
+                                {classObj.students_count}
                             </span>
                             <span className="inline-flex items-baseline gap-2">
-                                <i className="bi bi-person-plus text-lg"></i>8
+                                <i className="bi bi-person-plus-fill text-lg"></i>
+                                {classObj.requests_count}
                             </span>
                         </>
                     )}
