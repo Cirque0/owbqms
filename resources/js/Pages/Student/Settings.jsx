@@ -1,5 +1,5 @@
 import StudentLayout from "@/Layouts/StudentLayout";
-import UpdateProfileInformation from "../Profile/Partials/UpdateProfileInformationForm";
+import UpdateUserInformation from "../Profile/Partials/UpdateUserInformationForm";
 import UpdatePasswordForm from "../Profile/Partials/UpdatePasswordForm";
 
 export default function Settings({ auth, mustVerifyEmail, status }) {
@@ -11,7 +11,7 @@ export default function Settings({ auth, mustVerifyEmail, status }) {
                         <h2 className="font-bold text-2xl">Settings</h2>
                     </div>
 
-                    <UpdateProfileInformation
+                    <UpdateUserInformation
                         mustVerifyEmail={mustVerifyEmail}
                         status={status}
                         className="mt-4 grow"
