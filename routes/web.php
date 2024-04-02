@@ -14,6 +14,7 @@ use App\Http\Controllers\Student\StudentClassesController;
 use App\Http\Controllers\Student\StudentClassExamController;
 use App\Http\Controllers\Student\StudentExamsController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Student\StudentSettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,7 +39,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
@@ -66,9 +67,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
         Route::get('/', [StudentHomeController::class, 'index'])->name('home');
-        // Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
-        // Route::get('/classes/{class}', [StudentClassesController::class, 'show'])->name('classes.show');
-        // Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
+        Route::get('settings', [StudentSettingsController::class, 'edit'])->name('settings.edit');
         Route::get('classes/{class}/students', [StudentClassesController::class, 'students'])->name('classes.students');
         Route::resource('classes', StudentClassesController::class)->only(['show', 'store', 'destroy']);
         Route::post('classes/{class}/exams/{exam}/submit', [StudentClassExamController::class, 'submit'])->name('classes.exams.submit');
