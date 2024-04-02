@@ -1,6 +1,7 @@
 import FacultyLayout from "@/Layouts/FacultyLayout";
 import UpdateUserInformation from "../Profile/Partials/UpdateUserInformationForm";
 import UpdatePasswordForm from "../Profile/Partials/UpdatePasswordForm";
+import UpdateUserProfile from "../Profile/Partials/UpdateUserProfileForm";
 
 export default function Settings({ auth, mustVerifyEmail, status }) {
     return (
@@ -16,6 +17,8 @@ export default function Settings({ auth, mustVerifyEmail, status }) {
                         status={status}
                         className="mt-4 grow"
                     />
+
+                    <UpdateUserProfile className="mt-4 grow" />
 
                     <UpdatePasswordForm className="mt-4 grow" />
                 </div>

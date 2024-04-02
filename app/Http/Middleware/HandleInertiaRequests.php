@@ -31,6 +31,11 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
+        
+        if($request->routeIs('*.settings.*')) {
+            $user->load(['profile:id,user_id,first_name,middle_name,last_name,gender,contact_num']);
+        }
+        
         if($user && $user->roles()->where('roles.name', 'student')->exists()) {
             $user->load([
                 'enrolled_classes' => function ( $query) {
