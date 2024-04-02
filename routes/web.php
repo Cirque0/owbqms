@@ -9,6 +9,7 @@ use App\Http\Controllers\Faculty\FacultyExamScores;
 use App\Http\Controllers\Faculty\FacultyGradesController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
+use App\Http\Controllers\Faculty\FacultySettingsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\StudentClassesController;
 use App\Http\Controllers\Student\StudentClassExamController;
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
         Route::get('/', [FacultyHomeController::class, 'index'])->name('home');
+        Route::get('settings', [FacultySettingsController::class, 'edit'])->name('settings.edit');
         Route::post('classes/{class}/requests/{student}/accept', [ClassMembersController::class, 'accept'])->name('classes.requests.accept');
         Route::delete('classes/{class}/requests/{student}/deny', [ClassMembersController::class, 'deny'])->name('classes.requests.deny');
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');

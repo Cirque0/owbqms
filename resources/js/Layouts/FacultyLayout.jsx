@@ -60,10 +60,14 @@ export default function FacultyLayout({ user, header, children }) {
                                     </summary>
                                     <ul className="text-neutral text-base">
                                         <li>
-                                            <a href="#">
+                                            <Link
+                                                href={route(
+                                                    "faculty.settings.edit"
+                                                )}
+                                            >
                                                 <i className="bi bi-gear"></i>
                                                 Settings
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="text-error">
                                             <Link
@@ -102,10 +106,10 @@ export default function FacultyLayout({ user, header, children }) {
                             </summary>
                             <ul className="text-base">
                                 <li>
-                                    <a href="#">
+                                    <Link href={route("faculty.settings.edit")}>
                                         <i className="bi bi-gear"></i>
                                         Settings
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="text-error">
                                     <Link
