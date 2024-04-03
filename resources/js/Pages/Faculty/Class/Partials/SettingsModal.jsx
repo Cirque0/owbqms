@@ -84,7 +84,7 @@ const SettingsModal = forwardRef(({ classModel }, ref) => {
                     </div>
 
                     {recentlySuccessful && (
-                        <div className="flex gap-2 text-sm font-medium text-success">
+                        <div className="mt-2 flex gap-2 text-sm font-medium text-success">
                             <i className="bi bi-check-circle-fill"></i>
                             Settings saved successfully.
                         </div>

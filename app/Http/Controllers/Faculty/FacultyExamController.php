@@ -28,6 +28,8 @@ class FacultyExamController extends Controller
     }
 
     public function show(Request $request, Exam $exam) {
+        $this->authorize('view', $exam);
+
         $exam->load([
             'subject:id,name',
             'classes:id,section_id,subject_id' => [
@@ -44,6 +46,8 @@ class FacultyExamController extends Controller
     }
 
     public function store(ExamRequest $request) {
+        $this->authorize('create', Exam::class);
+        
         $subject = Subject::firstWhere('name', $request->subject);
 
         Exam::create([
@@ -58,6 +62,8 @@ class FacultyExamController extends Controller
     }
 
     public function update(Request $request, Exam $exam) {
+        $this->authorize('update', $exam);
+
         $request->validate([
             'title' => ['required', 'string'],
             'type' => ['required', 'string', Rule::in(['Quiz', 'Midterm', 'Finals'])],
@@ -67,5 +73,13 @@ class FacultyExamController extends Controller
         $exam->save();
 
         return back();
+    }
+
+    public function destroy(Exam $exam) {
+        $this->authorize('delete', $exam);
+        
+        $exam->delete();
+
+        return to_route('faculty.exams.index');
     }
 }
