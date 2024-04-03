@@ -9,6 +9,7 @@ use App\Models\Exam;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class FacultyExamController extends Controller
@@ -53,6 +54,18 @@ class FacultyExamController extends Controller
         ]);
 
         // TODO: should redirect to exam page
+        return back();
+    }
+
+    public function update(Request $request, Exam $exam) {
+        $request->validate([
+            'title' => ['required', 'string'],
+            'type' => ['required', 'string', Rule::in(['Quiz', 'Midterm', 'Finals'])],
+        ]);
+
+        $exam->fill($request->input());
+        $exam->save();
+
         return back();
     }
 }

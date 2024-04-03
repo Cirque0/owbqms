@@ -1,26 +1,28 @@
 import { Link, useForm } from "@inertiajs/react";
 import { forwardRef, useRef } from "react";
 
-const SettingsModal = forwardRef(({ classModel }, ref) => {
+const SettingsModal = forwardRef(({ exam }, ref) => {
     const deleteRef = useRef(null);
+
     const {
         data,
         setData,
+        patch,
         reset,
         setDefaults,
-        patch,
+        errors,
         processing,
         recentlySuccessful,
     } = useForm({
-        is_registration_open: classModel.is_registration_open,
+        title: exam.title,
+        type: exam.type,
     });
 
     const save = (e) => {
         e.preventDefault();
-        patch(route("faculty.classes.update", { class: classModel.id }), {
-            onSuccess: () => {
-                setDefaults("is_registration_open", data.is_registration_open);
-            },
+
+        patch(route("faculty.exams.update", { exam: exam.id }), {
+            onSuccess: () => setDefaults(data),
         });
     };
 
@@ -33,41 +35,66 @@ const SettingsModal = forwardRef(({ classModel }, ref) => {
     return (
         <>
             <dialog ref={ref} className="modal modal-bottom md:modal-middle">
-                <div className="modal-box md:overflow-auto">
-                    <h3 className="font-bold text-lg">Class settings</h3>
+                <div className="modal-box overflow-auto">
+                    <h3 className="font-bold text-lg">Exam settings</h3>
 
-                    <form id="update_class" className="mt-4" onSubmit={save}>
-                        <label className="label">
-                            <span className="label-text">
-                                Allow requests to join
-                            </span>
+                    <form id="update_exam" className="mt-4" onSubmit={save}>
+                        <label className="form-control w-full">
+                            <div className="label">
+                                <span className="label-text">Title</span>
+                            </div>
                             <input
-                                type="checkbox"
-                                className="toggle toggle-sm toggle-primary"
-                                checked={data.is_registration_open}
+                                type="text"
+                                className="input input-sm input-bordered"
+                                value={data.title}
                                 onChange={(e) =>
-                                    setData(
-                                        "is_registration_open",
-                                        e.target.checked
-                                    )
+                                    setData("title", e.target.value)
                                 }
+                                required
                             />
+                            <div className="label">
+                                <span className="label-text-alt text-error">
+                                    {errors.title}
+                                </span>
+                            </div>
+                        </label>
+
+                        <label className="form-control w-full">
+                            <div className="label">
+                                <span className="label-text">Type</span>
+                            </div>
+                            <select
+                                className="select select-sm select-bordered"
+                                value={data.type}
+                                onChange={(e) =>
+                                    setData("type", e.target.value)
+                                }
+                            >
+                                <option value="Quiz">Quiz</option>
+                                <option value="Midterm">Midterm</option>
+                                <option value="Finals">Finals</option>
+                            </select>
+                            <div className="label">
+                                <span className="label-text-alt text-error">
+                                    {errors.title}
+                                </span>
+                            </div>
                         </label>
                     </form>
 
                     <div className="modal-action justify-between">
-                        <div className="flex gap-2">
+                        <div className="flex">
                             <button
                                 className="btn btn-sm btn-error"
                                 onClick={() => deleteRef.current.showModal()}
                                 disabled={processing}
                             >
-                                Delete class
+                                Delete exam
                             </button>
                         </div>
                         <div className="flex gap-2">
                             <button
-                                form="update_class"
+                                form="update_exam"
                                 className="btn btn-sm btn-info"
                                 disabled={processing}
                             >
@@ -105,20 +132,18 @@ const SettingsModal = forwardRef(({ classModel }, ref) => {
                 className="modal modal-bottom md:modal-middle"
             >
                 <div className="modal-box md:overflow-auto">
-                    <h3 className="font-bold text-lg">Delete class</h3>
+                    <h3 className="font-bold text-lg">Delete exam</h3>
 
                     <p className="font-medium text-sm">
-                        Are you sure you want to delete this class? All data
-                        will be lost permanently.
+                        Are you sure you want to delete this exam? All data will
+                        be lost permanently.
                     </p>
 
                     <div className="modal-action">
                         <Link
                             className="btn btn-sm btn-error"
                             as="button"
-                            href={route("faculty.classes.destroy", {
-                                class: classModel.id,
-                            })}
+                            href={"#"}
                             method="delete"
                         >
                             Delete class
