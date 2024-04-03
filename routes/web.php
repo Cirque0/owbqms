@@ -16,6 +16,7 @@ use App\Http\Controllers\Student\StudentClassExamController;
 use App\Http\Controllers\Student\StudentExamsController;
 use App\Http\Controllers\Student\StudentHomeController;
 use App\Http\Controllers\Student\StudentSettingsController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,6 +43,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::patch('/user', [UserInformationController::class, 'update'])->name('user.update');
     Route::delete('/user', [UserInformationController::class, 'destroy'])->name('user.destroy');
+    Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');

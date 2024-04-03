@@ -15,7 +15,9 @@ export default function UpdateUserProfile({ className = "" }) {
     const submit = (e) => {
         e.preventDefault();
 
-        // patch(route("profile.update"));
+        patch(route("profile.update"), {
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -119,7 +121,6 @@ export default function UpdateUserProfile({ className = "" }) {
                             onChange={(e) =>
                                 setData("contact_num", e.target.value)
                             }
-                            required
                         />
                         <div className="label">
                             <span className="label-text-alt text-error">
