@@ -44,6 +44,12 @@ class StudentClassesController extends Controller
             ]);
         }
 
+        if(!$class->is_registration_open) {
+            return back()->withErrors([
+                'class_code' => 'This class is currently not accepting requests to join.'
+            ]);
+        }
+
         if($class->students()->find(Auth::id())) {
             return back()->withErrors([
                 'class_code' => 'You are already enrolled to this class.'

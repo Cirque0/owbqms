@@ -65,6 +65,19 @@ class FacultyClassesController extends Controller
         }
     }
 
+    public function update(Request $request, ClassModel $class) {
+        $this->authorize('update', $class);
+
+        $request->validate([
+            'is_registration_open' => ['required', 'boolean'],
+        ]);
+
+        $class->fill($request->input());
+        $class->save();
+
+        return back();
+    }
+
     public function destroy(ClassModel $class) {
         $this->authorize('delete', $class);
         $class->delete();

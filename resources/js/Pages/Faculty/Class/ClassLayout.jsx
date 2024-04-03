@@ -1,7 +1,9 @@
 import { Link } from "@inertiajs/react";
 import { useRef, useState } from "react";
+import SettingsModal from "./Partials/SettingsModal";
 
 export default function ClassLayout({ classModel, children }) {
+    const settingsModalRef = useRef(null);
     const codeModalRef = useRef(null);
     const [copied, setCopied] = useState(false);
 
@@ -42,21 +44,14 @@ export default function ClassLayout({ classModel, children }) {
                                         }
                                     >
                                         <i className="bi bi-share"></i>
-                                        Share code
+                                        Join code
                                     </button>
                                 </li>
                                 <li>
-                                    <Link
-                                        className="text-error font-medium"
-                                        as="button"
-                                        href={route("faculty.classes.destroy", {
-                                            class: classModel.id,
-                                        })}
-                                        method="delete"
-                                    >
-                                        <i className="bi bi-trash"></i>
-                                        Delete class
-                                    </Link>
+                                    <button onClick={() => settingsModalRef.current.showModal()}>
+                                        <i className="bi bi-gear"></i>
+                                        Settings
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -145,6 +140,8 @@ export default function ClassLayout({ classModel, children }) {
                     <button className="cursor-default">close</button>
                 </form>
             </dialog>
+
+            <SettingsModal ref={settingsModalRef} classModel={classModel} />
         </>
     );
 }

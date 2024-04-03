@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::post('classes/{class}/requests/{student}/accept', [ClassMembersController::class, 'accept'])->name('classes.requests.accept');
         Route::delete('classes/{class}/requests/{student}/deny', [ClassMembersController::class, 'deny'])->name('classes.requests.deny');
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
-        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
+        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'update', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
         Route::resource('classes.grades', FacultyGradesController::class)->only(['index']);
 
