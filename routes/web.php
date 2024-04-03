@@ -10,7 +10,7 @@ use App\Http\Controllers\Faculty\FacultyGradesController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
 use App\Http\Controllers\Faculty\FacultySettingsController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserInformationController;
 use App\Http\Controllers\Student\StudentClassesController;
 use App\Http\Controllers\Student\StudentClassExamController;
 use App\Http\Controllers\Student\StudentExamsController;
@@ -40,9 +40,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/user', [UserInformationController::class, 'update'])->name('user.update');
+    Route::delete('/user', [UserInformationController::class, 'destroy'])->name('user.destroy');
 
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
