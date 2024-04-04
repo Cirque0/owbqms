@@ -27,7 +27,9 @@ export default function Class({ auth, classModel }) {
                                                             )}
                                                             className="text-lg font-bold text-maroon"
                                                         >
-                                                            [{exam.type}]{" "}
+                                                            <span className="badge badge-lg badge-primary">
+                                                                {exam.type}
+                                                            </span>{" "}
                                                             {exam.title}
                                                         </Link>
                                                         <div className="flex gap-2">

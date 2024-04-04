@@ -63,7 +63,9 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             )}
                                             className="text-lg font-bold text-maroon"
                                         >
-                                            [{classExam.exam.type}]{" "}
+                                            <span className="badge badge-lg badge-primary">
+                                                {classExam.exam.type}
+                                            </span>{" "}
                                             {classExam.exam.title}
                                         </Link>
                                         <div className="flex gap-2">
@@ -71,21 +73,30 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                                 <span className="badge badge-success font-bold">
                                                     Open
                                                 </span>
+                                            ) : classExam.opened_at ? (
+                                                <span className="badge badge-error text-red-100 font-bold">
+                                                    Closed
+                                                </span>
                                             ) : (
-                                                classExam.opened_at ? (
-                                                    <span className="badge badge-error text-red-100 font-bold">
-                                                        Closed
-                                                    </span>
-                                                ) : (
-                                                    <span className="badge badge-warning font-bold">
-                                                        Upcoming
-                                                    </span>
-                                                )
+                                                <span className="badge badge-warning font-bold">
+                                                    Upcoming
+                                                </span>
                                             )}
-                                            {classExam.student_exams.length > 0 && (
+                                            {classExam.student_exams.length >
+                                                0 && (
                                                 <span className="badge badge-info font-bold">
                                                     {/* Submitted */}
-                                                    Score: {classExam.student_exams[0].score} / {classExam.exam.questions_count}
+                                                    Score:{" "}
+                                                    {
+                                                        classExam
+                                                            .student_exams[0]
+                                                            .score
+                                                    }{" "}
+                                                    /{" "}
+                                                    {
+                                                        classExam.exam
+                                                            .questions_count
+                                                    }
                                                 </span>
                                             )}
                                         </div>
