@@ -33,25 +33,35 @@ export default function Class({ auth, classModel }) {
                                                             {exam.title}
                                                         </Link>
                                                         <div className="flex gap-2">
-                                                            {exam.pivot.is_open ? (
+                                                            {exam.pivot
+                                                                .is_open ? (
                                                                 <span className="badge badge-success text-white font-bold">
                                                                     Open
                                                                 </span>
+                                                            ) : exam.pivot
+                                                                  .opened_at ? (
+                                                                <span className="badge badge-error text-white font-bold">
+                                                                    Closed
+                                                                </span>
                                                             ) : (
-                                                                exam.pivot.opened_at ? (
-                                                                    <span className="badge badge-error text-white font-bold">
-                                                                        Closed
-                                                                    </span>
-                                                                ) : (
-                                                                    <span className="badge badge-warning font-bold">
-                                                                        Upcoming
-                                                                    </span>
-                                                                )
+                                                                <span className="badge badge-warning font-bold">
+                                                                    Upcoming
+                                                                </span>
                                                             )}
-                                                            {exam.student_exams.length > 0 && (
+                                                            {exam.student_exams
+                                                                .length > 0 && (
                                                                 <span className="badge badge-info font-bold">
                                                                     {/* Submitted */}
-                                                                    Score: {exam.student_exams[0].score} / {exam.questions_count}
+                                                                    Score:{" "}
+                                                                    {
+                                                                        exam
+                                                                            .student_exams[0]
+                                                                            .score
+                                                                    }{" "}
+                                                                    /{" "}
+                                                                    {
+                                                                        exam.questions_count
+                                                                    }
                                                                 </span>
                                                             )}
                                                         </div>
@@ -116,9 +126,14 @@ export default function Class({ auth, classModel }) {
                                 ) : (
                                     <tr>
                                         <td colSpan={2}>
-                                            <div className="flex justify-center text-center">
-                                                There are no exams assigned to
-                                                this class, yet.
+                                            <div className="grow flex justify-center items-center">
+                                                <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                    <i className="bi bi-journal-text text-xl"></i>
+                                                    <h2 className="font-bold">
+                                                        There are no exams
+                                                        assigned.
+                                                    </h2>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -127,60 +142,6 @@ export default function Class({ auth, classModel }) {
                         </table>
                     </div>
                 </div>
-                {/* <div className="mt-8 card bg-gray-100">
-                    <div className="card-body">
-                        <h2 className="card-title">Enrolled Students</h2>
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Birthdate</th>
-                                    <th>Contact No.</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {classModel.students.length ? (
-                                    classModel.students.map((student) => (
-                                        <tr>
-                                            <td>
-                                                <div>
-                                                    <div className="font-bold">
-                                                        {
-                                                            student.profile
-                                                                .full_name
-                                                        }
-                                                    </div>
-                                                    <div className="text-sm opacity-50">
-                                                        {student.username}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                {new Date(
-                                                    student.birthdate
-                                                ).toLocaleDateString("en-us", {
-                                                    year: "numeric",
-                                                    month: "short",
-                                                    day: "numeric",
-                                                })}
-                                            </td>
-                                            <td>
-                                                {student.profile.contact_num ||
-                                                    "No contact number."}
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={4} className="text-center">
-                                            There are no students enrolled, yet.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                </div> */}
             </ClassLayout>
         </StudentLayout>
     );

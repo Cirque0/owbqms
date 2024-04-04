@@ -18,7 +18,7 @@ export default function Exams({ auth, closedClassExams, ongoingClassExams }) {
 
                                 <ExamsTable
                                     classExams={ongoingClassExams}
-                                    emptyMessage="There are no open exams right now."
+                                    emptyMessage="There are no open exams at the moment."
                                 />
                             </div>
                         </div>
@@ -31,7 +31,7 @@ export default function Exams({ auth, closedClassExams, ongoingClassExams }) {
 
                                 <ExamsTable
                                     classExams={closedClassExams}
-                                    emptyMessage="There are no upcoming or past exams, yet."
+                                    emptyMessage="There are no upcoming or past exams."
                                 />
                             </div>
                         </div>
@@ -166,8 +166,13 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                 ) : (
                     <tr>
                         <td colSpan={2}>
-                            <div className="flex justify-center text-center">
-                                {emptyMessage}
+                            <div className="grow flex justify-center items-center">
+                                <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                    <i className="bi bi-journal-text text-xl"></i>
+                                    <h2 className="font-bold">
+                                        {emptyMessage}
+                                    </h2>
+                                </div>
                             </div>
                         </td>
                     </tr>
