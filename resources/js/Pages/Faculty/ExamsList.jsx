@@ -27,11 +27,11 @@ export default function ExamsList({ auth, exams, subjects }) {
                             </div>
                         </div>
 
-                        <table className="mt-4 table">
-                            <tbody>
-                                {exams.length ? (
-                                    exams.map((exam) => (
-                                        <tr>
+                        {exams.length ? (
+                            <table className="mt-4 table">
+                                <tbody>
+                                    {exams.map((exam) => (
+                                        <tr key={exam.id}>
                                             <td>
                                                 <div className="flex md:flex-row flex-col gap-2 p-4 bg-gray-100 roundex-xl drop-shadow-lg">
                                                     <div className="grow">
@@ -98,18 +98,19 @@ export default function ExamsList({ auth, exams, subjects }) {
                                                 </div>
                                             </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td>
-                                            <p className="text-center">
-                                                You haven't made any exams, yet.
-                                            </p>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className="py-40 flex justify-center items-center">
+                                <div className="flex flex-col items-center">
+                                    <i className="bi bi-journal-text text-6xl text-gray-600"></i>
+                                    <h2 className="mt-4 sm:text-xl text-lg font-bold text-center">
+                                        There were no exams found.
+                                    </h2>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
