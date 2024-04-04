@@ -27,7 +27,7 @@ export default function ExamsList({ auth, exams, subjects }) {
                             </div>
                         </div>
 
-                        {exams.length ? (
+                        {!exams.length ? (
                             <table className="mt-4 table">
                                 <tbody>
                                     {exams.map((exam) => (
@@ -103,8 +103,10 @@ export default function ExamsList({ auth, exams, subjects }) {
                             </table>
                         ) : (
                             <div className="py-40 flex justify-center items-center">
-                                <div className="flex flex-col items-center">
-                                    <i className="bi bi-journal-text text-6xl text-gray-600"></i>
+                                <div className="flex flex-col items-center text-gray-500">
+                                    <span className="aspect-square p-8 bg-gray-100 rounded-full">
+                                        <i className="bi bi-journal-text text-6xl"></i>
+                                    </span>
                                     <h2 className="mt-4 sm:text-xl text-lg font-bold text-center">
                                         There were no exams found.
                                     </h2>
