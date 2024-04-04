@@ -20,49 +20,63 @@ export default function Questions({
     const updateModalRef = useRef(null);
     const deleteModalRef = useRef(null);
 
-    const [state, dispatch] = useReducer((prevState, action) => {
-        switch(action.type) {
-            case 'set_update_question':
-                return {
-                    ...prevState,
-                    updateQuestion: action.updateQuestion,
-                }
-            case 'set_delete_question':
-                return {
-                    ...prevState,
-                    deleteQuestion: action.deleteQuestion,
-                }
+    const [state, dispatch] = useReducer(
+        (prevState, action) => {
+            switch (action.type) {
+                case "set_update_question":
+                    return {
+                        ...prevState,
+                        updateQuestion: action.updateQuestion,
+                    };
+                case "set_delete_question":
+                    return {
+                        ...prevState,
+                        deleteQuestion: action.deleteQuestion,
+                    };
+            }
+        },
+        {
+            updateQuestion: null,
+            deleteQuestion: null,
         }
-    }, {
-        updateQuestion: null,
-        deleteQuestion: null,
-    });
+    );
 
     const showUpdateModal = (question) => {
-        dispatch({type: 'set_update_question', updateQuestion: question});
+        dispatch({ type: "set_update_question", updateQuestion: question });
         updateModalRef.current.showModal();
-    }
+    };
 
     const showDeleteModal = (question) => {
-        dispatch({type: 'set_delete_question', deleteQuestion: question});
+        dispatch({ type: "set_delete_question", deleteQuestion: question });
         deleteModalRef.current.showModal();
-    }
+    };
 
     return (
         <>
             <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
             <FacultyLayout user={auth.user}>
                 <ExamLayout exam={exam}>
-                    <QuestionsContext.Provider value={{state, dispatch, showUpdateModal, showDeleteModal}}>
+                    <QuestionsContext.Provider
+                        value={{
+                            state,
+                            dispatch,
+                            showUpdateModal,
+                            showDeleteModal,
+                        }}
+                    >
                         <div className="mt-4 card bg-gray-100">
                             <div className="card-body sm:p-8 p-4">
                                 <div className="flex justify-between items-baseline">
-                                    <h2 className="card-title">Exam Questions</h2>
+                                    <h2 className="card-title">
+                                        Exam Questions
+                                    </h2>
 
                                     <div className="flex justify-end">
                                         <button
                                             className="btn btn-sm btn-primary"
-                                            onClick={() => createModalRef.current.showModal()}
+                                            onClick={() =>
+                                                createModalRef.current.showModal()
+                                            }
                                         >
                                             <i className="bi bi-plus-lg"></i>
                                             <span className="sm:block hidden">
@@ -71,17 +85,28 @@ export default function Questions({
                                         </button>
                                     </div>
                                 </div>
-                                
-                                <QuestionsTable title={'Identification'} questions={identification} />
 
-                                <QuestionsTable title={'True or False'} questions={trueOrFalse} />
+                                <QuestionsTable
+                                    title={"Identification"}
+                                    questions={identification}
+                                />
 
-                                <QuestionsTable title={'Fill in the Blanks'} questions={fillInTheBlanks} />
+                                <QuestionsTable
+                                    title={"True or False"}
+                                    questions={trueOrFalse}
+                                />
 
-                                <QuestionsTable title={'Multiple Choice'} questions={multipleChoice} />
+                                <QuestionsTable
+                                    title={"Fill in the Blanks"}
+                                    questions={fillInTheBlanks}
+                                />
+
+                                <QuestionsTable
+                                    title={"Multiple Choice"}
+                                    questions={multipleChoice}
+                                />
                             </div>
                         </div>
-
 
                         {/* <details
                             open
@@ -112,9 +137,15 @@ export default function Questions({
                 <CreateQuestionModal ref={createModalRef} examId={exam.id} />
 
                 {/* <UpdateQuestionModal key={state.updateQuestion?.id} ref={updateModalRef} question={state.updateQuestion} /> */}
-                <UpdateQuestionModal ref={updateModalRef} question={state.updateQuestion} />
+                <UpdateQuestionModal
+                    ref={updateModalRef}
+                    question={state.updateQuestion}
+                />
 
-                <DeleteQuestionModal ref={deleteModalRef} question={state.deleteQuestion} />
+                <DeleteQuestionModal
+                    ref={deleteModalRef}
+                    question={state.deleteQuestion}
+                />
             </FacultyLayout>
         </>
     );
@@ -160,13 +191,25 @@ function QuestionsTable({ title, questions }) {
                                                             className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-max"
                                                         >
                                                             <li>
-                                                                <button onClick={() => showUpdateModal(question)}>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        showUpdateModal(
+                                                                            question
+                                                                        )
+                                                                    }
+                                                                >
                                                                     <i className="bi bi-pencil-square"></i>
                                                                     Edit
                                                                 </button>
                                                             </li>
                                                             <li className="text-error">
-                                                                <button onClick={() => showDeleteModal(question)}>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        showDeleteModal(
+                                                                            question
+                                                                        )
+                                                                    }
+                                                                >
                                                                     <i className="bi bi-trash"></i>
                                                                     Delete
                                                                 </button>
@@ -182,9 +225,14 @@ function QuestionsTable({ title, questions }) {
                                                         </h4>
                                                         <div className="w-full mt-2 join join-vertical bg-gray-200 font-medium">
                                                             {question.choices.map(
-                                                                (choice, index) => (
+                                                                (
+                                                                    choice,
+                                                                    index
+                                                                ) => (
                                                                     <div
-                                                                        key={index}
+                                                                        key={
+                                                                            index
+                                                                        }
                                                                         className={`join-item flex items-center p-2 gap-2 ${
                                                                             choice ===
                                                                             question.answer
@@ -221,11 +269,13 @@ function QuestionsTable({ title, questions }) {
                             ) : (
                                 <tr>
                                     <td>
-                                        <div>
-                                            <p>
-                                                There are no questions for this
-                                                category, yet.
-                                            </p>
+                                        <div className="grow flex justify-center items-center">
+                                            <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                <i className="bi bi-patch-question text-xl"></i>
+                                                <h2 className="font-bold">
+                                                    There are no questions in this category.
+                                                </h2>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

@@ -175,16 +175,25 @@ export default function Scores({
                                                 <div className="flex justify-end">
                                                     <Link
                                                         href={
-                                                            student.answered_exams.length
-                                                                ? route("faculty.exams.scores.show", {
-                                                                    exam: exam.id,
-                                                                    student_exam: student.answered_exams[0].id,
-                                                                })
+                                                            student
+                                                                .answered_exams
+                                                                .length
+                                                                ? route(
+                                                                      "faculty.exams.scores.show",
+                                                                      {
+                                                                          exam: exam.id,
+                                                                          student_exam:
+                                                                              student
+                                                                                  .answered_exams[0]
+                                                                                  .id,
+                                                                      }
+                                                                  )
                                                                 : "#"
                                                         }
                                                         className="btn btn-sm btn-primary"
                                                         disabled={
-                                                            !student.answered_exams
+                                                            !student
+                                                                .answered_exams
                                                                 .length
                                                         }
                                                     >
@@ -198,9 +207,14 @@ export default function Scores({
                                 ) : (
                                     <tr>
                                         <td colSpan={3}>
-                                            <p className="text-center font-semibold">
-                                                No students found.
-                                            </p>
+                                            <div className="grow flex justify-center items-center">
+                                                <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                    <i className="bi bi-journal-text text-xl"></i>
+                                                    <h2 className="font-bold">
+                                                        There were no results found.
+                                                    </h2>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 )}

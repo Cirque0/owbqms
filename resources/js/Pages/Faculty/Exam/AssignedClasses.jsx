@@ -68,7 +68,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {exam.classes.length > 0 ? (
+                                    {exam.classes.length ? (
                                         exam.classes.map((classModel) => (
                                             <tr key={classModel.id}>
                                                 <td>
@@ -359,9 +359,14 @@ export default function AssignedClasses({ auth, exam, classes }) {
                                     ) : (
                                         <tr>
                                             <td colSpan={4}>
-                                                <div className="flex justify-center text-center">
-                                                    There are no classes
-                                                    assigned to this exam, yet.
+                                                <div className="grow flex justify-center items-center">
+                                                    <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                        <i className="bi bi-journal-text text-xl"></i>
+                                                        <h2 className="font-bold">
+                                                            There are no classes
+                                                            assigned.
+                                                        </h2>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
