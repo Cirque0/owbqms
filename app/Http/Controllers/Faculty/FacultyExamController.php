@@ -16,6 +16,7 @@ class FacultyExamController extends Controller
 {
     public function index() {
         $exams = Exam::with(['subject:id,name'])
+            ->withCount(['questions'])
             ->where('instructor_id', Auth::id())
             ->get();
             
