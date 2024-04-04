@@ -49,7 +49,7 @@ export default function ExamsList({ auth, exams, subjects }) {
                                                             </span>{" "}
                                                             {exam.title}
                                                         </Link>
-                                                        <div className="mt-2 text-base font-semibold">
+                                                        <div className="mt-2 sm:text-base text-sm font-semibold">
                                                             <span className="flex gap-2">
                                                                 <i className="bi bi-mortarboard"></i>
                                                                 {

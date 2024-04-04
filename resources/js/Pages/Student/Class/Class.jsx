@@ -54,15 +54,14 @@ export default function Class({ auth, classModel }) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <div className="text-sm">
+                                                    <div className="sm:text-base text-sm">
                                                         {exam.pivot
                                                             .closed_at ? (
                                                             <p>
-                                                                Exam{" "}
                                                                 {exam.pivot
                                                                     .is_open
-                                                                    ? "will close"
-                                                                    : "closed"}{" "}
+                                                                    ? "Closing"
+                                                                    : "Closed"}{" "}
                                                                 at{" "}
                                                                 <span className="font-bold">
                                                                     {new Date(

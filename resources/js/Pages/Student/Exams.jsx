@@ -90,7 +90,7 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="text-sm font-semibold">
+                                    <div className="sm:text-base text-sm font-semibold">
                                         <span className="flex gap-2">
                                             <i className="bi bi-mortarboard"></i>{" "}
                                             {
@@ -112,13 +112,12 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             }
                                         </span>
                                     </div>
-                                    <div className="text-sm">
+                                    <div className="sm:text-base text-sm mt-2">
                                         {classExam.closed_at ? (
                                             <p>
-                                                Exam{" "}
                                                 {classExam.is_open
-                                                    ? "will close"
-                                                    : "closed"}{" "}
+                                                    ? "Closing"
+                                                    : "Closed"}{" "}
                                                 at{" "}
                                                 <span className="font-bold">
                                                     {new Date(
