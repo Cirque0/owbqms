@@ -15,7 +15,7 @@ export default function ClassCard({
                 disabled={disabled}
             >
                 <div className="grow flex flex-col text-lg font-bold items-start">
-                    <p className="text-maroon">{classObj.subject.name}</p>
+                    <p className="text-maroon text-left">{classObj.subject.name}</p>
                     <p>{classObj.section.name}</p>
                     {student && (
                         <p className="flex gap-2 font-medium text-sm">
@@ -29,12 +29,14 @@ export default function ClassCard({
                         <>
                             <span className="inline-flex items-baseline gap-2">
                                 <i className="bi bi-people-fill text-lg"></i>
-                                {classObj.students_count}
+                                {classObj.students_count} {classObj.students_count === 1 ? "student" : "students"}
                             </span>
-                            <span className="inline-flex items-baseline gap-2">
-                                <i className="bi bi-person-plus-fill text-lg"></i>
-                                {classObj.requests_count}
-                            </span>
+                            {classObj.requests_count > 0 && (
+                                <span className="inline-flex items-baseline gap-2">
+                                    <i className="bi bi-person-plus-fill text-lg"></i>
+                                    {classObj.requests_count} pending
+                                </span>
+                            )}
                         </>
                     )}
                     {student && classObj.pivot.status === "pending" && (

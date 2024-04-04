@@ -9,12 +9,14 @@ use App\Models\Exam;
 use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class FacultyExamController extends Controller
 {
     public function index() {
         $exams = Exam::with(['subject:id,name'])
+            ->withCount(['questions'])
             ->where('instructor_id', Auth::id())
             ->get();
             
@@ -27,6 +29,8 @@ class FacultyExamController extends Controller
     }
 
     public function show(Request $request, Exam $exam) {
+        $this->authorize('view', $exam);
+
         $exam->load([
             'subject:id,name',
             'classes:id,section_id,subject_id' => [
@@ -43,6 +47,8 @@ class FacultyExamController extends Controller
     }
 
     public function store(ExamRequest $request) {
+        $this->authorize('create', Exam::class);
+        
         $subject = Subject::firstWhere('name', $request->subject);
 
         Exam::create([
@@ -54,5 +60,27 @@ class FacultyExamController extends Controller
 
         // TODO: should redirect to exam page
         return back();
+    }
+
+    public function update(Request $request, Exam $exam) {
+        $this->authorize('update', $exam);
+
+        $request->validate([
+            'title' => ['required', 'string'],
+            'type' => ['required', 'string', Rule::in(['Quiz', 'Midterm', 'Finals'])],
+        ]);
+
+        $exam->fill($request->input());
+        $exam->save();
+
+        return back();
+    }
+
+    public function destroy(Exam $exam) {
+        $this->authorize('delete', $exam);
+        
+        $exam->delete();
+
+        return to_route('faculty.exams.index');
     }
 }

@@ -13,7 +13,7 @@ export default function ClassExams({ auth, classModel }) {
     const unassignModalRef = useRef(null);
     const updateModalRef = useRef(null);
     const openModalRef = useRef(null);
-    const closeModalRef = useRef(null)
+    const closeModalRef = useRef(null);
 
     const showUnassignModal = (exam) => {
         setSelectedExam(exam);
@@ -28,12 +28,12 @@ export default function ClassExams({ auth, classModel }) {
     const showOpenModal = (exam) => {
         setSelectedExam(exam);
         openModalRef.current.showModal();
-    }
+    };
 
     const showCloseModal = (exam) => {
         setSelectedExam(exam);
         closeModalRef.current.showModal();
-    }
+    };
 
     return (
         <>
@@ -56,7 +56,7 @@ export default function ClassExams({ auth, classModel }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {classModel.exams.length > 0 ? (
+                                    {classModel.exams.length ? (
                                         classModel.exams.map((exam) => (
                                             <tr key={exam.id}>
                                                 <td>
@@ -70,12 +70,9 @@ export default function ClassExams({ auth, classModel }) {
                                                             )}
                                                             className="font-bold text-maroon"
                                                         >
-                                                            {
-                                                                exam.title
-                                                            }
+                                                            {exam.title}
                                                         </Link>
-                                                        {exam.pivot
-                                                            .is_open ? (
+                                                        {exam.pivot.is_open ? (
                                                             <div className="badge badge-sm badge-success">
                                                                 Open
                                                             </div>
@@ -92,8 +89,7 @@ export default function ClassExams({ auth, classModel }) {
                                                             </span>
                                                             <span>
                                                                 {
-                                                                    exam
-                                                                        .pivot
+                                                                    exam.pivot
                                                                         .passing_score
                                                                 }
                                                                 %
@@ -105,15 +101,13 @@ export default function ClassExams({ auth, classModel }) {
                                                             </span>
                                                             <span>
                                                                 {
-                                                                    exam
-                                                                        .pivot
+                                                                    exam.pivot
                                                                         .exam_period
                                                                 }{" "}
                                                                 mins
                                                             </span>
                                                         </div>
-                                                        {exam.pivot
-                                                            .opened_at &&
+                                                        {exam.pivot.opened_at &&
                                                             exam.pivot
                                                                 .closed_at && (
                                                                 <>
@@ -147,8 +141,7 @@ export default function ClassExams({ auth, classModel }) {
                                                             )}
                                                     </div>
                                                     <div className="md:hidden mt-4 join w-full">
-                                                        {exam.pivot
-                                                            .is_open ? (
+                                                        {exam.pivot.is_open ? (
                                                             <button
                                                                 className="join-item btn btn-sm btn-primary grow"
                                                                 onClick={() =>
@@ -219,8 +212,7 @@ export default function ClassExams({ auth, classModel }) {
                                                             </span>
                                                             <span>
                                                                 {
-                                                                    exam
-                                                                        .pivot
+                                                                    exam.pivot
                                                                         .passing_score
                                                                 }
                                                                 %
@@ -232,15 +224,13 @@ export default function ClassExams({ auth, classModel }) {
                                                             </span>
                                                             <span>
                                                                 {
-                                                                    exam
-                                                                        .pivot
+                                                                    exam.pivot
                                                                         .exam_period
                                                                 }{" "}
                                                                 mins
                                                             </span>
                                                         </div>
-                                                        {exam.pivot
-                                                            .opened_at &&
+                                                        {exam.pivot.opened_at &&
                                                             exam.pivot
                                                                 .closed_at && (
                                                                 <>
@@ -276,8 +266,7 @@ export default function ClassExams({ auth, classModel }) {
                                                 </td>
                                                 <td className="md:flex hidden justify-end">
                                                     <div className="join">
-                                                        {exam.pivot
-                                                            .is_open ? (
+                                                        {exam.pivot.is_open ? (
                                                             <button
                                                                 className="join-item btn btn-sm btn-primary"
                                                                 onClick={() =>
@@ -345,9 +334,13 @@ export default function ClassExams({ auth, classModel }) {
                                     ) : (
                                         <tr>
                                             <td colSpan={4}>
-                                                <div className="flex justify-center text-center">
-                                                    There are no exams
-                                                    assigned to this class, yet.
+                                                <div className="grow flex justify-center items-center">
+                                                    <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                        <i className="bi bi-journal-text text-xl"></i>
+                                                        <h2 className="font-bold">
+                                                            There are no exams assigned.
+                                                        </h2>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>

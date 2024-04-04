@@ -18,7 +18,7 @@ export default function Exams({ auth, closedClassExams, ongoingClassExams }) {
 
                                 <ExamsTable
                                     classExams={ongoingClassExams}
-                                    emptyMessage="There are no open exams right now."
+                                    emptyMessage="There are no open exams at the moment."
                                 />
                             </div>
                         </div>
@@ -31,7 +31,7 @@ export default function Exams({ auth, closedClassExams, ongoingClassExams }) {
 
                                 <ExamsTable
                                     classExams={closedClassExams}
-                                    emptyMessage="There are no upcoming or past exams, yet."
+                                    emptyMessage="There are no upcoming or past exams."
                                 />
                             </div>
                         </div>
@@ -63,7 +63,9 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             )}
                                             className="text-lg font-bold text-maroon"
                                         >
-                                            [{classExam.exam.type}]{" "}
+                                            <span className="badge badge-lg badge-primary">
+                                                {classExam.exam.type}
+                                            </span>{" "}
                                             {classExam.exam.title}
                                         </Link>
                                         <div className="flex gap-2">
@@ -71,26 +73,35 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                                 <span className="badge badge-success font-bold">
                                                     Open
                                                 </span>
+                                            ) : classExam.opened_at ? (
+                                                <span className="badge badge-error text-red-100 font-bold">
+                                                    Closed
+                                                </span>
                                             ) : (
-                                                classExam.opened_at ? (
-                                                    <span className="badge badge-error text-red-100 font-bold">
-                                                        Closed
-                                                    </span>
-                                                ) : (
-                                                    <span className="badge badge-warning font-bold">
-                                                        Upcoming
-                                                    </span>
-                                                )
+                                                <span className="badge badge-warning font-bold">
+                                                    Upcoming
+                                                </span>
                                             )}
-                                            {classExam.student_exams.length > 0 && (
+                                            {classExam.student_exams.length >
+                                                0 && (
                                                 <span className="badge badge-info font-bold">
                                                     {/* Submitted */}
-                                                    Score: {classExam.student_exams[0].score} / {classExam.exam.questions_count}
+                                                    Score:{" "}
+                                                    {
+                                                        classExam
+                                                            .student_exams[0]
+                                                            .score
+                                                    }{" "}
+                                                    /{" "}
+                                                    {
+                                                        classExam.exam
+                                                            .questions_count
+                                                    }
                                                 </span>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="text-sm font-semibold">
+                                    <div className="sm:text-base text-sm font-semibold">
                                         <span className="flex gap-2">
                                             <i className="bi bi-mortarboard"></i>{" "}
                                             {
@@ -112,13 +123,12 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                                             }
                                         </span>
                                     </div>
-                                    <div className="text-sm">
+                                    <div className="sm:text-base text-sm mt-2">
                                         {classExam.closed_at ? (
                                             <p>
-                                                Exam{" "}
                                                 {classExam.is_open
-                                                    ? "will close"
-                                                    : "closed"}{" "}
+                                                    ? "Closing"
+                                                    : "Closed"}{" "}
                                                 at{" "}
                                                 <span className="font-bold">
                                                     {new Date(
@@ -156,8 +166,13 @@ function ExamsTable({ classExams = [], emptyMessage = "" }) {
                 ) : (
                     <tr>
                         <td colSpan={2}>
-                            <div className="flex justify-center text-center">
-                                {emptyMessage}
+                            <div className="grow flex justify-center items-center">
+                                <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                    <i className="bi bi-journal-text text-xl"></i>
+                                    <h2 className="font-bold">
+                                        {emptyMessage}
+                                    </h2>
+                                </div>
                             </div>
                         </td>
                     </tr>

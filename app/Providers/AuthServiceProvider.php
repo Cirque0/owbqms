@@ -5,7 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\ClassModel;
+use App\Models\Exam;
 use App\Policies\ClassPolicy;
+use App\Policies\ExamPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ClassModel::class => ClassPolicy::class,
+        Exam::class => ExamPolicy::class,
     ];
 
     /**

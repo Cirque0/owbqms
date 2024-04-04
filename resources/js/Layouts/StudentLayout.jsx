@@ -42,6 +42,21 @@ export default function StudentLayout({ user, header, children }) {
                     <div className="px-4 font-bold">
                         <ul className="menu md:menu-horizontal hidden w-full text-base">
                             <li>
+                                <div className="menu-title divider py-0 my-0"></div>
+                            </li>
+                            <li>
+                                <Link href={route("student.home")}>
+                                    <i className="bi bi-mortarboard"></i>
+                                    Classes
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={route("student.exams.index")}>
+                                    <i className="bi bi-journal-text"></i>
+                                    Exams
+                                </Link>
+                            </li>
+                            <li>
                                 <details>
                                     <summary>
                                         <i className="bi bi-person-circle"></i>
@@ -49,10 +64,10 @@ export default function StudentLayout({ user, header, children }) {
                                     </summary>
                                     <ul className="text-neutral text-base">
                                         <li>
-                                            <a href="#">
+                                            <Link href={route("student.settings.edit")}>
                                                 <i className="bi bi-gear"></i>
                                                 Settings
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="text-error">
                                             <Link
@@ -74,12 +89,6 @@ export default function StudentLayout({ user, header, children }) {
                 <main className="min-h-screen md:px-16 px-4 md:py-12 py-6 gap-8 flex">
                     <div className="sticky top-32 h-fit w-60 hidden shrink-0 md:flex flex-col">
                         <ul className="menu w-full text-base">
-                            <li>
-                                <Link href={route("student.exams.index")}>
-                                    <i className="bi bi-journal-text"></i>
-                                    Exams
-                                </Link>
-                            </li>
                             <li>
                                 <Link href={route("student.home")}>
                                     <i className="bi bi-mortarboard"></i>
@@ -137,10 +146,10 @@ export default function StudentLayout({ user, header, children }) {
                             </summary>
                             <ul className="text-base">
                                 <li>
-                                    <a href="#">
+                                    <Link href={route("student.settings.edit")}>
                                         <i className="bi bi-gear"></i>
                                         Settings
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="text-error">
                                     <Link

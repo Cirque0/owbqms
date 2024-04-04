@@ -24,7 +24,7 @@ class ExamRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'type' => ['required', 'string', Rule::in(['Quiz', 'Midterms', 'Finals'])],
+            'type' => ['required', 'string', Rule::in(['Quiz', 'Midterm', 'Finals'])],
             'subject' => ['required', 'string', 'exists:subjects,name'],
         ];
     }

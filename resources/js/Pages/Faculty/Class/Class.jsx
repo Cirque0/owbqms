@@ -178,9 +178,15 @@ export default function Class({ auth, classModel }) {
                                         <tr>
                                             <td
                                                 colSpan={4}
-                                                className="text-center"
                                             >
-                                                There are no pending requests.
+                                                <div className="grow flex justify-center items-center">
+                                                    <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                        <i className="bi bi-people text-xl"></i>
+                                                        <h2 className="font-bold">
+                                                            There are no pending requests.
+                                                        </h2>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     )}
@@ -319,10 +325,15 @@ export default function Class({ auth, classModel }) {
                                         <tr>
                                             <td
                                                 colSpan={4}
-                                                className="text-center"
                                             >
-                                                There are no students enrolled,
-                                                yet.
+                                                <div className="grow flex justify-center items-center">
+                                                    <div className="flex items-center gap-2 sm:text-base text-gray-500">
+                                                        <i className="bi bi-people text-xl"></i>
+                                                        <h2 className="font-bold">
+                                                            There are no students enrolled, yet.
+                                                        </h2>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     )}

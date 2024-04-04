@@ -9,11 +9,14 @@ use App\Http\Controllers\Faculty\FacultyExamScores;
 use App\Http\Controllers\Faculty\FacultyGradesController;
 use App\Http\Controllers\Faculty\FacultyHomeController;
 use App\Http\Controllers\Faculty\FacultyQuestionsController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Faculty\FacultySettingsController;
+use App\Http\Controllers\UserInformationController;
 use App\Http\Controllers\Student\StudentClassesController;
 use App\Http\Controllers\Student\StudentClassExamController;
 use App\Http\Controllers\Student\StudentExamsController;
 use App\Http\Controllers\Student\StudentHomeController;
+use App\Http\Controllers\Student\StudentSettingsController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,22 +41,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::patch('/user', [UserInformationController::class, 'update'])->name('user.update');
+    Route::delete('/user', [UserInformationController::class, 'destroy'])->name('user.destroy');
+    Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
     Route::group(['prefix' => 'faculty', 'as' => 'faculty.', 'middleware' => ['faculty']], function() {
         // Route::get('/classes', [FacultyClassesController::class, 'index'])->name('faculty.classes');
         Route::get('/', [FacultyHomeController::class, 'index'])->name('home');
+        Route::get('settings', [FacultySettingsController::class, 'edit'])->name('settings.edit');
         Route::post('classes/{class}/requests/{student}/accept', [ClassMembersController::class, 'accept'])->name('classes.requests.accept');
         Route::delete('classes/{class}/requests/{student}/deny', [ClassMembersController::class, 'deny'])->name('classes.requests.deny');
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
-        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'destroy']);
+        Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'update', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
         Route::resource('classes.grades', FacultyGradesController::class)->only(['index']);
 
         Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores.index');
-        Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store']);
+        Route::resource('exams', FacultyExamController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
         Route::resource('exams.questions', FacultyQuestionsController::class)->only(['index', 'store', 'update', 'destroy'])->shallow();
         Route::resource('exams.scores', FacultyAnswersController::class)->only(['show'])->parameters([
             'scores' => 'student_exam',
@@ -66,9 +70,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['student']], function () {
         Route::get('/', [StudentHomeController::class, 'index'])->name('home');
-        // Route::get('/classes', [StudentClassesController::class, 'index'])->name('classes');
-        // Route::get('/classes/{class}', [StudentClassesController::class, 'show'])->name('classes.show');
-        // Route::post('/classes/join', [StudentClassesController::class, 'store'])->name('classes.join');
+        Route::get('settings', [StudentSettingsController::class, 'edit'])->name('settings.edit');
         Route::get('classes/{class}/students', [StudentClassesController::class, 'students'])->name('classes.students');
         Route::resource('classes', StudentClassesController::class)->only(['show', 'store', 'destroy']);
         Route::post('classes/{class}/exams/{exam}/submit', [StudentClassExamController::class, 'submit'])->name('classes.exams.submit');

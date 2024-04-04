@@ -27,61 +27,92 @@ export default function ExamsList({ auth, exams, subjects }) {
                             </div>
                         </div>
 
-                        <div className="card bg-gray-100 mt-4">
-                            <div className="card-body">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Subject</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {exams.length ? (
-                                            exams.map((exam) => (
-                                                <tr>
-                                                    <td className="text-maroon font-bold">
-                                                        <Link href={route("faculty.exams.show", {exam: exam.id})}>{exam.title}</Link>
-                                                    </td>
-                                                    <td>{exam.subject.name}</td>
-                                                    <td>
-                                                        <div className="dropdown">
-                                                            <div
-                                                                tabIndex={0}
-                                                                role="button"
-                                                                className="btn btn-sm btn-circle btn-ghost"
-                                                            >
-                                                                <i className="bi bi-three-dots-vertical"></i>
-                                                            </div>
-                                                            <ul
-                                                                tabIndex={0}
-                                                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                                                            >
-                                                                <li>
-                                                                    <a>Item 1</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a>Item 2</a>
-                                                                </li>
-                                                            </ul>
+                        {exams.length ? (
+                            <table className="mt-4 table">
+                                <tbody>
+                                    {exams.map((exam) => (
+                                        <tr key={exam.id}>
+                                            <td>
+                                                <div className="flex md:flex-row flex-col gap-2 p-4 bg-gray-100 roundex-xl drop-shadow-lg">
+                                                    <div className="grow">
+                                                        <Link
+                                                            href={route(
+                                                                "faculty.exams.show",
+                                                                {
+                                                                    exam: exam.id,
+                                                                }
+                                                            )}
+                                                            className="text-lg font-bold text-maroon"
+                                                        >
+                                                            <span className="badge badge-lg badge-primary">
+                                                                {exam.type}
+                                                            </span>{" "}
+                                                            {exam.title}
+                                                        </Link>
+                                                        <div className="mt-2 sm:text-base text-sm font-semibold">
+                                                            <span className="flex gap-2">
+                                                                <i className="bi bi-mortarboard"></i>
+                                                                {
+                                                                    exam.subject
+                                                                        .name
+                                                                }
+                                                            </span>
+                                                            <span className="flex gap-2">
+                                                                <i className="bi bi-patch-question"></i>
+                                                                {
+                                                                    exam.questions_count
+                                                                }{" "}
+                                                                {exam.questions_count ===
+                                                                1
+                                                                    ? "question"
+                                                                    : "questions"}
+                                                            </span>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan={3}>
-                                                    <p className="text-center">
-                                                        You haven't made any exams, yet.
-                                                    </p>
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
+                                                    </div>
+                                                    <div className="flex md:flex-col gap-2">
+                                                        <Link
+                                                            href={route(
+                                                                "faculty.exams.questions.index",
+                                                                {
+                                                                    exam: exam.id,
+                                                                }
+                                                            )}
+                                                            className="btn btn-sm btn-primary"
+                                                        >
+                                                            <i className="bi bi-patch-question-fill"></i>
+                                                            Questions
+                                                        </Link>
+                                                        <Link
+                                                            href={route(
+                                                                "faculty.exams.scores.index",
+                                                                {
+                                                                    exam: exam.id,
+                                                                }
+                                                            )}
+                                                            className="btn btn-sm btn-primary"
+                                                        >
+                                                            <i className="bi bi-percent"></i>
+                                                            Scores
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className="py-40 flex justify-center items-center">
+                                <div className="flex flex-col items-center text-gray-500">
+                                    <span className="aspect-square p-8 bg-gray-100 rounded-full">
+                                        <i className="bi bi-journal-text text-6xl"></i>
+                                    </span>
+                                    <h2 className="mt-4 sm:text-xl text-lg font-bold text-center">
+                                        There were no exams found.
+                                    </h2>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </div>
 
