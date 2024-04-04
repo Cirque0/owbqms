@@ -27,7 +27,7 @@ export default function ExamsList({ auth, exams, subjects }) {
                             </div>
                         </div>
 
-                        {!exams.length ? (
+                        {exams.length ? (
                             <table className="mt-4 table">
                                 <tbody>
                                     {exams.map((exam) => (
