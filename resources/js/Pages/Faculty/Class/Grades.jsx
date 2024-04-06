@@ -33,8 +33,16 @@ export default function Grades({ auth, classModel }) {
                 <ClassLayout classModel={classModel}>
                     <div className="mt-8 card bg-gray-100">
                         <div className="card-body">
-                            <h2 className="card-title">Students' Grades</h2>
-                            <div className="flex">
+                            <div className="flex md:flex-row flex-col justify-between">
+                                <h2 className="card-title">Students' Grades</h2>
+                                <div className="sm:mt-0 mt-4 flex">
+                                    <a href="#" className="btn btn-sm btn-primary">
+                                        <i className="bi bi-download"></i>
+                                        Export to .xlsx
+                                    </a>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex">
                                 {students.length ? (
                                     <div className="overflow-x-auto w-0 grow">
                                         <table className="table table-pin-rows table-pin-cols whitespace-nowrap">
