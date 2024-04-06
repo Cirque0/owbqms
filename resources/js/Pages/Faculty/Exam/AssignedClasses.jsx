@@ -45,7 +45,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                         <div className="card-body">
                             <div className="flex sm:flex-row flex-col sm:justify-between items-baseline">
                                 <h2 className="card-title">Assigned Classes</h2>
-                                <div className="flex">
+                                <div className="mt-4 flex">
                                     <button
                                         className="btn btn-sm btn-primary"
                                         onClick={() =>
