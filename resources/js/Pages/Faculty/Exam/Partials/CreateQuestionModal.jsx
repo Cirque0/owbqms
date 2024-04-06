@@ -8,6 +8,7 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
         description: "",
         answer: "",
         choices: [],
+        points: 1,
     });
 
     const [newChoice, setNewChoice] = useState("");
@@ -19,12 +20,12 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('faculty.exams.questions.store', {exam: examId}), {
+        post(route("faculty.exams.questions.store", { exam: examId }), {
             onSuccess: () => {
                 reset();
                 ref.current.close();
             },
-        })
+        });
     };
 
     const createChoice = (e) => {
@@ -41,7 +42,10 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
         setData((prevState) => ({
             ...prevState,
             choices: prevState.choices.toSpliced(index, 1),
-            answer: prevState.choices[index] === prevState.answer ? "" : prevState.answer,
+            answer:
+                prevState.choices[index] === prevState.answer
+                    ? ""
+                    : prevState.answer,
         }));
     };
 
@@ -93,6 +97,26 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                         <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.description}
+                            </span>
+                        </div>
+                    </label>
+
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text">Points</span>
+                        </div>
+                        <input
+                            type="number"
+                            className="w-full input input-sm input-bordered"
+                            value={data.points}
+                            onChange={(e) => setData("points", e.target.value)}
+                            placeholder="How many points is it worth?"
+                            min={1}
+                            max={100}
+                        />
+                        <div className="label">
+                            <span className="label-text-alt text-error">
+                                {errors.points}
                             </span>
                         </div>
                     </label>
@@ -200,7 +224,8 @@ const CreateQuestionModal = forwardRef(({ examId }, ref) => {
                                             <thead>
                                                 <tr>
                                                     <th>
-                                                        Click or tap to select correct answer
+                                                        Click or tap to select
+                                                        correct answer
                                                     </th>
                                                 </tr>
                                             </thead>

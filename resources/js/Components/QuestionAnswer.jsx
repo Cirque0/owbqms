@@ -3,6 +3,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
         <div>
             <p className="font-semibold">
                 {questionAnswer.question.description}
+                <span className="ml-2 badge badge-info">{questionAnswer.question.points} pts.</span>
             </p>
             {(() => {
                 switch (questionAnswer.question.type) {

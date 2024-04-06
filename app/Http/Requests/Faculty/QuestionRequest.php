@@ -31,7 +31,8 @@ class QuestionRequest extends FormRequest
             'description' => ['required', 'string'],
             'choices' => ['exclude_unless:type,Multiple Choice', 'array'],
             'choices.*' => ['string'],
-            'answer' => ['required', 'string']
+            'answer' => ['required', 'string'],
+            'points' => ['required', 'integer', 'gt:0', 'lte:100'],
         ];
     }
 }

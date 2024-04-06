@@ -32,7 +32,7 @@ class StudentClassExamController extends Controller
         if($pivot->is_answers_shown) {
             $pivot->load([
                 'student_exams.answers:id,student_exam_id,question_id,answer,is_correct' => [
-                    'question:id,type,description,answer,choices',
+                    'question:id,type,description,answer,choices,points',
                 ],
             ]);
             
@@ -49,9 +49,7 @@ class StudentClassExamController extends Controller
 
         $exam->load([
             'subject:id,name',
-            'questions' => function ($query) {
-                $query->select('id', 'exam_id', 'type', 'description', 'choices');
-            },
+            'questions:id,exam_id,type,description,choices,points',
         ]);
 
         return Inertia::render('Student/Exam/ExamForm', [
