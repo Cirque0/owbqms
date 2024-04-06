@@ -43,7 +43,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
                 <ExamLayout exam={exam}>
                     <div className="mt-4 card w-full bg-gray-100">
                         <div className="card-body">
-                            <div className="flex sm:flex-row flex-col sm:justify-between items-baseline">
+                            <div className="flex md:flex-row flex-col justify-between">
                                 <h2 className="card-title">Assigned Classes</h2>
                                 <div className="mt-4 flex">
                                     <button

@@ -66,12 +66,12 @@ export default function Questions({
                     >
                         <div className="mt-4 card bg-gray-100">
                             <div className="card-body sm:p-8 p-4">
-                                <div className="flex justify-between items-baseline">
+                                <div className="flex md:flex-row flex-col justify-between">
                                     <h2 className="card-title">
                                         Exam Questions
                                     </h2>
 
-                                    <div className="flex justify-end">
+                                    <div className="mt-4 flex">
                                         <button
                                             className="btn btn-sm btn-primary"
                                             onClick={() =>
@@ -79,9 +79,7 @@ export default function Questions({
                                             }
                                         >
                                             <i className="bi bi-plus-lg"></i>
-                                            <span className="sm:block hidden">
-                                                New Question
-                                            </span>
+                                            New Question
                                         </button>
                                     </div>
                                 </div>
