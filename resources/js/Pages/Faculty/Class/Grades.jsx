@@ -36,7 +36,13 @@ export default function Grades({ auth, classModel }) {
                             <div className="flex md:flex-row flex-col justify-between">
                                 <h2 className="card-title">Students' Grades</h2>
                                 <div className="sm:mt-0 mt-4 flex">
-                                    <a href="#" className="btn btn-sm btn-primary">
+                                    <a
+                                        href={route(
+                                            "faculty.classes.grades.export",
+                                            { class: classModel.id }
+                                        )}
+                                        className="btn btn-sm btn-primary"
+                                    >
                                         <i className="bi bi-download"></i>
                                         Export to .xlsx
                                     </a>
@@ -149,7 +155,8 @@ export default function Grades({ auth, classModel }) {
                                         <div className="flex flex-col items-center text-gray-500">
                                             <i className="bi bi-people text-6xl"></i>
                                             <h2 className="mt-4 sm:text-xl text-lg font-bold text-center">
-                                                There are no students enrolled, yet.
+                                                There are no students enrolled,
+                                                yet.
                                             </h2>
                                         </div>
                                     </div>
