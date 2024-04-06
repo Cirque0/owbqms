@@ -35,7 +35,7 @@ export default function Grades({ auth, classModel }) {
                         <div className="card-body">
                             <h2 className="card-title">Students' Grades</h2>
                             <div className="flex">
-                                {!students.length ? (
+                                {students.length ? (
                                     <div className="overflow-x-auto w-0 grow">
                                         <table className="table table-pin-rows table-pin-cols whitespace-nowrap">
                                             <thead>
