@@ -176,7 +176,8 @@ function QuestionsTable({ title, questions }) {
                                                 <div className="flex justify-between items-baseline gap-2">
                                                     <p className="font-bold">
                                                         Q:{" "}
-                                                        {question.description}
+                                                        {question.description}{" "}
+                                                        <span className="badge badge-info">{question.points} pts.</span>
                                                     </p>
                                                     <div className="dropdown dropdown-end">
                                                         <div

@@ -190,7 +190,10 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
 function Question({ question, value, changeAnswer }) {
     return (
         <div>
-            <p className="font-semibold">{question.description}</p>
+            <p className="font-semibold">
+                {question.description}
+                <span className="ml-2 badge badge-info">{question.points} pts.</span>
+            </p>
             {(() => {
                 switch (question.type) {
                     case "Identification":
