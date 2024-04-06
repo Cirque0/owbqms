@@ -8,6 +8,7 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
         description: question?.description || "",
         answer: question?.answer || "",
         choices: question?.choices || [],
+        points: question?.points || 0,
     });
 
     useEffect(() => {
@@ -16,6 +17,7 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
             description: question?.description || "",
             answer: question?.answer || "",
             choices: question?.choices || [],
+            points: question?.points || 0,
         });
 
         setData({
@@ -23,6 +25,7 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
             description: question?.description || "",
             answer: question?.answer || "",
             choices: question?.choices || [],
+            points: question?.points || 0,
         });
     }, [question])
 
@@ -117,6 +120,26 @@ const UpdateQuestionModal = forwardRef(({ question }, ref) => {
                         <div className="label">
                             <span className="label-text-alt text-error">
                                 {errors.description}
+                            </span>
+                        </div>
+                    </label>
+
+                    <label className="form-control w-full">
+                        <div className="label">
+                            <span className="label-text">Points</span>
+                        </div>
+                        <input
+                            type="number"
+                            className="w-full input input-sm input-bordered"
+                            value={data.points}
+                            onChange={(e) => setData("points", e.target.value)}
+                            placeholder="How many points is it worth?"
+                            min={1}
+                            max={100}
+                        />
+                        <div className="label">
+                            <span className="label-text-alt text-error">
+                                {errors.points}
                             </span>
                         </div>
                     </label>

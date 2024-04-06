@@ -32,7 +32,7 @@ class QuestionRequest extends FormRequest
             'choices' => ['exclude_unless:type,Multiple Choice', 'array'],
             'choices.*' => ['string'],
             'answer' => ['required', 'string'],
-            'poiints' => ['required', 'integer', 'gt:0'],
+            'points' => ['required', 'integer', 'gt:0', 'lte:100'],
         ];
     }
 }
