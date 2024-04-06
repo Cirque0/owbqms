@@ -1,8 +1,27 @@
 import { Head, Link } from "@inertiajs/react";
 import ClassLayout from "@/Pages/Faculty/Class/ClassLayout";
 import FacultyLayout from "@/Layouts/FacultyLayout";
+import { useRef, useState } from "react";
+import AcceptRequestModal from "./Partials/AcceptRequestModal";
+import DenyRequestModal from "./Partials/DenyRequestModal";
 
 export default function Class({ auth, classModel }) {
+    const acceptRequestRef = useRef(null);
+    const denyRequestRef = useRef(null);
+
+    const [requestAccept, setRequestAccept] = useState(null);
+    const [requestDeny, setRequestDeny] = useState(null);
+
+    const openAcceptModal = (request) => {
+        setRequestAccept(request);
+        acceptRequestRef.current.showModal();
+    };
+
+    const openDenyModal = (request) => {
+        setRequestDeny(request);
+        denyRequestRef.current.showModal();
+    };
+
     return (
         <>
             <Head
@@ -77,38 +96,28 @@ export default function Class({ auth, classModel }) {
                                                     </div>
                                                     <ul className="md:hidden w-full menu menu-horizontal gap-2">
                                                         <li className="grow">
-                                                            <Link
-                                                                href={route(
-                                                                    "faculty.classes.requests.accept",
-                                                                    {
-                                                                        class: classModel.id,
-                                                                        student:
-                                                                            request.id,
-                                                                    }
-                                                                )}
-                                                                as="button"
-                                                                method="post"
+                                                            <button
                                                                 className="btn btn-sm btn-success"
+                                                                onClick={() =>
+                                                                    openAcceptModal(
+                                                                        request
+                                                                    )
+                                                                }
                                                             >
                                                                 <i className="bi bi-check-lg"></i>
-                                                            </Link>
+                                                            </button>
                                                         </li>
                                                         <li className="grow">
-                                                            <Link
-                                                                href={route(
-                                                                    "faculty.classes.requests.deny",
-                                                                    {
-                                                                        class: classModel.id,
-                                                                        student:
-                                                                            request.id,
-                                                                    }
-                                                                )}
-                                                                as="button"
-                                                                method="delete"
+                                                            <button
                                                                 className="btn btn-sm btn-error"
+                                                                onClick={() =>
+                                                                    openDenyModal(
+                                                                        request
+                                                                    )
+                                                                }
                                                             >
                                                                 <i className="bi bi-x-lg"></i>
-                                                            </Link>
+                                                            </button>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -137,38 +146,28 @@ export default function Class({ auth, classModel }) {
                                                 <td className="md:table-cell hidden">
                                                     <ul className="menu menu-horizontal gap-2">
                                                         <li>
-                                                            <Link
-                                                                href={route(
-                                                                    "faculty.classes.requests.accept",
-                                                                    {
-                                                                        class: classModel.id,
-                                                                        student:
-                                                                            request.id,
-                                                                    }
-                                                                )}
-                                                                as="button"
-                                                                method="post"
+                                                            <button
                                                                 className="btn btn-sm btn-success"
+                                                                onClick={() =>
+                                                                    openAcceptModal(
+                                                                        request
+                                                                    )
+                                                                }
                                                             >
                                                                 <i className="bi bi-check-lg"></i>
-                                                            </Link>
+                                                            </button>
                                                         </li>
                                                         <li>
-                                                            <Link
-                                                                href={route(
-                                                                    "faculty.classes.requests.deny",
-                                                                    {
-                                                                        class: classModel.id,
-                                                                        student:
-                                                                            request.id,
-                                                                    }
-                                                                )}
-                                                                as="button"
-                                                                method="delete"
+                                                            <button
                                                                 className="btn btn-sm btn-error"
+                                                                onClick={() =>
+                                                                    openDenyModal(
+                                                                        request
+                                                                    )
+                                                                }
                                                             >
                                                                 <i className="bi bi-x-lg"></i>
-                                                            </Link>
+                                                            </button>
                                                         </li>
                                                     </ul>
                                                 </td>
@@ -176,14 +175,13 @@ export default function Class({ auth, classModel }) {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td
-                                                colSpan={4}
-                                            >
+                                            <td colSpan={4}>
                                                 <div className="grow flex justify-center items-center">
                                                     <div className="flex items-center gap-2 sm:text-base text-gray-500">
                                                         <i className="bi bi-people text-xl"></i>
                                                         <h2 className="font-bold">
-                                                            There are no pending requests.
+                                                            There are no pending
+                                                            requests.
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -323,14 +321,14 @@ export default function Class({ auth, classModel }) {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td
-                                                colSpan={4}
-                                            >
+                                            <td colSpan={4}>
                                                 <div className="grow flex justify-center items-center">
                                                     <div className="flex items-center gap-2 sm:text-base text-gray-500">
                                                         <i className="bi bi-people text-xl"></i>
                                                         <h2 className="font-bold">
-                                                            There are no students enrolled, yet.
+                                                            There are no
+                                                            students enrolled,
+                                                            yet.
                                                         </h2>
                                                     </div>
                                                 </div>
@@ -342,6 +340,18 @@ export default function Class({ auth, classModel }) {
                         </div>
                     </div>
                 </ClassLayout>
+
+                <AcceptRequestModal
+                    ref={acceptRequestRef}
+                    classId={classModel.id}
+                    request={requestAccept}
+                />
+
+                <DenyRequestModal
+                    ref={denyRequestRef}
+                    classId={classModel.id}
+                    request={requestDeny}
+                />
             </FacultyLayout>
         </>
     );
