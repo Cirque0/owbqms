@@ -17,6 +17,7 @@ class Question extends Model
         'description',
         'answer',
         'choices',
+        'points',
     ];
 
     protected $casts = [
