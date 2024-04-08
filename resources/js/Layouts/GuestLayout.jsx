@@ -1,7 +1,7 @@
 export default function Guest({ children }) {
     return (
         <main className='relative min-h-screen w-full flex'>
-                <div className="md:max-w-96 w-full shrink-0 p-4 flex flex-col bg-maroon">
+                <div className="md:max-w-[32rem] w-full shrink-0 p-4 flex flex-col items-center bg-gradient-to-tr from-secondary to-40% to-primary">
                     <img src="/images/LBQMS Logo.png" alt="OWBQMS logo" className='w-96' />
 
                     {children}
