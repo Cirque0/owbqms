@@ -39,9 +39,9 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
 
     return (
         <main className="relative min-h-screen">
-            <nav className="sticky z-50 top-0 p-2 bg-primary text-primary-content">
+            <nav className="sticky z-50 top-0 p-4 bg-primary text-primary-content">
                 <Link href={route("student.exams.index")}>
-                    <i className="bi bi-arrow-left-short text-5xl"></i>
+                    <i className="bi bi-arrow-chevron text-xl"></i>
                 </Link>
             </nav>
 
