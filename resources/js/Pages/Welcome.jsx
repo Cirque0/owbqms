@@ -6,9 +6,10 @@ export default function Welcome() {
         <>
             <Head title="Welcome" />
             <Guest>
+                <img src="/images/LBQMS Logo.png" alt="OWBQMS logo" className='w-96' />
                 <h2 className="mt-16 text-center text-2xl font-bold text-white">Welcome!</h2>
 
-                <div className="mx-4 mt-12 flex flex-col gap-4 text-white">
+                <div className="w-full max-w-xs mt-12 flex flex-col gap-4 text-white">
                     <p className="text-center text-xl">Login as...</p>
                     <Link
                         href={route("student.login")}

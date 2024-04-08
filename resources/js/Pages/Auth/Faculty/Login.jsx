@@ -19,7 +19,7 @@ export default function Login() {
             <h2 className="mt-16 text-center text-2xl font-bold text-white">
                 Login as Faculty
             </h2>
-            <form onSubmit={login} className="w-full mt-4 flex flex-col items-center gap-4">
+            <form onSubmit={login} className="w-full mt-12 flex flex-col items-center gap-4">
                 <label className="form-control w-full max-w-xs">
                     <div className="label">
                         <span className="label-text text-white">Username</span>
