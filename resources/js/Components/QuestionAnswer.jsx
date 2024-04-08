@@ -3,7 +3,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
         <div>
             <p className="font-semibold">
                 {questionAnswer.question.description}
-                <span className="ml-2 badge badge-info">{questionAnswer.question.points} pts.</span>
+                <span className="ml-2 badge badge-info">{+(questionAnswer.question.points * questionAnswer.score_percentage).toFixed(2)} / {questionAnswer.question.points} pts.</span>
             </p>
             {(() => {
                 switch (questionAnswer.question.type) {
@@ -14,7 +14,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
                             <div
                                 className={
                                     "mt-4 p-4 w-full rounded-xl " +
-                                    (questionAnswer.is_correct
+                                    (questionAnswer.score_percentage > 0
                                         ? "bg-green-200 text-success-content"
                                         : "bg-red-200 text-error-content")
                                 }
@@ -23,7 +23,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
                                     {isStudent ? "Your" : "Student\'s"} answer
                                 </div>
                                 <div>
-                                    {questionAnswer.is_correct ? (
+                                    {questionAnswer.score_percentage > 0 ? (
                                         <i className="bi bi-check-circle-fill mr-2 text-xl text-success"></i>
                                     ) : (
                                         <i className="bi bi-x-circle-fill mr-2 text-xl text-error"></i>
@@ -31,7 +31,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
                                     <span>{questionAnswer.answer}</span>
                                 </div>
 
-                                {!questionAnswer.is_correct && (
+                                {questionAnswer.score_percentage <= 0 && (
                                     <>
                                         <div className="mt-4 text-xs font-bold">
                                             Correct answer

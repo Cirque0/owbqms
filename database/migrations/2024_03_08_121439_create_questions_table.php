@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('answer');
             $table->json('choices')->nullable();
+            $table->integer('points')->default(1);
             $table->timestamps();
         });
     }

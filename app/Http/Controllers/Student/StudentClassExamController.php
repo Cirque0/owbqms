@@ -31,7 +31,7 @@ class StudentClassExamController extends Controller
 
         if($pivot->is_answers_shown) {
             $pivot->load([
-                'student_exams.answers:id,student_exam_id,question_id,answer,is_correct' => [
+                'student_exams.answers:id,student_exam_id,question_id,answer,score_percentage' => [
                     'question:id,type,description,answer,choices,points',
                 ],
             ]);
@@ -91,11 +91,17 @@ class StudentClassExamController extends Controller
             $studentExam->answers()->create([
                 'question_id' => $answer['question_id'],
                 'answer' => $answer['answer'],
-                'is_correct' => strtolower(Question::find($answer['question_id'])->answer) == strtolower($answer['answer']),
+                'score_percentage' => strtolower(Question::find($answer['question_id'])->answer) == strtolower($answer['answer']) ? 1 : 0,
             ]);
         }
 
-        $studentExam->score = $studentExam->answers()->where('is_correct', true)->count();
+        $score = 0;
+
+        foreach($studentExam->answers as $answer) {
+            $score += $answer->question->points * $answer->score_percentage;
+        }
+
+        $studentExam->score = $score;
         $studentExam->save();
 
         return back();
