@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('classes/{class}/students/{student}/remove', [ClassMembersController::class, 'remove'])->name('classes.students.remove');
         Route::resource('classes', FacultyClassesController::class)->only(['show', 'store', 'update', 'destroy']);
         Route::resource('classes.exams', FacultyClassExamController::class)->only(['index']);
+        Route::get('classes/{class}/grades/export', [FacultyGradesController::class, 'export'])->name('classes.grades.export');
         Route::resource('classes.grades', FacultyGradesController::class)->only(['index']);
 
         Route::get('exams/{exam}/scores', FacultyExamScores::class)->name('exams.scores.index');
