@@ -20,18 +20,25 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col justify-center items-center">
-            <Head title="Register / Faculty" />
-            <div className="card md:min-h-fit min-h-screen w-full max-w-xl md:bg-base-200 md:shadow">
-                <div className="card-body">
-                    <h2 className="card-title">
-                        Register for a student account
-                    </h2>
-                    <form
-                        onSubmit={register}
-                        className="flex flex-col items-center gap-4"
-                    >
-                        <label className="form-control w-full max-w-xs">
+        <div className="min-h-screen flex flex-col">
+            <nav className="w-full sticky z-50 top-0 p-4 flex bg-primary text-primary-content">
+                <Link
+                    href={route("student.login")}
+                    className="flex gap-2 text-xl font-medium"
+                >
+                    <i className="bi bi-chevron-left"></i>
+                    Back to student login
+                </Link>
+            </nav>
+            <Head title="Register / Student" />
+            <div className="w-full flex flex-col md:py-16 md:px-40 p-8 gap-4">
+                <h2 className="card-title">Register for a student account</h2>
+                <form
+                    onSubmit={register}
+                    className="w-full max-w-3xl flex flex-col md:items-start items-center gap-4"
+                >
+                    <div className="w-full flex md:flex-row flex-col gap-4">
+                        <label className="form-control grow">
                             <div className="label">
                                 <span className="label-text">Username</span>
                             </div>
@@ -55,7 +62,7 @@ export default function Register() {
                             )}
                         </label>
 
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control grow">
                             <div className="label">
                                 <span className="label-text">Email</span>
                             </div>
@@ -78,8 +85,10 @@ export default function Register() {
                                 </div>
                             )}
                         </label>
+                    </div>
 
-                        <label className="form-control w-full max-w-xs">
+                    <div className="w-full flex md:flex-row flex-col gap-4">
+                        <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Password</span>
                             </div>
@@ -103,7 +112,7 @@ export default function Register() {
                             )}
                         </label>
 
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">
                                     Confirm Password
@@ -131,8 +140,10 @@ export default function Register() {
                                 </div>
                             )}
                         </label>
+                    </div>
 
-                        <label className="form-control w-full max-w-xs">
+                    <div className="w-full flex md:flex-row flex-col gap-4">
+                        <label className="form-control grow">
                             <div className="label">
                                 <span className="label-text">Birthdate</span>
                             </div>
@@ -156,80 +167,7 @@ export default function Register() {
                             )}
                         </label>
 
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text">First Name</span>
-                            </div>
-                            <div className="input input-bordered flex items-center gap-2">
-                                <i className="bi bi-person"></i>
-                                <input
-                                    type="text"
-                                    className="grow"
-                                    value={data.first_name}
-                                    onChange={(e) =>
-                                        setData("first_name", e.target.value)
-                                    }
-                                />
-                            </div>
-                            {errors.first_name && (
-                                <div className="label">
-                                    <span className="label-text-alt text-error">
-                                        {errors.first_name}
-                                    </span>
-                                </div>
-                            )}
-                        </label>
-
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text">Middle Name</span>
-                                <span className="label-text-alt">optional</span>
-                            </div>
-                            <div className="input input-bordered flex items-center gap-2">
-                                <i className="bi bi-person"></i>
-                                <input
-                                    type="text"
-                                    className="grow"
-                                    value={data.middle_name}
-                                    onChange={(e) =>
-                                        setData("middle_name", e.target.value)
-                                    }
-                                />
-                            </div>
-                            {errors.middle_name && (
-                                <div className="label">
-                                    <span className="label-text-alt text-error">
-                                        {errors.middle_name}
-                                    </span>
-                                </div>
-                            )}
-                        </label>
-
-                        <label className="form-control w-full max-w-xs">
-                            <div className="label">
-                                <span className="label-text">Last Name</span>
-                            </div>
-                            <div className="input input-bordered flex items-center gap-2">
-                                <i className="bi bi-person"></i>
-                                <input
-                                    type="text"
-                                    className="grow"
-                                    value={data.last_name}
-                                    onChange={(e) =>
-                                        setData("last_name", e.target.value)
-                                    }
-                                />
-                            </div>
-                            {errors.last_name && (
-                                <div className="label">
-                                    <span className="label-text-alt text-error">
-                                        {errors.last_name}
-                                    </span>
-                                </div>
-                            )}
-                        </label>
-
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control grow">
                             <div className="label">
                                 <span className="label-text">Gender</span>
                             </div>
@@ -255,7 +193,7 @@ export default function Register() {
                             )}
                         </label>
 
-                        <label className="form-control w-full max-w-xs">
+                        <label className="form-control grow">
                             <div className="label">
                                 <span className="label-text">
                                     Contact Number
@@ -281,21 +219,96 @@ export default function Register() {
                                 </div>
                             )}
                         </label>
+                    </div>
 
-                        <div className="w-full flex justify-end">
-                            <button
-                                className="btn btn-sm btn-primary"
-                                disabled={processing}
-                            >
-                                {processing ? (
-                                    <span className="loading loading-spinner loading-sm"></span>
-                                ) : (
-                                    "Register"
-                                )}
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <div className="w-full flex md:flex-row flex-col gap-4">
+                        <label className="form-control grow">
+                            <div className="label">
+                                <span className="label-text">First Name</span>
+                            </div>
+                            <div className="input input-bordered flex items-center gap-2">
+                                <i className="bi bi-person"></i>
+                                <input
+                                    type="text"
+                                    className="grow w-0"
+                                    value={data.first_name}
+                                    onChange={(e) =>
+                                        setData("first_name", e.target.value)
+                                    }
+                                />
+                            </div>
+                            {errors.first_name && (
+                                <div className="label">
+                                    <span className="label-text-alt text-error">
+                                        {errors.first_name}
+                                    </span>
+                                </div>
+                            )}
+                        </label>
+
+                        <label className="form-control grow">
+                            <div className="label">
+                                <span className="label-text">Middle Name</span>
+                                <span className="label-text-alt">optional</span>
+                            </div>
+                            <div className="input input-bordered flex items-center gap-2">
+                                <i className="bi bi-person"></i>
+                                <input
+                                    type="text"
+                                    className="grow w-0"
+                                    value={data.middle_name}
+                                    onChange={(e) =>
+                                        setData("middle_name", e.target.value)
+                                    }
+                                />
+                            </div>
+                            {errors.middle_name && (
+                                <div className="label">
+                                    <span className="label-text-alt text-error">
+                                        {errors.middle_name}
+                                    </span>
+                                </div>
+                            )}
+                        </label>
+
+                        <label className="form-control grow">
+                            <div className="label">
+                                <span className="label-text">Last Name</span>
+                            </div>
+                            <div className="input input-bordered flex items-center gap-2">
+                                <i className="bi bi-person"></i>
+                                <input
+                                    type="text"
+                                    className="grow w-0"
+                                    value={data.last_name}
+                                    onChange={(e) =>
+                                        setData("last_name", e.target.value)
+                                    }
+                                />
+                            </div>
+                            {errors.last_name && (
+                                <div className="label">
+                                    <span className="label-text-alt text-error">
+                                        {errors.last_name}
+                                    </span>
+                                </div>
+                            )}
+                        </label>
+                    </div>
+
+                    <div className="mt-4 w-full flex justify-end">
+                        <button
+                            className="btn btn-sm btn-primary"
+                            disabled={processing}
+                        >
+                            {processing ? (
+                                <span className="loading loading-spinner loading-sm"></span>
+                            ) : (
+                                "Register"
+                            )}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );
