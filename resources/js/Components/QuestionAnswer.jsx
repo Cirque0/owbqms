@@ -13,7 +13,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
                         return (
                             <div
                                 className={
-                                    "mt-4 p-4 w-full rounded-xl " +
+                                    "mt-4 p-4 w-full font-medium rounded-xl " +
                                     (questionAnswer.score_percentage > 0
                                         ? "bg-green-200 text-success-content"
                                         : "bg-red-200 text-error-content")
@@ -48,7 +48,7 @@ export default function QuestionAnswer({ questionAnswer, isStudent = false }) {
                         );
                     case "Multiple Choice":
                         return (
-                            <div className="w-full mt-4 flex flex-col">
+                            <div className="w-full mt-4 flex flex-col font-medium">
                                 {questionAnswer.question.choices.map(
                                     (choice) => (
                                         <div
