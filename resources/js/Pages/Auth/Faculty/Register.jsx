@@ -21,15 +21,15 @@ export default function Register() {
 
     return (
         <div className="min-h-screen flex flex-col">
-            <div className="w-full p-4 flex bg-maroon">
+            <nav className="w-full sticky z-50 top-0 p-4 flex bg-primary text-primary-content">
                 <Link
                     href={route("faculty.login")}
-                    className="flex gap-2 text-white text-xl font-medium"
+                    className="flex gap-2 text-xl font-medium"
                 >
                     <i className="bi bi-chevron-left"></i>
                     Back to faculty login
                 </Link>
-            </div>
+            </nav>
             <Head title="Register / Faculty" />
             <div className="w-full flex flex-col md:py-16 md:px-40 p-8 gap-4">
                 <h2 className="card-title">Register for a faculty account</h2>
