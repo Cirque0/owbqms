@@ -14,7 +14,7 @@ class QuestionAnswer extends Model
         'student_exam_id',
         'question_id',
         'answer',
-        'is_correct',
+        'score_percentage',
     ];
 
     protected $hidden = [

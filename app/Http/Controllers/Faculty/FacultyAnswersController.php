@@ -25,7 +25,7 @@ class FacultyAnswersController extends Controller
                 'profile:id,user_id,first_name,middle_name,last_name',
             ],
             'answers' => [
-                'question:id,type,description,answer,choices',
+                'question:id,type,description,answer,choices,points',
             ],
         ]);
 

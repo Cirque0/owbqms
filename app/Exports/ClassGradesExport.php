@@ -40,7 +40,9 @@ class ClassGradesExport implements FromCollection, WithHeadings, WithMapping, Wi
             ],
             $this->model->exams->map(function ($exam, $key) use ($row) {
                 if($answered_exam = $row->answered_exams->firstWhere('class_exam_id', $exam->pivot->id)) {
-                    return $answered_exam->score;
+                    $totalPoints = $answered_exam->class_exam->exam->questions()->sum('points');
+                    $totalScorePercent = ($answered_exam->score / ($totalPoints)) * 100;
+                    return $answered_exam->score . ' (' . number_format((float)$totalScorePercent, 2, '.', '') . '%)';
                 }
                 else {
                     return 'No submission';
@@ -54,7 +56,7 @@ class ClassGradesExport implements FromCollection, WithHeadings, WithMapping, Wi
         return array_merge(
             ['Student No.', 'Student Name'],
             $this->model->exams->map(function ($exam, $key) {
-                return $exam->title . ' (' . $exam->questions()->count() . ' pts. - min. ' . $exam->pivot->passing_score . '%)';
+                return $exam->title . ' (' . $exam->questions()->sum('points') . ' pts. - min. ' . $exam->pivot->passing_score . '%)';
             })->toArray(),
         );
     }
