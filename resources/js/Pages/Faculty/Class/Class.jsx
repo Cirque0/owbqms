@@ -24,10 +24,7 @@ export default function Class({ auth, classModel }) {
 
     return (
         <>
-            <Head
-                title={`[${classModel.section.name}] ${classModel.subject.name}`}
-            />
-            <FacultyLayout user={auth.user}>
+            <FacultyLayout user={auth.user} title={`Students / [${classModel.section.name}] ${classModel.subject.name}`}>
                 <ClassLayout classModel={classModel}>
                     <div className="mt-8 card bg-gray-100">
                         <div className="card-body">

@@ -5,7 +5,7 @@ import UpdateUserProfile from "../Profile/Partials/UpdateUserProfileForm";
 
 export default function Settings({ auth, mustVerifyEmail, status }) {
     return (
-        <FacultyLayout user={auth.user}>
+        <FacultyLayout user={auth.user} title="Account Settings">
             <div className="grow flex gap-8">
                 <div className="grow max-w-4xl">
                     <div className="flex justify-between items-baseline">

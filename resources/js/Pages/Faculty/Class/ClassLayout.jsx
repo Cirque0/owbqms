@@ -82,7 +82,7 @@ export default function ClassLayout({ classModel, children }) {
                                     : ""
                             }`}
                         >
-                            Examinations
+                            Exams
                         </Link>
                         <Link
                             href={route("faculty.classes.grades.index", {

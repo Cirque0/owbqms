@@ -53,8 +53,7 @@ export default function Questions({
 
     return (
         <>
-            <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
-            <FacultyLayout user={auth.user}>
+            <FacultyLayout user={auth.user} title={`Questions / ${exam.title} (${exam.subject.name})`}>
                 <ExamLayout exam={exam}>
                     <QuestionsContext.Provider
                         value={{

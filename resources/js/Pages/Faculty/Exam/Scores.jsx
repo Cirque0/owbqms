@@ -19,7 +19,7 @@ export default function Scores({
     };
 
     return (
-        <FacultyLayout user={auth.user}>
+        <FacultyLayout user={auth.user} title={`Scores / ${exam.title} (${exam.subject.name})`}>
             <ExamLayout exam={exam}>
                 <div className="mt-4 card bg-gray-100">
                     <div className="card-body">

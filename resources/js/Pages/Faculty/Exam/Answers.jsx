@@ -5,7 +5,7 @@ import FacultyLayout from "@/Layouts/FacultyLayout";
 export default function Answers({ auth, exam, studentExam }) {
     return (
         <>
-            <FacultyLayout user={auth.user}>
+            <FacultyLayout user={auth.user} title={`${studentExam.student.profile.full_name}\'s ${exam.title} (${exam.subject.name})`}>
                 <ExamLayout exam={exam}>
                     <div className="mt-4 card bg-gray-100">
                         <div className="card-body">

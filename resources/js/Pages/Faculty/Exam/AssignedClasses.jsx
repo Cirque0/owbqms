@@ -38,8 +38,7 @@ export default function AssignedClasses({ auth, exam, classes }) {
 
     return (
         <>
-            <Head title={`${exam.title} (${exam.subject.name}) / Faculty`} />
-            <FacultyLayout user={auth.user}>
+            <FacultyLayout user={auth.user} title={`Assigness / ${exam.title} (${exam.subject.name})`}>
                 <ExamLayout exam={exam}>
                     <div className="mt-4 card w-full bg-gray-100">
                         <div className="card-body">
