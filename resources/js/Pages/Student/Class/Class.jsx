@@ -4,7 +4,7 @@ import { Link } from "@inertiajs/react";
 
 export default function Class({ auth, classModel }) {
     return (
-        <StudentLayout user={auth.user}>
+        <StudentLayout user={auth.user} title={`Exams / [${classModel.section.name}] ${classModel.subject.name}`}>
             <ClassLayout classModel={classModel}>
                 <div className="mt-8 card bg-gray-100">
                     <div className="card-body">

@@ -81,7 +81,7 @@ export default function ClassLayout({ classModel, children }) {
                                     : ""
                             }`}
                         >
-                            Examinations
+                            Exams
                         </Link>
                         <Link
                             href={route("student.classes.students", {

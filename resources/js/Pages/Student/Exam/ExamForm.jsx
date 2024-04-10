@@ -1,5 +1,5 @@
 import QuestionAnswer from "@/Components/QuestionAnswer";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, Head, useForm } from "@inertiajs/react";
 
 export default function ExamForm({ auth, classModel, exam, pivot }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -38,153 +38,156 @@ export default function ExamForm({ auth, classModel, exam, pivot }) {
     };
 
     return (
-        <main className="relative min-h-screen">
-            <nav className="sticky z-50 top-0 p-4 bg-primary text-primary-content">
-                <Link href={route("student.exams.index")} className="flex gap-2 text-xl font-medium">
-                    <i className="bi bi-chevron-left text-xl"></i>
-                    Exams
-                </Link>
-            </nav>
+        <>
+            <Head title={`${exam.title} (${exam.subject.name})`} />
+            <main className="relative min-h-screen">
+                <nav className="sticky z-50 top-0 p-4 bg-primary text-primary-content">
+                    <Link href={route("student.exams.index")} className="flex gap-2 text-xl font-medium">
+                        <i className="bi bi-chevron-left text-xl"></i>
+                        Exams
+                    </Link>
+                </nav>
 
-            <div className="flex flex-col max-w-3xl items-center p-4 mx-auto">
-                <div className="card w-full bg-gray-100">
-                    <div className="card-body">
-                        <h2 className="card-title md:text-2xl text-xl font-bold">
-                            [{exam.type}] {exam.title}
-                        </h2>
-                        <div className="font-semibold md:text-lg text-base">
-                            <h4>
-                                [{classModel.section.name}] {exam.subject.name}
-                            </h4>
-                        </div>
-                        <p className="font-medium sm:text-base text-sm">
-                            A score of <b>{pivot.passing_score}%</b> out of{" "}
-                            <b>{exam.questions_count} questions</b> is needed to
-                            pass.
-                        </p>
-                        {pivot.is_open && (
+                <div className="flex flex-col max-w-3xl items-center p-4 mx-auto">
+                    <div className="card w-full bg-gray-100">
+                        <div className="card-body">
+                            <h2 className="card-title md:text-2xl text-xl font-bold">
+                                [{exam.type}] {exam.title}
+                            </h2>
+                            <div className="font-semibold md:text-lg text-base">
+                                <h4>
+                                    [{classModel.section.name}] {exam.subject.name}
+                                </h4>
+                            </div>
                             <p className="font-medium sm:text-base text-sm">
-                                The examination will close at{" "}
-                                <span className="font-bold">
-                                    {new Date(pivot.closed_at).toLocaleString(
-                                        "en-PH"
-                                    )}
-                                </span>
-                                .
+                                A score of <b>{pivot.passing_score}%</b> out of{" "}
+                                <b>{exam.questions_count} questions</b> is needed to
+                                pass.
                             </p>
-                        )}
+                            {pivot.is_open && (
+                                <p className="font-medium sm:text-base text-sm">
+                                    The examination will close at{" "}
+                                    <span className="font-bold">
+                                        {new Date(pivot.closed_at).toLocaleString(
+                                            "en-PH"
+                                        )}
+                                    </span>
+                                    .
+                                </p>
+                            )}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mt-4 card w-full bg-gray-100">
-                    <div className="card-body">
-                        {pivot.student_exams.length > 0 ? (
-                            <div className="flex flex-col gap-2 font-medium">
-                                <p className="card-title sm:text-2xl text-lg">
-                                    You completed the exam!
-                                </p>
-                                <p className="sm:text-xl text-base">
-                                    {pivot.student_exams[0].is_passed ? (
-                                        <i className="bi bi-check-circle-fill sm:text-2xl text-lg text-success"></i>
+                    <div className="mt-4 card w-full bg-gray-100">
+                        <div className="card-body">
+                            {pivot.student_exams.length > 0 ? (
+                                <div className="flex flex-col gap-2 font-medium">
+                                    <p className="card-title sm:text-2xl text-lg">
+                                        You completed the exam!
+                                    </p>
+                                    <p className="sm:text-xl text-base">
+                                        {pivot.student_exams[0].is_passed ? (
+                                            <i className="bi bi-check-circle-fill sm:text-2xl text-lg text-success"></i>
+                                        ) : (
+                                            <i className="bi bi-x-circle-fill sm:text-2xl text-lg text-error"></i>
+                                        )}{" "}
+                                        You{" "}
+                                        {pivot.student_exams[0].is_passed
+                                            ? "passed"
+                                            : "failed"}{" "}
+                                        with a score of{" "}
+                                        {pivot.student_exams[0].score} out of{" "}
+                                        {exam.questions_count} (
+                                        {(
+                                            (pivot.student_exams[0].score /
+                                                exam.questions_count) *
+                                            100
+                                        ).toFixed(2)}
+                                        %).
+                                    </p>
+                                    {pivot.is_answers_shown ? (
+                                        <>
+                                            <h2 className="mt-4 card-title">
+                                                Your Answers
+                                            </h2>
+                                            <div className="flex flex-col gap-12 mt-4">
+                                                {pivot.student_exams[0].answers.map(
+                                                    (questionAnswer) => (
+                                                        <QuestionAnswer
+                                                            key={questionAnswer.id}
+                                                            questionAnswer={
+                                                                questionAnswer
+                                                            }
+                                                            isStudent
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+                                        </>
                                     ) : (
-                                        <i className="bi bi-x-circle-fill sm:text-2xl text-lg text-error"></i>
-                                    )}{" "}
-                                    You{" "}
-                                    {pivot.student_exams[0].is_passed
-                                        ? "passed"
-                                        : "failed"}{" "}
-                                    with a score of{" "}
-                                    {pivot.student_exams[0].score} out of{" "}
-                                    {exam.questions_count} (
-                                    {(
-                                        (pivot.student_exams[0].score /
-                                            exam.questions_count) *
-                                        100
-                                    ).toFixed(2)}
-                                    %).
-                                </p>
-                                {pivot.is_answers_shown ? (
+                                        <p>
+                                            Your instructor will release the answers at a later time.
+                                        </p>
+                                    )}
+                                </div>
+                            ) : pivot.closed_at ? (
+                                pivot.is_open ? (
                                     <>
-                                        <h2 className="mt-4 card-title">
-                                            Your Answers
-                                        </h2>
-                                        <div className="flex flex-col gap-12 mt-4">
-                                            {pivot.student_exams[0].answers.map(
-                                                (questionAnswer) => (
-                                                    <QuestionAnswer
-                                                        key={questionAnswer.id}
-                                                        questionAnswer={
-                                                            questionAnswer
-                                                        }
-                                                        isStudent
-                                                    />
-                                                )
-                                            )}
-                                        </div>
+                                        <h2 className="card-title">Questions</h2>
+                                        <form
+                                            onSubmit={submit}
+                                            className="flex flex-col gap-12 mt-4"
+                                        >
+                                            {exam.questions.map((question) => (
+                                                <Question
+                                                    key={question.id}
+                                                    question={question}
+                                                    value={
+                                                        data.answers[question.id]
+                                                            .answer
+                                                    }
+                                                    changeAnswer={changeAnswer}
+                                                />
+                                            ))}
+                                            
+                                            <button
+                                                className="btn btn-sm btn-primary"
+                                                disabled={processing}
+                                            >
+                                                {processing && (
+                                                    <span className="loading loading-spinner loading-sm"></span>
+                                                )}
+                                                Submit
+                                            </button>
+                                        </form>
                                     </>
                                 ) : (
-                                    <p>
-                                        Your instructor will release the answers at a later time.
-                                    </p>
-                                )}
-                            </div>
-                        ) : pivot.closed_at ? (
-                            pivot.is_open ? (
-                                <>
-                                    <h2 className="card-title">Questions</h2>
-                                    <form
-                                        onSubmit={submit}
-                                        className="flex flex-col gap-12 mt-4"
-                                    >
-                                        {exam.questions.map((question) => (
-                                            <Question
-                                                key={question.id}
-                                                question={question}
-                                                value={
-                                                    data.answers[question.id]
-                                                        .answer
-                                                }
-                                                changeAnswer={changeAnswer}
-                                            />
-                                        ))}
-                                        
-                                        <button
-                                            className="btn btn-sm btn-primary"
-                                            disabled={processing}
-                                        >
-                                            {processing && (
-                                                <span className="loading loading-spinner loading-sm"></span>
-                                            )}
-                                            Submit
-                                        </button>
-                                    </form>
-                                </>
+                                    <>
+                                        <p className="font-medium text-xl">
+                                            The examination period has ended.
+                                        </p>
+                                        <p>
+                                            Approach your instructor for a possible
+                                            reopening.
+                                        </p>
+                                    </>
+                                )
                             ) : (
                                 <>
                                     <p className="font-medium text-xl">
-                                        The examination period has ended.
+                                        This exam is not open, yet.
                                     </p>
                                     <p>
-                                        Approach your instructor for a possible
-                                        reopening.
+                                        Please, wait for for your instructor to open
+                                        submissions.
                                     </p>
                                 </>
-                            )
-                        ) : (
-                            <>
-                                <p className="font-medium text-xl">
-                                    This exam is not open, yet.
-                                </p>
-                                <p>
-                                    Please, wait for for your instructor to open
-                                    submissions.
-                                </p>
-                            </>
-                        )}
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </>
     );
 }
 

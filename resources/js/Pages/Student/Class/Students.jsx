@@ -3,7 +3,7 @@ import ClassLayout from "./ClassLayout";
 
 export default function Students({ auth, classModel }) {
     return (
-        <StudentLayout user={auth.user}>
+        <StudentLayout user={auth.user} title={`Students / [${classModel.section.name}] ${classModel.subject.name}`}>
             <ClassLayout classModel={classModel}>
                 <div className="mt-8 card bg-gray-100">
                     <div className="card-body">
